@@ -20,7 +20,7 @@ class CreateTblIgrejasTable extends Migration
             $table->string('cidade')->nullable();
             $table->string('bairro')->nullable();
             $table->string('rua')->nullable();
-            $table->string('complemento');
+            $table->string('complemento')->nullable();
             $table->string('num');
             $table->string('telefone')->nullable();
             $table->text('txt_logo')->nullable();

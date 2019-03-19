@@ -12,13 +12,19 @@ class Tbl_Igrejas_Seeder extends Seeder
     public function run()
     {
         DB::table('tbl_igrejas')->insert([
-            'nome'=>'Primeira Igreja Batista'
+            'nome'=>'Primeira Igreja Batista',
+            'num'=>'230',
+            'cep'=>'35.181-018',
         ]);
         DB::table('tbl_igrejas')->insert([
-            'nome'=>'Segunda Igreja Batista'
+            'nome'=>'Segunda Igreja Batista',
+            'num'=>'230',
+            'cep'=>'35.181-018',
         ]);
         DB::table('tbl_igrejas')->insert([
-            'nome'=>'Terceira Igreja Batista'
+            'nome'=>'Terceira Igreja Batista',
+            'num'=>'230',
+            'cep'=>'35.181-018',
         ]);
     }
 }
