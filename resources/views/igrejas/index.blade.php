@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
+<!-- Toogle Button -->
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
 
 <!-- Select2 -->
 <script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
@@ -14,6 +17,8 @@
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
+<!-- Toogle Button -->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -28,6 +33,51 @@ $(function () {
       //uploadUrl: "/file-upload-batch/2",
       allowedFileExtensions: ["jpg", "png", "gif"]
   });
+
+  $('.bt-status').bootstrapToggle({
+    on: 'Ativa',
+    off: 'Inativa'
+  });
+
+  function limpa_formulário_cep() {
+      // Limpa valores do formulário de cep.
+      $("#cep").val("");
+      $("#rua").val("");
+      $("#bairro").val("");
+      $("#cidade").val("");
+      $("#uf").val("");
+      //$("#ibge").val("");
+  }
+
+  $("#cep").keypress(function() {
+
+    var cep = $(this).val().replace(/\D/g, '');
+    
+    //Preenche os campos com "..." enquanto consulta webservice.
+    $("#rua").val("...");
+    $("#bairro").val("...");
+    $("#cidade").val("...");
+    $("#uf").val("...");
+    //$("#ibge").val("...");
+
+    //Consulta o webservice viacep.com.br/
+    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+        
+        if (!("erro" in dados)) {
+            //Atualiza os campos com os valores da consulta.
+            $("#rua").val(dados.logradouro);
+            $("#bairro").val(dados.bairro);
+            $("#cidade").val(dados.localidade);
+            $("#uf").val(dados.uf);
+            //$("#ibge").val(dados.ibge);
+        } //end if.
+        else {
+            //CEP pesquisado não foi encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    });
+  })
 
   $('#tbl_igrejas').DataTable({
     'paging'      : true,
@@ -147,16 +197,34 @@ $(function () {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label >CEP</label>
-                            <input name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask>
+                            <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label >Número</label>
-                            <input name="numero" type="number" class="form-control" placeholder="Número">
+                            <label >Estado</label>
+                            <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado">
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label >Cidade</label>
+                            <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label >Bairro</label>
+                            <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label >Rua</label>
+                            <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
                         <div class="form-group">
                             <label >Complemento</label>
                             <input name="complemento" type="text" class="form-control" placeholder="Complemento">
@@ -164,20 +232,8 @@ $(function () {
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label >Cidade</label>
-                            <input name="cidade" type="text" class="form-control" placeholder="Cidade">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Bairro</label>
-                            <input name="bairro" type="text" class="form-control" placeholder="Bairro">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Rua</label>
-                            <input name="rua" type="text" class="form-control" placeholder="Rua">
+                            <label >Número</label>
+                            <input name="num" type="number" class="form-control" placeholder="Número">
                         </div>
                     </div>
                   </div>
@@ -195,7 +251,7 @@ $(function () {
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Módulos do sistema</label>
-                        <select class="form-control select2" multiple="multiple" data-placeholder="Selecione o módulo"
+                        <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione o módulo"
                                 style="width: 100%;">
                           <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
                           @foreach ($modulos as $modulo)

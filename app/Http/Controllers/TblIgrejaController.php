@@ -23,7 +23,10 @@ class TblIgrejaController extends Controller
         $igrejas = TblIgreja::orderBy('nome', 'ASC');
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
             return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+            '<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
+            '<div class="checkbox"><label>
+              <input class="bt-status" type="checkbox" data-toggle="toggle">
+            </label></div>';
         })
         ->make(true);
     }
@@ -46,7 +49,16 @@ class TblIgrejaController extends Controller
      */
     public function store(Request $request)
     {
-        dd($_FILES['logo']);
+        $igreja = new TblIgreja();
+        $igreja->nome = $request->nome;
+        $igreja->cep = $request->cep;
+        $igreja->num = $request->num;
+        $igreja->cidade = $request->cidade;
+        $igreja->complemento = $request->complemento;
+        $igreja->bairro = $request->bairro;
+        $igreja->estado = $request->estado;
+        $igreja->save();
+        return view('igrejas.index');
     }
 
     /**

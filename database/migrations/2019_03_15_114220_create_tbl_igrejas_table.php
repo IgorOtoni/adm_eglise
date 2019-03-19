@@ -17,15 +17,18 @@ class CreateTblIgrejasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->string('cep');
+            $table->string('estado')->nullable();
             $table->string('cidade')->nullable();
             $table->string('bairro')->nullable();
             $table->string('rua')->nullable();
             $table->string('complemento')->nullable();
             $table->string('num');
             $table->string('telefone')->nullable();
-            $table->text('txt_logo')->nullable();
+            //$table->string('logo')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE tbl_igrejas ADD logo MEDIUMBLOB');
     }
 
     /**
