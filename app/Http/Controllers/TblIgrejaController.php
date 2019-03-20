@@ -24,11 +24,15 @@ class TblIgrejaController extends Controller
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
             return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
             '<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
-            '<div class="checkbox"><label>
-              <input class="bt-status" type="checkbox" data-toggle="toggle">
-            </label></div>';
+            '<label title="Status da Igreja" class="switch"><input onClick="switch_status(this)" name="'.$igrejas->nome.'" class="status" id="'.$igrejas->id.'" type="checkbox" '.(($igrejas->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
         ->make(true);
+    }
+
+    public function switchStatus(Request $request){
+        $igreja = TblIgreja::find($request->id);
+        ($igreja->status == 1) ? $igreja->status = 0 : $igreja->status = 1 ;
+        $igreja->save();
     }
 
     /**

@@ -5,8 +5,9 @@
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
 <!-- Toogle Button -->
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
+<!-- Toastr -->
+<link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
 
 <!-- Select2 -->
 <script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
@@ -17,12 +18,27 @@
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
-<!-- Toogle Button -->
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
+
 <script>
+function switch_status(comp){
+  var id = $(comp).prop('id');
+  var nome = $(comp).prop('name');
+  $.ajax({
+    url: '/igrejas/switchStatus/'+id,
+    type: 'GET'
+  });
+  if($(comp).prop('checked') == true){
+    toastr.success(nome + " teve seu status ativado!");
+  }else{
+    toastr.error(nome + " teve seu status desativado!");
+  }
+}
+
 $(function () {
   $('.select2').select2()
 
@@ -32,11 +48,6 @@ $(function () {
       language: "pt-BR",
       //uploadUrl: "/file-upload-batch/2",
       allowedFileExtensions: ["jpg", "png", "gif"]
-  });
-
-  $('.bt-status').bootstrapToggle({
-    on: 'Ativa',
-    off: 'Inativa'
   });
 
   function limpa_formulário_cep() {
@@ -118,8 +129,8 @@ $(function () {
             { data: 'nome', name: 'nome' },
             { data: 'action', name: 'action' },
             ]
-    })
-  
+    });
+
 })
 </script>
 @endpush

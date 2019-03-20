@@ -24,6 +24,7 @@ class CreateTblIgrejasTable extends Migration
             $table->string('complemento')->nullable();
             $table->string('num');
             $table->string('telefone')->nullable();
+            $table->boolean('status')->default(0);
             //$table->string('logo')->nullable();
             $table->timestamps();
         });
