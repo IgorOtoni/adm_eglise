@@ -35,6 +35,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\TblIgreja' => $baseDir . '/app/TblIgreja.php',
+    'App\\TblIgrejasModulos' => $baseDir . '/app/TblIgrejasModulos.php',
     'App\\TblIgrejasPerfis' => $baseDir . '/app/TblIgrejasPerfis.php',
     'App\\TblModulo' => $baseDir . '/app/TblModulo.php',
     'App\\TblModulosPermissoes' => $baseDir . '/app/TblModulosPermissoes.php',

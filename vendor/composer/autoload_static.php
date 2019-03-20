@@ -418,6 +418,7 @@ class ComposerStaticInit564996520d96a55fda414f3d2ba873aa
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\TblIgreja' => __DIR__ . '/../..' . '/app/TblIgreja.php',
+        'App\\TblIgrejasModulos' => __DIR__ . '/../..' . '/app/TblIgrejasModulos.php',
         'App\\TblIgrejasPerfis' => __DIR__ . '/../..' . '/app/TblIgrejasPerfis.php',
         'App\\TblModulo' => __DIR__ . '/../..' . '/app/TblModulo.php',
         'App\\TblModulosPermissoes' => __DIR__ . '/../..' . '/app/TblModulosPermissoes.php',

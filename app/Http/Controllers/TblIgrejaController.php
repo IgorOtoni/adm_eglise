@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Image;
 use DataTables;
 use App\TblIgreja;
+use App\TblIgrejasModulos;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 class TblIgrejaController extends Controller
@@ -74,6 +75,15 @@ class TblIgrejaController extends Controller
         $igreja->logo = $igreja->nome.'.'.$request->logo->getClientOriginalExtension();
 
         $igreja->save();
+        $modulo = new TblIgrejasModulos();
+
+        foreach ($request->modulos as $key => $value) {
+            $data = [
+                'id_igreja' => $igreja->id,
+                'id_modulo' => $value
+            ];
+            $modulo->create($data);
+        }
 
         $notification = array(
             'message' => $igreja->nome . ' foi incluído(a) com sucesso!', 
