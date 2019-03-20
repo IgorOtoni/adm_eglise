@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Image;
 use DataTables;
 use App\TblIgreja;
 use Illuminate\Http\Request;
@@ -61,8 +61,27 @@ class TblIgrejaController extends Controller
         $igreja->complemento = $request->complemento;
         $igreja->bairro = $request->bairro;
         $igreja->estado = $request->estado;
+
+        //convertendo imagem base64
+        $img = $request->logo;
+
+        //dd($request->logo->getClientOriginalExtension());
+        //$igreja->logo = Image::make($img)->encode('data-url');
+
+        \Image::make($request->logo)->save(public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension(),90);
+
+        //$igreja->logo =  public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+        $igreja->logo = $igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+
         $igreja->save();
-        return view('igrejas.index');
+
+        $notification = array(
+            'message' => $igreja->nome . ' foi incluído(a) com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        //return view('igrejas.index')->with($notification);
+        return redirect()->route('igrejas')->with($notification);
     }
 
     /**

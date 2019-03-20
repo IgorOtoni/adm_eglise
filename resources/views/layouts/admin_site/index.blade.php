@@ -136,7 +136,6 @@
 </div>
 <!-- ./wrapper -->
 
-
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('template_adm/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
@@ -147,6 +146,8 @@
 <script src="{{asset('template_adm/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('template_adm/dist/js/demo.js')}}"></script>
+<!-- Bootstrap Validator -->
+<script src="{{asset('template_adm/plugins/bootstrap-validator/validator.js')}}"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
@@ -155,4 +156,28 @@
 
 @stack('script')
 </body>
+
+<!-- Toaster message SCRIPT -->
+<script>
+  @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type', 'info') }}";
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+  @endif
+</script>
 </html>

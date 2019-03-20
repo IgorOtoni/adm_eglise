@@ -40,9 +40,9 @@ function switch_status(comp){
 }
 
 $(function () {
-  $('.select2').select2()
+  $('.select2').select2();
 
-  $('[data-mask]').inputmask()
+  $('[data-mask]').inputmask();
 
   $('input[type=file]').fileinput({
       language: "pt-BR",
@@ -131,6 +131,18 @@ $(function () {
             ]
     });
 
+    $('#incluirIgrejaFormulario').validator({
+      update: true,
+      ignore: [],       
+      rules: {
+        //Rules
+      },
+      messages: {
+        //messages
+      }
+    });
+
+    
 })
 </script>
 @endpush
@@ -185,7 +197,7 @@ $(function () {
 
   <!-- modal -->
   <div class="modal fade" id="modal-incluir">
-    <form method="POST" role="form" action="{{url('igrejas/incluir')}}" enctype="multipart/form-data">
+    <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{url('igrejas/incluir')}}" enctype="multipart/form-data">
     @csrf
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -200,39 +212,51 @@ $(function () {
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                           <label >Nome</label>
-                          <input name="nome" type="text" class="form-control" placeholder="Nome">
+                          <input name="nome" type="text" class="form-control" placeholder="Nome" required>
+                          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                          <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >CEP</label>
-                            <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask>
+                            <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >Estado</label>
-                            <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado">
+                            <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >Cidade</label>
-                            <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade">
+                            <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >Bairro</label>
-                            <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro">
+                            <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >Rua</label>
-                            <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua">
+                            <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -242,33 +266,38 @@ $(function () {
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label >Número</label>
-                            <input name="num" type="number" class="form-control" placeholder="Número">
+                            <input name="num" type="number" class="form-control" placeholder="Número" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                   </div>
                   
                   <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                           <label >Logo</label>
-                          <input name="logo" type="file" id="input_img" onchange="muda_imagem()">
+                          <input name="logo" type="file" id="input_img" required>
+                          <div class="help-block with-errors"></div>
                         </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="form-group">
+                      <div class="form-group has-feedback">
                         <label>Módulos do sistema</label>
                         <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione o módulo"
-                                style="width: 100%;">
+                                style="width: 100%;" required>
                           <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
                           @foreach ($modulos as $modulo)
                             <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
                           @endforeach
                         </select>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
                       </div>
                       <!-- /.form-group -->
                     </div>
