@@ -46,6 +46,8 @@ $(function () {
 
   $('input[type=file]').fileinput({
       language: "pt-BR",
+      minFileCount: 1,
+      maxFileCount: 1,
       //uploadUrl: "/file-upload-batch/2",
       allowedFileExtensions: ["jpg", "png", "gif"]
   });
@@ -269,6 +271,14 @@ $(function () {
                         <div class="form-group has-feedback">
                             <label >Número</label>
                             <input name="num" type="number" class="form-control" placeholder="Número" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback">
+                            <label >Telefone</label>
+                            <input name="telefone" type="text" class="form-control" placeholder="Telefone" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <div class="help-block with-errors"></div>
                         </div>

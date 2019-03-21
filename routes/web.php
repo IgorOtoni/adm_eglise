@@ -23,6 +23,7 @@ Route::get('admin', function () {
 Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
 Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
 Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
+Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editarIgreja');
 Route::post('igrejas/incluir', 'TbligrejaController@store');
 
 Route::get('perfis', 'TblperfilController@index')->name('perfis');

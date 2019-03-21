@@ -23,8 +23,8 @@ class TblIgrejaController extends Controller
     public function tbl_igrejas(){
         $igrejas = TblIgreja::orderBy('nome', 'ASC');
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
-            return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
+            return '<a href="igrejas/editarIgreja/'.$igrejas->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
             '<label title="Status da Igreja" class="switch"><input onClick="switch_status(this)" name="'.$igrejas->nome.'" class="status" id="'.$igrejas->id.'" type="checkbox" '.(($igrejas->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
         ->make(true);
@@ -58,10 +58,12 @@ class TblIgrejaController extends Controller
         $igreja->nome = $request->nome;
         $igreja->cep = $request->cep;
         $igreja->num = $request->num;
+        $igreja->rua = $request->rua;
         $igreja->cidade = $request->cidade;
         $igreja->complemento = $request->complemento;
         $igreja->bairro = $request->bairro;
         $igreja->estado = $request->estado;
+        $igreja->telefone = $request->telefone;
 
         //convertendo imagem base64
         $img = $request->logo;
@@ -111,9 +113,11 @@ class TblIgrejaController extends Controller
      * @param  \App\Tbl_Igreja  $tbl_Igreja
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tbl_Igreja $tbl_Igreja)
+    public function edit($id)
     {
-        //
+        $igreja = TblIgreja::findOrfail($id);
+        $modulos_igreja = TblIgrejasModulos::where('id_igreja', '=', $id);
+        return view('igrejas.edit', compact('igreja','modulos_igreja'));
     }
 
     /**
@@ -123,7 +127,7 @@ class TblIgrejaController extends Controller
      * @param  \App\Tbl_Igreja  $tbl_Igreja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tbl_Igreja $tbl_Igreja)
+    public function update(Request $request)
     {
         //
     }
