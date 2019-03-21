@@ -12,6 +12,16 @@ class Tbl_Perfis_Seeder extends Seeder
     public function run()
     {
         DB::table('tbl_perfis')->insert([
+            'nome'=>'ADM Eglise',
+            'descricao'=>'Administrador da plataforma.'
+        ]);
+
+        DB::table('tbl_perfis')->insert([
+            'nome'=>'ADM Site',
+            'descricao'=>'Administrador do site da igreja.'
+        ]);
+
+        DB::table('tbl_perfis')->insert([
             'nome'=>'Membros',
             'descricao'=>'Consulta aos dízimos, eventos programados, links de materiais e sermões, células que participa e suas programações.'
         ]);
