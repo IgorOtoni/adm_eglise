@@ -25,6 +25,7 @@ Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igre
 Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
 Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editarIgreja');
 Route::post('igrejas/incluir', 'TbligrejaController@store');
+Route::post('igrejas/atualizar', 'TbligrejaController@update');
 
 Route::get('perfis', 'TblperfilController@index')->name('perfis');
 Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');

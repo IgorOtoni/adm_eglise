@@ -43,8 +43,8 @@ $(function () {
 
   $('input[type=file]').fileinput({
       language: "pt-BR",
-      minFileCount: 0,
-      maxFileCount: 1,
+      minImageCount: 1,
+      maxImageCount: 1,
       allowedFileExtensions: ["jpg", "png", "gif"],
       initialPreview: [
         "{{'http://localhost/adm_eglise/public/img/igrejas/'.$igreja->logo}}",
@@ -126,8 +126,9 @@ $(function () {
     <!-- Main content -->
     <section class="content">
 
-      <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{url('igrejas/incluir')}}" enctype="multipart/form-data">
+      <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{url('igrejas/atualizar')}}" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="id" value="{{$igreja->id}}">
         <div class="box">
           <div class="box-body">
             <div class="row">
@@ -222,7 +223,7 @@ $(function () {
                     foreach ($modulos as $modulo){
                       $achou = false;
                       foreach ($modulos_igreja as $modulo_igreja){
-                        if($modulo_igreja->id == $modulo->id){
+                        if($modulo_igreja->id_modulo == $modulo->id){
                           ?>
                           <option value="{{$modulo->id}}" selected>{{$modulo->nome}}</option>
                           <?php
@@ -230,7 +231,7 @@ $(function () {
                           break;
                         }
                       }
-                      if(!$achou){
+                      if($achou == false){
                         ?>
                         <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
                         <?php

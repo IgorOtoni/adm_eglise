@@ -104,7 +104,7 @@ class TblIgrejaController extends Controller
      */
     public function show(Tbl_Igreja $tbl_Igreja)
     {
-        //
+        
     }
 
     /**
@@ -116,7 +116,7 @@ class TblIgrejaController extends Controller
     public function edit($id)
     {
         $igreja = TblIgreja::findOrfail($id);
-        $modulos_igreja = TblIgrejasModulos::where('id_igreja', '=', $id);
+        $modulos_igreja = TblIgrejasModulos::where('id_igreja', '=', $id)->get();
         return view('igrejas.edit', compact('igreja','modulos_igreja'));
     }
 
@@ -129,7 +129,44 @@ class TblIgrejaController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $igreja = TblIgreja::find($request->id);
+        $igreja->nome = $request->nome;
+        $igreja->cep = $request->cep;
+        $igreja->num = $request->num;
+        $igreja->rua = $request->rua;
+        $igreja->cidade = $request->cidade;
+        $igreja->complemento = $request->complemento;
+        $igreja->bairro = $request->bairro;
+        $igreja->estado = $request->estado;
+        $igreja->telefone = $request->telefone;
+
+        if($request->logo){
+            //convertendo imagem base64
+            $img = $request->logo;
+            \Image::make($request->logo)->save(public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension(),90);
+            $igreja->logo = $igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+        }
+
+        $igreja->save();
+
+        TblIgrejasModulos::where('id_igreja', '=',  $request->id)->delete();
+
+        $modulo = new TblIgrejasModulos();
+
+        foreach ($request->modulos as $key => $value) {
+            $data = [
+                'id_igreja' => $igreja->id,
+                'id_modulo' => $value
+            ];
+            $modulo->create($data);
+        }
+
+        $notification = array(
+            'message' => $igreja->nome . ' foi atualizado(a) com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('igrejas')->with($notification);
     }
 
     /**

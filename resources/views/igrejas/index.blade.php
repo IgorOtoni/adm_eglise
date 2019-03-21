@@ -46,8 +46,8 @@ $(function () {
 
   $('input[type=file]').fileinput({
       language: "pt-BR",
-      minFileCount: 1,
-      maxFileCount: 1,
+      minImageCount: 1,
+      maxImageCount: 1,
       //uploadUrl: "/file-upload-batch/2",
       allowedFileExtensions: ["jpg", "png", "gif"]
   });
