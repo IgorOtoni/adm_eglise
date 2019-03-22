@@ -11,31 +11,52 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
-
+/*
 Route::get('admin', function () {
     return view('admin_site.index');
-});
+});*/
 
-Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
-Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
-Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
-Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editarIgreja');
-Route::post('igrejas/incluir', 'TbligrejaController@store');
-Route::post('igrejas/atualizar', 'TbligrejaController@update');
-
-Route::get('perfis', 'TblperfilController@index')->name('perfis');
-Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
-
-Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/logout', function () {
     Session::flush();
     return redirect('login');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        if (Auth::user()->id_perfil == 1)
+            return redirect('home');
+        /*elseif (Auth::user()->id_perfil == 2)
+            return redirect('user');*/
+        else
+            return redirect('error');
+    });
+    Route::get('error', function () {
+        return "Sorry, you are unauthorized to access this page.";
+    });
+    //     ROTAS DE ADMINISTRAÇÃO DO SISTEMA
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+        Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
+        Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
+        Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
+        Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editarIgreja');
+        Route::post('igrejas/incluir', 'TbligrejaController@store');
+        Route::post('igrejas/atualizar', 'TbligrejaController@update');
+
+        Route::get('perfis', 'TblperfilController@index')->name('perfis');
+        Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
+
+        Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');
+        
+
+        Route::get('/home', 'HomeController@index')->name('home');
+    });
+    /*Route::group(['prefix' => 'user', 'middleware' => 'user'], function () {
+
+    });*/
 });
