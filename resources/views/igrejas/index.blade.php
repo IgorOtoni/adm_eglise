@@ -119,7 +119,7 @@ $(function () {
 
     'processing': true,
     //'serverSide': false,
-    'ajax': '/admin/igrejas/tbl_igrejas',
+    'ajax': '{{route('igrejas.tbl_igrejas')}}',
     'columns': [
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },
@@ -193,7 +193,7 @@ $(function () {
 
   <!-- modal -->
   <div class="modal fade" id="modal-incluir">
-    <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{url('igrejas/incluir')}}" enctype="multipart/form-data">
+    <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.incluir')}}" enctype="multipart/form-data">
     @csrf
       <div class="modal-dialog modal-lg">
         <div class="modal-content">

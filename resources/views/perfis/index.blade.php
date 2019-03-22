@@ -8,7 +8,7 @@ function switch_status(comp){
   var id = $(comp).prop('id');
   var nome = $(comp).prop('name');
   $.ajax({
-    url: '/perfis/switchStatus/'+id,
+    url: '/admin/perfis/switchStatus/'+id,
     type: 'GET'
   });
   if($(comp).prop('checked') == true){

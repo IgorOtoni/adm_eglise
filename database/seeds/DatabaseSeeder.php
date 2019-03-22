@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(Tbl_Modulos_Seeder::class);
         $this->call(Tbl_Igrejas_Seeder::class);
-         
+        $this->call(TemplateSeeder::class);
+        $this->call(ConfiguracaoSeeder::class);
     }
 }

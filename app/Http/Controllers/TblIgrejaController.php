@@ -65,35 +65,49 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        //convertendo imagem base64
-        $img = $request->logo;
+        $count = TblIgrejas::where("nome", "=", $request->nome)->count();
+        if($count == 0){
 
-        //dd($request->logo->getClientOriginalExtension());
-        //$igreja->logo = Image::make($img)->encode('data-url');
+            //convertendo imagem base64
+            $img = $request->logo;
 
-        \Image::make($request->logo)->save(public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension(),90);
+            //dd($request->logo->getClientOriginalExtension());
+            //$igreja->logo = Image::make($img)->encode('data-url');
 
-        //$igreja->logo =  public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension();
-        $igreja->logo = $igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+            \Image::make($request->logo)->save(public_path('img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
 
-        $igreja->save();
-        $modulo = new TblIgrejasModulos();
+            //$igreja->logo =  public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+            $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
 
-        foreach ($request->modulos as $key => $value) {
-            $data = [
-                'id_igreja' => $igreja->id,
-                'id_modulo' => $value
-            ];
-            $modulo->create($data);
+            $igreja->save();
+            $modulo = new TblIgrejasModulos();
+
+            foreach ($request->modulos as $key => $value) {
+                $data = [
+                    'id_igreja' => $igreja->id,
+                    'id_modulo' => $value
+                ];
+                $modulo->create($data);
+            }
+
+            $notification = array(
+                'message' => $igreja->nome . ' foi incluído(a) com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            //return view('igrejas.index')->with($notification);
+            return redirect()->route('igrejas')->with($notification);
+
+        }else{
+
+            $notification = array(
+                'message' => 'O nome informado já está na base de dados!', 
+                'alert-type' => 'error'
+            );
+
+            return back()->with($notification);
+
         }
-
-        $notification = array(
-            'message' => $igreja->nome . ' foi incluído(a) com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        //return view('igrejas.index')->with($notification);
-        return redirect()->route('igrejas')->with($notification);
     }
 
     /**
@@ -140,33 +154,50 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        if($request->logo){
-            //convertendo imagem base64
-            $img = $request->logo;
-            \Image::make($request->logo)->save(public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension(),90);
-            $igreja->logo = $igreja->nome.'.'.$request->logo->getClientOriginalExtension();
+        $count = TblIgrejas::where("nome", "=", $request->nome)->count();
+        if($count == 0){
+            if($request->logo){
+                //convertendo imagem base64
+                $img = $request->logo;
+                \Image::make($request->logo)->save(public_path('img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
+                $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
+            }
+
+            $igreja->save();
+
+            TblIgrejasModulos::where('id_igreja', '=',  $request->id)->delete();
+
+            $modulo = new TblIgrejasModulos();
+
+            foreach ($request->modulos as $key => $value) {
+                $data = [
+                    'id_igreja' => $igreja->id,
+                    'id_modulo' => $value
+                ];
+                $modulo->create($data);
+            }
+
+            $configuracao = new TblConfiguracoes();
+            $configuracao->id_igreja = $igreja->id;
+            $configuracao->save();
+
+            $notification = array(
+                'message' => $igreja->nome . ' foi atualizado(a) com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('igrejas')->with($notification);
+
+        }else{
+
+            $notification = array(
+                'message' => 'O nome informado já está na base de dados!', 
+                'alert-type' => 'error'
+            );
+
+            return back()->with($notification);
+
         }
-
-        $igreja->save();
-
-        TblIgrejasModulos::where('id_igreja', '=',  $request->id)->delete();
-
-        $modulo = new TblIgrejasModulos();
-
-        foreach ($request->modulos as $key => $value) {
-            $data = [
-                'id_igreja' => $igreja->id,
-                'id_modulo' => $value
-            ];
-            $modulo->create($data);
-        }
-
-        $notification = array(
-            'message' => $igreja->nome . ' foi atualizado(a) com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('igrejas')->with($notification);
     }
 
     /**

@@ -22,6 +22,10 @@ Route::get('admin', function () {
 
 Auth::routes();
 
+Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
+
+Route::get('igreja/{url}', 'IgrejaController@index')->name('igreja.index');
+
 Route::get('/logout', function () {
     Session::flush();
     return redirect('login');
@@ -44,12 +48,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
         Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
         Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
-        Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editarIgreja');
-        Route::post('igrejas/incluir', 'TbligrejaController@store');
-        Route::post('igrejas/atualizar', 'TbligrejaController@update');
+        Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editar');
+        Route::post('igrejas/incluir', 'TbligrejaController@store')->name('igrejas.incluir');
+        Route::post('igrejas/atualizar', 'TbligrejaController@update')->name('igrejas.atualizar');;
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
+		Route::get('perfis/switchStatus/{id}', 'TblperfilController@switchStatus')->name('perfis.switchStatus');
 
         Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 

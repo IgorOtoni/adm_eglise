@@ -47,7 +47,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="/home" class="logo">
+      <a href="{{route('home')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Eglise</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -77,7 +77,7 @@
                   <a href="#" class="btn btn-default btn-flat">Conta</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/logout" class="btn btn-default btn-flat">Sair</a>
+                  <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sair</a>
                 </div>
               </li>
             </ul>
@@ -97,9 +97,9 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">BARRA DE NAVEGAÇÃO</li>
-      <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li><a href="{{route('igrejas')}}"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
-      <li><a href="{{route('perfis')}}"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
+        <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="{{route('igrejas')}}"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
+        <li><a href="{{route('perfis')}}"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
         <li><a href="/usuarios"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
       </ul>
     </section>

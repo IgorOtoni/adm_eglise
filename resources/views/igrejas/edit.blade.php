@@ -126,7 +126,7 @@ $(function () {
     <!-- Main content -->
     <section class="content">
 
-      <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{url('igrejas/atualizar')}}" enctype="multipart/form-data">
+      <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.atualizar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="id" value="{{$igreja->id}}">
         <div class="box">
@@ -246,7 +246,7 @@ $(function () {
 
           </div>
           <div class="box-footer">
-            <a href="/igrejas" class="btn btn-warning pull-left">Cancelar</a>
+            <a href="{{route('igrejas')}}" class="btn btn-warning pull-left">Cancelar</a>
             <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
           </div>
         </div>
