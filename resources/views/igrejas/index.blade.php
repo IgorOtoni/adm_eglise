@@ -4,10 +4,6 @@
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
-<!-- Toogle Button -->
-<link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
-<!-- Toastr -->
-<link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
 
 <!-- Select2 -->
 <script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
@@ -21,8 +17,6 @@
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<!-- Toastr -->
-<script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
 
 <script>
 function switch_status(comp){
@@ -154,8 +148,8 @@ $(function () {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        Igrejas
+        <small>Lista de todas as igrejas</small>
       </h1>
     </section>
 

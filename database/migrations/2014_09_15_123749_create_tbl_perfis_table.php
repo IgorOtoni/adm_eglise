@@ -17,6 +17,7 @@ class CreateTblPerfisTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->text('descricao')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

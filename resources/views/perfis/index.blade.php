@@ -4,7 +4,22 @@
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
+function switch_status(comp){
+  var id = $(comp).prop('id');
+  var nome = $(comp).prop('name');
+  $.ajax({
+    url: '/perfis/switchStatus/'+id,
+    type: 'GET'
+  });
+  if($(comp).prop('checked') == true){
+    toastr.success(nome + " teve seu status ativado!");
+  }else{
+    toastr.error(nome + " teve seu status desativado!");
+  }
+}
+
 $(function () {
+
     $('#tbl_perfis').DataTable({
     'paging'      : true,
     'lengthChange': true,
@@ -56,8 +71,8 @@ $(function () {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Perfis cadastrados
-        <!-- <small>it all starts here</small> -->
+        Perfis
+        <small>Lista de todos os perfis</small>
       </h1>
     </section>
 

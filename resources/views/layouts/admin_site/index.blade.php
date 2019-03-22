@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Content-Language" content="pt-br">
-  <title>AdminLTE 2 | Blank Page</title>
+  <title>SGE Eglise</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -21,6 +21,10 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('template_adm/dist/css/skins/_all-skins.min.css')}}">
 
+  <!-- Toastr -->
+  <link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
+  <!-- Toogle Button -->
+  <link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
 
   <!-- jQuery 3 -->
 <script src="{{asset('template_adm/bower_components/jquery/dist/jquery.min.js')}}"></script>
@@ -30,6 +34,9 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  
+  <!-- Toastr -->
+  <script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
 
   <!-- Google Font URL: https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic -->
   <link rel="stylesheet" href="{{asset('css/fontes/font.css')}}">

@@ -23,9 +23,16 @@ class TblPerfilController extends Controller
         $perfis = TblPerfil::orderBy('nome', 'ASC');
         return DataTables::of($perfis)->addColumn('action',function($perfis){
             return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+            //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
+            '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';;
         })
         ->make(true);
+    }
+
+    public function switchStatus(Request $request){
+        $perfil = TblPerfil::find($request->id);
+        ($perfil->status == 1) ? $perfil->status = 0 : $perfil->status = 1 ;
+        $perfil->save();
     }
 
     /**
