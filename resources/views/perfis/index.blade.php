@@ -53,7 +53,7 @@ $(function () {
 
     'processing': true,
     //'serverSide': false,
-    'ajax': '/perfis/tbl_perfis',
+    'ajax': '/admin/perfis/tbl_perfis',
     'columns': [
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },

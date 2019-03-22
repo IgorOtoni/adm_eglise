@@ -23,7 +23,7 @@ function switch_status(comp){
   var id = $(comp).prop('id');
   var nome = $(comp).prop('name');
   $.ajax({
-    url: '/igrejas/switchStatus/'+id,
+    url: '/admin/igrejas/switchStatus/'+id,
     type: 'GET'
   });
   if($(comp).prop('checked') == true){
@@ -119,7 +119,7 @@ $(function () {
 
     'processing': true,
     //'serverSide': false,
-    'ajax': '/igrejas/tbl_igrejas',
+    'ajax': '/admin/igrejas/tbl_igrejas',
     'columns': [
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },
