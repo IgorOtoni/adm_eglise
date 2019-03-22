@@ -36,7 +36,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../index2.html" class="navbar-brand"><b>Admin</b>LTE</a>
+          <a href="../../index2.html" class="navbar-brand"><b>Plataforma Eglise</b></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -59,7 +59,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Plataforma Eglise
+          Congregações
           <!--<small>Example 2.0</small>-->
         </h1>
       </section>
@@ -67,26 +67,42 @@
       <!-- Main content -->
       <section class="content">
         @foreach ($igrejas as $igreja)
-          <!-- Attachment -->
-          <div class="attachment-block clearfix">
-          @if ($igreja->logo != null)
-            <img class="attachment-img" src="/public/img/igreja/{{$igreja->logo}}" alt="Attachment Image">
-          @else
-            <img class="attachment-img" src="{{asset('/img/igreja/no-logo.jpg')}}" alt="Attachment Image">
-          @endif
-          
-          <div class="attachment-pushed">
-              <h4 class="attachment-heading"><a href="http://www.lipsum.com/">{{$igreja->nome}}</a></h4>
+          <div class="col-xs-6">
+            <!-- Attachment -->
+            <div class="attachment-block clearfix">
+            @if ($igreja->logo != null)
+              <img class="attachment-img" src="/storage/igrejas/{{$igreja->logo}}" alt="Attachment Image">
+            @else
+              <img class="attachment-img" src="/storage/no-logo.jpg" alt="Attachment Image">
+            @endif
+            
+            <div class="attachment-pushed">
+                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">{{$igreja->nome}}</a></h4>
 
-              <div class="attachment-text">
-              Estado: {{$igreja->estado}}, Cidade: {{$igreja->cidade}}, Bairro: {{$igreja->bairro}}, Rua: {{$igreja->rua}}, Número: {{$igreja->num}}, Complemento: {{$igreja->complemento}}
-              </div>
-              <!-- /.attachment-text -->
+                <div class="attachment-text">
+                Estado: {{$igreja->estado}}<br/>
+                Cidade: {{$igreja->cidade}}<br/>
+                Bairro: {{$igreja->bairro}}<br/>
+                Rua: {{$igreja->rua}}<br/>
+                Número: {{$igreja->num}}<br/>
+                @if ($igreja->complemento != null)
+                  Complemento: {{$igreja->complemento}}
+                @else
+                  Complemento: <span class="label bg-red">Não informado</span>
+                @endif
+                <br/>
+                @if ($igreja->telefone != null)
+                  Telefone: {{$igreja->telefone}}
+                @else
+                  Telefone: <span class="label bg-red">Não informado</span>
+                @endif
+                </div>
+                <!-- /.attachment-text -->
+            </div>
+            <!-- /.attachment-pushed -->
+            </div>
+            <!-- /.attachment-block -->
           </div>
-          <!-- /.attachment-pushed -->
-          </div>
-          <!-- /.attachment-block -->
-          
         @endforeach
       </section>
       <!-- /.content -->

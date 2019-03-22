@@ -43,18 +43,20 @@ $(function () {
 
   $('input[type=file]').fileinput({
       language: "pt-BR",
-      minImageCount: 1,
-      maxImageCount: 1,
+      //minImageCount: 0,
+      //maxImageCount: 1,
       allowedFileExtensions: ["jpg", "png", "gif"],
       initialPreview: [
-        "{{'http://localhost/adm_eglise/public/img/igrejas/'.$igreja->logo}}",
+        "{{'http://localhost/adm_eglise/public/storage/igrejas/'.$igreja->logo}}",
       ],
+      //deleteUrl: "{{'http://localhost/adm_eglise/public/storage'}}",
       initialPreviewAsData: true,
-      initialPreviewFileType: "image",
+      //initialPreviewFileType: "image",
       initialPreviewConfig: [
-        {caption: "{{$igreja->logo}}", size: 215000, width: "120px", downloadurl: "{{'http://localhost/adm_eglise/public/img/igrejas/'.$igreja->logo}}", key: 1},
+        {caption: "{{$igreja->logo}}", size: 215000, width: "120px", url: "/public/storage/lixo/", key: 1},
       ],
-      purifyHtml: true,
+      //overwriteInitial: false,
+      //purifyHtml: true,
   });
 
   function limpa_formulário_cep() {
@@ -208,7 +210,7 @@ $(function () {
               <div class="col-md-12">
                   <div class="form-group">
                     <label >Logo</label>
-                    <input name="logo" type="file" id="input_img">
+                    <input name="logo" type="file" id="input_img" multiple>
                   </div>
               </div>
             </div>
