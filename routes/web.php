@@ -51,8 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
 
-        Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');
-        
+        Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 
         Route::get('/home', 'HomeController@index')->name('home');
     });
