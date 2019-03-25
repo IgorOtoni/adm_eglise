@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
 <!-- Toastr -->
 <link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
+<!-- InputFilePTBR Confirm Dialog -->
+<link href="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- Select2 -->
 <script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
@@ -20,6 +22,8 @@
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
 <!-- Toastr -->
 <script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
+<!-- InputFilePTBR Confirm Dialog -->
+<script src="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.js')}}"></script>
 
 <script>
 function switch_status(comp){
@@ -46,18 +50,43 @@ $(function () {
       //minImageCount: 0,
       //maxImageCount: 1,
       allowedFileExtensions: ["jpg", "png", "gif"],
+      <?php if($igreja->logo != null){ ?>
       initialPreview: [
         "{{'http://localhost/adm_eglise/public/storage/igrejas/'.$igreja->logo}}",
       ],
-      //deleteUrl: "{{'http://localhost/adm_eglise/public/storage'}}",
+      <?php } ?>
+      deleteUrl: "{{'http://localhost/adm_eglise/public/storage'}}",
+      uploadExtraData:{'_token':$("#csrf_token").val()},
       initialPreviewAsData: true,
       //initialPreviewFileType: "image",
+      <?php if($igreja->logo != null){ ?>
       initialPreviewConfig: [
-        {caption: "{{$igreja->logo}}", size: 215000, width: "120px", url: "/public/storage/lixo/", key: 1},
+        {caption: "{{$igreja->logo}}", extra: {id: {{$igreja->id}}, logo: "{{$igreja->logo}}", _token: $("#csrf_token").val()}, size: 215000, width: "120px", url: "/admin/igrejas/excluirLogo", key: 1},
       ],
+      <?php } ?>
       //overwriteInitial: false,
       //purifyHtml: true,
-  });
+  }).on('filebeforedelete', function() {
+        return new Promise(function(resolve, reject) {
+            $.confirm({
+                title: 'Confirmação!',
+                content: 'A logo será excluída e <b>não poderá ser recuperada</b>, deseja realmente excluír a logo?',
+                type: 'red',
+                buttons: {   
+                    ok: {
+                        btnClass: 'btn-primary text-white',
+                        keys: ['enter'],
+                        action: function(){
+                            resolve();
+                        }
+                    },
+                    cancel: function(){
+                        //$.alert('File deletion was aborted! ' + krajeeGetCount('file-6'));
+                    }
+                }
+            });
+        });
+    });
 
   function limpa_formulário_cep() {
       // Limpa valores do formulário de cep.
@@ -128,7 +157,7 @@ $(function () {
     <!-- Main content -->
     <section class="content">
 
-      <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.atualizar')}}" enctype="multipart/form-data">
+      <form id="editarIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.atualizar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="id" value="{{$igreja->id}}">
         <div class="box">
@@ -210,6 +239,7 @@ $(function () {
               <div class="col-md-12">
                   <div class="form-group">
                     <label >Logo</label>
+                    <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}">
                     <input name="logo" type="file" id="input_img" multiple>
                   </div>
               </div>

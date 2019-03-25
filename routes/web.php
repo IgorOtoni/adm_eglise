@@ -50,7 +50,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
         Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editar');
         Route::post('igrejas/incluir', 'TbligrejaController@store')->name('igrejas.incluir');
-        Route::post('igrejas/atualizar', 'TbligrejaController@update')->name('igrejas.atualizar');;
+        Route::post('igrejas/atualizar', 'TbligrejaController@update')->name('igrejas.atualizar');
+        Route::post('igrejas/excluirLogo', 'TbligrejaController@excluirLogo')->name('igrejas.excluirLogo');
+        Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');

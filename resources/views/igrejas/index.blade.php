@@ -127,6 +127,8 @@ $(function () {
             ]
     });
 
+    $('#configuracoesIgrejaFormulario').validator('update');
+
     $('#incluirIgrejaFormulario').validator({
       update: true,
       ignore: [],       
@@ -139,7 +141,32 @@ $(function () {
     });
 
     
-})
+});
+
+$('#modal-configuracoes').on('hide.bs.modal', function (event) {
+  var button = $(event.relatedTarget) ;
+
+  var modal = $(this);
+
+  modal.find('.modal-body #id').val(null);
+  modal.find('.modal-body #url').val(null);
+  modal.find('.modal-body #template').val(null);
+});
+
+$('#modal-configuracoes').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) ;
+  var id = button.data('id');
+  var url = button.data('url');
+  var template = button.data('template');
+
+  var modal = $(this);
+
+  if(id != null) modal.find('.modal-body #id').val(id);
+  if(url != null) modal.find('.modal-body #url').val(url);
+  if(template != null) modal.find('.modal-body #template').val(template);
+
+  $('#configuracoesIgrejaFormulario').validator('validate');
+});
 </script>
 @endpush
 @section('content')
@@ -191,7 +218,53 @@ $(function () {
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- modal -->
+  <!-- modals -->
+  <div class="modal fade" id="modal-configuracoes">
+    <form id="configuracoesIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.salvarConfiguracoes')}}" enctype="multipart/form-data">
+    @csrf
+      <input type="hidden" name="id" id="id">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Configurações</h4>
+          </div>
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group has-feedback">
+                    <label >URL</label>
+                    <input id="url" name="url" type="text" class="form-control" placeholder="URL" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group has-feedback">
+                    <label >Template</label>
+                    <select id="template" name="template" class="form-control" required>
+                        <?php $templates = App\TblTemplates::orderBy('nome','ASC')->get(); ?>
+                        @foreach ($templates as $template)
+                          <option value="{{$template->id}}">{{$template->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <div class="modal fade" id="modal-incluir">
     <form id="incluirIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.incluir')}}" enctype="multipart/form-data">
     @csrf

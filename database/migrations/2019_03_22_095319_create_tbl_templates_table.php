@@ -17,7 +17,7 @@ class CreateTblTemplatesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->string('descricao')->nullable();
-            $table->string('pasta');
+            //$table->string('pasta');
             $table->timestamps();
         });
     }

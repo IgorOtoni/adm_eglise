@@ -13,7 +13,9 @@ class PlataformaController extends Controller
 
     public function eglise()
     {
-        $igrejas = TblIgreja::all();
-        return view('eglise.index', compact('igrejas'));
+        //$igrejas = TblIgreja::all();
+        $igrejas_e_configuracoes = \DB::table('tbl_igrejas')->leftJoin('tbl_configuracoes','tbl_igrejas.id','=','tbl_configuracoes.id_igreja')->get();
+        //dd($igrejas_e_configuracoes);
+        return view('eglise.index', compact('igrejas_e_configuracoes'));
     }
 }

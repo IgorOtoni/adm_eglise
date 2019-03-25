@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use Image;
 use DataTables;
 use App\TblIgreja;
+use App\TblConfiguracoes;
 use App\TblIgrejasModulos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 class TblIgrejaController extends Controller
 {
@@ -21,9 +23,15 @@ class TblIgrejaController extends Controller
     }
 
     public function tbl_igrejas(){
-        $igrejas = TblIgreja::orderBy('nome', 'ASC');
+        //$igrejas = TblIgreja::orderBy('nome', 'ASC');
+        $igrejas = \DB::table('tbl_igrejas')
+            ->select('tbl_igrejas.*', 'tbl_configuracoes.id as id_configuracao', 'tbl_configuracoes.url','tbl_configuracoes.id_template')
+            ->leftJoin('tbl_configuracoes', 'tbl_igrejas.id', '=', 'tbl_configuracoes.id_igreja')
+            ->orderBy('nome', 'ASC')
+            ->get();
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
             return '<a href="igrejas/editarIgreja/'.$igrejas->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            '<a data-id="'.$igrejas->id_configuracao.'" data-url="'.$igrejas->url.'" data-template="'.$igrejas->id_template.'" class="btn btn-xs btn-warning bt-configuracoes" data-toggle="modal" data-target="#modal-configuracoes"><i class="fa fa-cog"></i></a>'.'&nbsp'.
             //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
             '<label title="Status da Igreja" class="switch"><input onClick="switch_status(this)" name="'.$igrejas->nome.'" class="status" id="'.$igrejas->id.'" type="checkbox" '.(($igrejas->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
@@ -74,7 +82,7 @@ class TblIgrejaController extends Controller
             //dd($request->logo->getClientOriginalExtension());
             //$igreja->logo = Image::make($img)->encode('data-url');
 
-            \Image::make($request->logo)->save(public_path('storage/img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
+            \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
 
             //$igreja->logo =  public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension();
             $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
@@ -154,12 +162,12 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        $count = TblIgrejas::where("nome", "=", $request->nome)->count();
+        $count = TblIgreja::where("nome", "=", $request->nome)->where("id", "<>", $request->id)->count();
         if($count == 0){
             if($request->logo){
                 //convertendo imagem base64
                 $img = $request->logo;
-                \Image::make($request->logo)->save(public_path('storage/img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
+                \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
                 $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
             }
 
@@ -176,10 +184,6 @@ class TblIgrejaController extends Controller
                 ];
                 $modulo->create($data);
             }
-
-            $configuracao = new TblConfiguracoes();
-            $configuracao->id_igreja = $igreja->id;
-            $configuracao->save();
 
             $notification = array(
                 'message' => $igreja->nome . ' foi atualizado(a) com sucesso!', 
@@ -200,6 +204,15 @@ class TblIgrejaController extends Controller
         }
     }
 
+    public function excluirLogo(Request $request){
+        $logo = $request['logo'];
+        $igreja = TblIgreja::find($request->id);
+        $igreja->logo = null;
+        $igreja->save();
+        File::delete(public_path().'/storage/igrejas/'.$logo);
+        return \Response::json(['message' => 'File successfully delete'], 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -208,6 +221,6 @@ class TblIgrejaController extends Controller
      */
     public function destroy(Tbl_Igreja $tbl_Igreja)
     {
-        //
+        
     }
 }

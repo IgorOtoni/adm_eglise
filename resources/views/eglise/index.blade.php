@@ -66,7 +66,7 @@
 
       <!-- Main content -->
       <section class="content">
-        @foreach ($igrejas as $igreja)
+        @foreach ($igrejas_e_configuracoes as $igreja)
           <div class="col-xs-6">
             <!-- Attachment -->
             <div class="attachment-block clearfix">
@@ -77,7 +77,9 @@
             @endif
             
             <div class="attachment-pushed">
-                <h4 class="attachment-heading"><a href="http://www.lipsum.com/">{{$igreja->nome}}</a></h4>
+                <h4 class="attachment-heading">
+                  <a href="igreja/{{($igreja->url != null) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
+                </h4>
 
                 <div class="attachment-text">
                 Estado: {{$igreja->estado}}<br/>
