@@ -74,7 +74,7 @@ class TblIgrejaController extends Controller
             //dd($request->logo->getClientOriginalExtension());
             //$igreja->logo = Image::make($img)->encode('data-url');
 
-            \Image::make($request->logo)->save(public_path('img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
+            \Image::make($request->logo)->save(public_path('storage/img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
 
             //$igreja->logo =  public_path('img/igrejas/').$igreja->nome.'.'.$request->logo->getClientOriginalExtension();
             $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
@@ -159,7 +159,7 @@ class TblIgrejaController extends Controller
             if($request->logo){
                 //convertendo imagem base64
                 $img = $request->logo;
-                \Image::make($request->logo)->save(public_path('img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
+                \Image::make($request->logo)->save(public_path('storage/img/igrejas/').'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension(),90);
                 $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.$request->logo->getClientOriginalExtension();
             }
 
