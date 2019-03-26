@@ -52,6 +52,7 @@ $(function () {
       },*/
 
     'processing': true,
+    'autoWidth': false,
     //'serverSide': false,
     'ajax': '/admin/perfis/tbl_perfis',
     'columns': [

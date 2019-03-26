@@ -36,9 +36,7 @@
                 </div>
                 <div class="col-md-8 col-sm-6 col-xs-4">
                 <ul class="top-navigation hidden-sm hidden-xs">
-                    <li><a href="plan-visit.html">Plan your visit</a></li>
-                    <li><a href="events-calendar.html">Calendar</a></li>
-                    <li><a href="donate.html">Donate Now</a></li>
+                    <li><a href="plan-visit.html"><h3>{{$igreja->nome}}</h3></a></li>
                 </ul>
                 <a href="#" class="visible-sm visible-xs menu-toggle"><i class="fa fa-bars"></i></a> </div>
             </div>
@@ -119,10 +117,9 @@
         </header>
         @yield('content')
         <!-- Start Footer -->
-        <footer class="site-footer">
+        <!-- <footer class="site-footer">
             <div class="container">
-            <div class="row"> 
-                <!-- Start Footer Widgets -->
+            <div class="row">
                 <div class="col-md-4 col-sm-4 widget footer-widget">
                 <h4 class="footer-widget-title">About our Church</h4>
                 <img src="images/logo.png" alt="Logo">
@@ -146,7 +143,7 @@
                 </div>
             </div>
             </div>
-        </footer>
+        </footer>-->
         <footer class="site-footer-bottom">
             <div class="container">
             <div class="row">

@@ -22,7 +22,8 @@ Route::get('admin', function () {
 
 Auth::routes();
 
-Route::get('/', 'PlataformaController@eglise')->name('eglise');
+Route::get('/', 'PlataformaController@eglise');
+//Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
 Route::get('igreja/{url}', 'IgrejaController@index')->name('igreja.index');
 

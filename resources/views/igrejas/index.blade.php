@@ -118,6 +118,7 @@ $(function () {
         },*/
 
     'processing': true,
+    'autoWidth': false,
     //'serverSide': false,
     'ajax': '{{route('igrejas.tbl_igrejas')}}',
     'columns': [
