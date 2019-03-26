@@ -73,7 +73,7 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        $count = TblIgreja::where("nome", "=", $request->nome)->count();
+        $count = TblIgreja::where("nome", "=", $igreja->nome)->count();
         if($count == 0){
 
             //convertendo imagem base64
@@ -152,7 +152,7 @@ class TblIgrejaController extends Controller
     public function update(Request $request)
     {
         $igreja = TblIgreja::find($request->id);
-        $igreja->nome = $request->nome;
+        $igreja->nome = fistCharFromWord_toUpper($request->nome);  
         $igreja->cep = $request->cep;
         $igreja->num = $request->num;
         $igreja->rua = $request->rua;
@@ -162,7 +162,7 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        $count = TblIgreja::where("nome", "=", $request->nome)->where("id", "<>", $request->id)->count();
+        $count = TblIgreja::where("nome", "=",  $igreja->nome)->where("id", "<>", $request->id)->count();
         if($count == 0){
             if($request->logo){
                 //convertendo imagem base64
