@@ -26,6 +26,8 @@ Route::get('/', 'PlataformaController@eglise');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
 Route::get('igreja/{url}', 'IgrejaController@index')->name('igreja.index');
+Route::get('igreja/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
+Route::get('igreja/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
 
 Route::get('/logout', function () {
     Session::flush();

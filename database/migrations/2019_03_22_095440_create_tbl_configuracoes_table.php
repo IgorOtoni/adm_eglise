@@ -20,6 +20,7 @@ class CreateTblConfiguracoesTable extends Migration
             $table->bigInteger('id_template')->default(1)->unsigned();
             $table->foreign('id_template')->references('id')->on('tbl_templates');
             $table->string('url')->nullable();
+            $table->text('texto_apresentativo')->nullable();
             $table->timestamps();
         });
     }

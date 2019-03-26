@@ -56,7 +56,7 @@
                 <div class="col-md-12">
                 <nav class="navigation">
                     <ul class="sf-menu">
-                    <li><a href="#" style="background-color: #007F7B; border-radius: 2px; color: honeydew;">Login</a></li>
+                    <li><a href="#" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li>
                     <?php
                     $ids_modulos_permitidos = array();
                     $x = 0;
@@ -67,10 +67,9 @@
                         ?>
                         <li><a href="#">Sobre nós</a>
                             <ul class="dropdown">
-                            <li><a href="#">Visite nos</a></li>
-                            <li><a href="#">Visões e valores</a></li>
+                            <li><a href="/igreja/{{$igreja->url}}/apresentacao">Visões e valores</a></li>
                             <li><a href="#">Ministros</a></li>
-                            <li><a href="#">Contato</a></li>
+                            <li><a href="/igreja/{{$igreja->url}}/contato">Contato</a></li>
                             </ul>
                         </li>
                         <?php
