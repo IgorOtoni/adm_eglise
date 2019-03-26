@@ -16,7 +16,11 @@ class IgrejaController extends Controller
             ->orderBy('nome', 'ASC')
             ->get();
         $igreja = $igreja[0];
-        return view('layouts.template'.$igreja->id_template.'.index', compact('igreja'));
+        $modulos = \DB::table('tbl_igrejas_modulos')
+            ->select('tbl_igrejas_modulos.id_modulo')
+            ->where('id_igreja','=',$igreja->id)
+            ->get();
+        return view('layouts.template'.$igreja->id_template.'.index', compact('igreja','modulos'));
     }
     public function eventos($url){
         return view('igreja.eventos');

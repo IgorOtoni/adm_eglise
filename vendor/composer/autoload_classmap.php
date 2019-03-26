@@ -3609,6 +3609,7 @@ return array(
     'Symfony\\Polyfill\\Intl\\Idn\\Idn' => $vendorDir . '/symfony/polyfill-intl-idn/Idn.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Symfony\\Polyfill\\Php72\\Php72' => $vendorDir . '/symfony/polyfill-php72/Php72.php',
+    'Tbl_Igrejas_Modulos' => $baseDir . '/database/seeds/Tbl_Igrejas_Modulos.php',
     'Tbl_Igrejas_Seeder' => $baseDir . '/database/seeds/Tbl_Igrejas_Seeder.php',
     'Tbl_Modulos_Seeder' => $baseDir . '/database/seeds/Tbl_Modulos_Seeder.php',
     'Tbl_Perfis_Seeder' => $baseDir . '/database/seeds/Tbl_Perfis_Seeder.php',

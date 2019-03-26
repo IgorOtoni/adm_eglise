@@ -3993,6 +3993,7 @@ class ComposerStaticInit564996520d96a55fda414f3d2ba873aa
         'Symfony\\Polyfill\\Intl\\Idn\\Idn' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/Idn.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php72\\Php72' => __DIR__ . '/..' . '/symfony/polyfill-php72/Php72.php',
+        'Tbl_Igrejas_Modulos' => __DIR__ . '/../..' . '/database/seeds/Tbl_Igrejas_Modulos.php',
         'Tbl_Igrejas_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Igrejas_Seeder.php',
         'Tbl_Modulos_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Modulos_Seeder.php',
         'Tbl_Perfis_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Perfis_Seeder.php',

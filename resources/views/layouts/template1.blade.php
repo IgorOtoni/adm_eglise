@@ -56,67 +56,61 @@
                 <div class="col-md-12">
                 <nav class="navigation">
                     <ul class="sf-menu">
-                    <li><a href="about.html">About Us</a>
-                        <ul class="dropdown">
-                        <li><a href="about.html">Overview</a></li>
-                        <li><a href="contact.html">Where we meet</a></li>
-                        <li><a href="our-staff.html">Our Staff</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="events.html">Events</a>
-                        <ul class="dropdown">
-                        <li><a href="events.html">Events Listing</a></li>
-                        <li><a href="events-timeline.html">Events Timeline</a></li>
-                        <li><a href="google-calendar.html">Google Calender</a></li>
-                        <li><a href="events-calendar.html">Events Calender</a></li>
-                        <li><a href="events-grid.html">Events Masonry Grid</a></li>
-                        <li><a href="single-event.html">Single Event</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="sermons.html">Sermons</a>
-                        <ul class="dropdown">
-                        <li><a href="sermon-albums.html">Sermon Albums</a></li>
-                        <li><a href="sermons.html">Sermons Archive</a></li>
-                        <li><a href="single-sermon.html">Single Sermon</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="gallery-2cols-pagination.html">Gallery</a>
-                        <ul class="dropdown">
-                        <li><a href="gallery-2cols-pagination.html">With Pagination</a>
+                    <li><a href="#" style="background-color: #007F7B; border-radius: 2px; color: honeydew;">Login</a></li>
+                    <?php
+                    $ids_modulos_permitidos = array();
+                    $x = 0;
+                    foreach($modulos as $modulo){
+                        $ids_modulos_permitidos[$x++] = $modulo->id_modulo;
+                    }
+                    if(in_array(8, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="#">Sobre nós</a>
                             <ul class="dropdown">
-                            <li><a href="gallery-2cols-pagination.html">2 Columns</a></li>
-                            <li><a href="gallery-3cols-pagination.html">3 Columns</a></li>
-                            <li><a href="gallery-4cols-pagination.html">4 Columns</a></li>
+                            <li><a href="#">Visite nos</a></li>
+                            <li><a href="#">Visões e valores</a></li>
+                            <li><a href="#">Ministros</a></li>
+                            <li><a href="#">Contato</a></li>
                             </ul>
                         </li>
-                        <li><a href="gallery-2cols-filter.html">With Filter</a>
+                        <?php
+                    }
+                    if(in_array(5, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="#">Eventos</a>
                             <ul class="dropdown">
-                            <li><a href="gallery-2cols-filter.html">2 Columns</a></li>
-                            <li><a href="gallery-3cols-filter.html">3 Columns</a></li>
-                            <li><a href="gallery-4cols-filter.html">4 Columns</a></li>
+                            <li><a href="#">Events fixos</a></li>
+                            <li><a href="#">Linha do tempo</a></li>
                             </ul>
                         </li>
-                        <li><a href="gallery-masonry.html">Masonry Grid</a></li>
+                        <?php
+                    }
+                    if(in_array(5, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="sermons.html">Sermões</a></li><?php
+                    }
+                    if(in_array(10, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="gallery-2cols-pagination.html">Galeria</a></li>
+                        <?php
+                    }
+                    if(in_array(9, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="blog-masonry.html">Notícias</a></li>
+                        <?php
+                    }
+                    if(in_array(11, $ids_modulos_permitidos)){
+                        ?>
+                        <li><a href="causes.html">Doações</a>
+                            <ul class="dropdown">
+                            <li><a href="causes.html">Doações para congregação</a></li>
+                            <li><a href="causes-grid.html">Projetos e causas</a></li>
+                            </ul>
+                            </li>
                         </ul>
-                    </li>
-                    <li><a href="blog-masonry.html">Blog</a>
-                        <ul class="dropdown">
-                        <li><a href="blog-masonry.html">Masonry Blog</a></li>
-                        <li><a href="blog-full-width.html">Full Width Blog</a></li>
-                        <li><a href="blog-timeline.html">Timeline Blog</a></li>
-                        <li><a href="blog-medium-thumbnails.html">Medium Thumbnails</a></li>
-                        <li><a href="blog-post.html">Single Blog Post</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="causes.html">Causes</a>
-                        <ul class="dropdown">
-                        <li><a href="causes.html">Causes List</a></li>
-                        <li><a href="causes-grid.html">Causes Grid</a></li>
-                        <li><a href="single-cause.html">Single Cause</a></li>
-                        </ul>
-                        </li>
-                    </ul>
+                        <?php
+                    }
+                    ?>
                 </nav>
                 </div>
             </div>
@@ -124,39 +118,11 @@
         </div>
         </header>
         @yield('content')
-        <!-- Start Footer -->
-        <!-- <footer class="site-footer">
-            <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 widget footer-widget">
-                <h4 class="footer-widget-title">About our Church</h4>
-                <img src="images/logo.png" alt="Logo">
-                <div class="spacer-20"></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis consectetur adipiscing elit. Nulla convallis egestas rhoncus</p>
-                </div>
-                <div class="col-md-4 col-sm-4 widget footer-widget">
-                <h4 class="footer-widget-title">Blogroll</h4>
-                <ul>
-                    <li><a href="index.html">Church Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="events.html">All Events</a></li>
-                    <li><a href="sermons.html">Sermons Archive</a></li>
-                    <li><a href="blog-masonry.html">Our Blog</a></li>
-                </ul>
-                </div>
-                <div class="col-md-4 col-sm-4 widget footer-widget">
-                <h4 class="footer-widget-title">Our Church on twitter</h4>
-                <ul class="twitter-widget">
-                </ul>
-                </div>
-            </div>
-            </div>
-        </footer>-->
         <footer class="site-footer-bottom">
             <div class="container">
             <div class="row">
                 <div class="copyrights-col-left col-md-6 col-sm-6">
-                <p>&copy; 2014 NativeChurch. All Rights Reserved</p>
+                <p>{{$igreja->nome}}</p>
                 </div>
                 <div class="copyrights-col-right col-md-6 col-sm-6">
                 <div class="social-icons"> <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> <a href="http://www.pinterest.com/" target="_blank"><i class="fa fa-pinterest"></i></a> <a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a> <a href="http://www.pinterest.com/" target="_blank"><i class="fa fa-youtube"></i></a> <a href="#"><i class="fa fa-rss"></i></a> </div>
