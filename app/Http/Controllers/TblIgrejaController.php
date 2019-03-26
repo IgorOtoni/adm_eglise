@@ -63,7 +63,7 @@ class TblIgrejaController extends Controller
     public function store(Request $request)
     {
         $igreja = new TblIgreja();
-        $igreja->nome = $request->nome;
+        $igreja->nome = fistCharFromWord_toUpper($request->nome);        
         $igreja->cep = $request->cep;
         $igreja->num = $request->num;
         $igreja->rua = $request->rua;
@@ -73,7 +73,7 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
 
-        $count = TblIgrejas::where("nome", "=", $request->nome)->count();
+        $count = TblIgreja::where("nome", "=", $request->nome)->count();
         if($count == 0){
 
             //convertendo imagem base64
