@@ -22,7 +22,7 @@ Route::get('admin', function () {
 
 Auth::routes();
 
-Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
+Route::get('/', 'PlataformaController@eglise')->name('eglise');
 
 Route::get('igreja/{url}', 'IgrejaController@index')->name('igreja.index');
 
@@ -32,14 +32,12 @@ Route::get('/logout', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
+    /*Route::get('/', function () {
         if (Auth::user()->id_perfil == 1)
-            return redirect('home');
-        /*elseif (Auth::user()->id_perfil == 2)
-            return redirect('user');*/
+            return redirect('admin/home');
         else
-            return redirect('error');
-    });
+            return redirect('eglise');
+    });*/
     Route::get('error', function () {
         return "Sorry, you are unauthorized to access this page.";
     });
