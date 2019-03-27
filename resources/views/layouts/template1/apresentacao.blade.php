@@ -2,13 +2,13 @@
 @section('content')
 <!-- End Site Header --> 
 <!-- Start Nav Backed Header -->
-<div class="nav-backed-header parallax" style="background-image:url(http://placehold.it/1280x635&amp;text=IMAGE+PLACEHOLDER);">
+<div class="nav-backed-header parallax">
 <div class="container">
     <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb">
-        <li><a href="index.html">Home</a></li>
-        <li class="active">About Us</li>
+        <li><a href="/{{$igreja->url}}/">Home</a></li>
+        <li class="active">Sobre nós</li>
         </ol>
     </div>
     </div>
@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row">
     <div class="col-md-12">
-        <h1>About Us</h1>
+        <h1>Sobre nós</h1>
     </div>
     </div>
 </div>
@@ -32,9 +32,9 @@
     <div class="container">
     <div class="row">
         <div class="col-md-12">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
+        <p>{{$igreja->texto_apresentativo}}</p>
         <hr>
-        <h3>Our Staff</h3>
+        <h3>Ministros</h3>
         </div>
         <div class="col-md-4 col-sm-4">
         <div class="grid-item staff-item">

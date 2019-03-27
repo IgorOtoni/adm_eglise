@@ -1,11 +1,65 @@
 @extends('layouts.template1')
 @section('content')
 <!-- Start Hero Slider -->
-<div class="hero-slider flexslider clearfix" data-autoplay="yes" data-pagination="yes" data-arrows="yes" data-style="fade" data-pause="yes">
-<ul class="slides">
-    <li class=" parallax" style="background-image:url(http://placehold.it/1280x635&amp;text=IMAGE+PLACEHOLDER);"></li>
-    <li class="parallax" style="background-image:url(http://placehold.it/1280x635&amp;text=IMAGE+PLACEHOLDER);"></li>
-</ul>
+<div class="slider-rev-cont">
+<div class="tp-banner-container">
+    <div class="tp-banner">
+        <ul style="display:none;">
+            <?php
+            $x = 1;
+            foreach($eventos_fixos as $evento){
+                ?>
+                <!-- SLIDE  -->
+                <li data-transition="fade" data-slotamount="1" data-masterspeed="1000"  data-saveperformance="off" data-title="{{$x++}}">
+                    <!-- MAIN IMAGE -->
+                    <?php if($evento->foto != null){ ?>
+                    <img src="/storage/eventos/{{$evento->foto}}"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    <?php }else{ ?>
+                    <img src="/storage/no-event.jpg"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    <?php } ?>
+                    <!-- LAYERS -->
+        
+                    <!-- LAYER NR. 1 --><!--data-end="3000"-->
+                    <div class="tp-caption large_text randomrotate tp-resizeme" 
+                            data-x="100" 
+                            data-y="200"  
+                        data-speed="300" 
+                        data-start="500" 
+                        data-easing="Power3.easeInOut" 
+                        data-splitin="none" 
+                        data-splitout="none" 
+                        data-elementdelay="0.1" 
+                        data-endelementdelay="0.1" 
+                            
+                data-endspeed="300" 
+            
+                        style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->nome}} 
+                    </div>
+            
+                    <!-- LAYER NR. 2 --><!--data-end="4000"-->
+                    <div class="tp-caption large_text randomrotate tp-resizeme" 
+                            data-x="100" 
+                            data-y="259"  
+                        data-speed="300" 
+                        data-start="800" 
+                        data-easing="Power3.easeInOut" 
+                        data-splitin="none" 
+                        data-splitout="none" 
+                        data-elementdelay="0.1" 
+                        data-endelementdelay="0.1" 
+                        
+                data-endspeed="300" 
+            
+                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->dados_horario}} 
+                    </div>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>	
+        <div class="tp-bannertimer" style="display:none;"></div>	
+    </div>
+</div>
 </div>
 <!-- End Hero Slider -->
 <!-- Start Page Header -->

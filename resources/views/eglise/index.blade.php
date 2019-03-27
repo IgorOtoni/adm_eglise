@@ -78,7 +78,7 @@
             
             <div class="attachment-pushed">
                 <h4 class="attachment-heading">
-                  <a href="igreja/{{($igreja->url != null) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
+                  <a href="/{{($igreja->url != null) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
                 </h4>
 
                 <div class="attachment-text">
