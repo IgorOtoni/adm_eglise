@@ -17,7 +17,7 @@ function fistCharFromWord_toUpper($string)
 }
 function obter_dados_igreja($url){
     $igreja = \DB::table('tbl_igrejas')
-        ->select('tbl_igrejas.*', 'tbl_configuracoes.id as id_configuracao', 'tbl_configuracoes.url','tbl_configuracoes.id_template','tbl_configuracoes.texto_apresentativo')
+        ->select('tbl_igrejas.*', 'tbl_configuracoes.id as id_configuracao', 'tbl_configuracoes.url','tbl_configuracoes.id_template','tbl_configuracoes.texto_apresentativo','tbl_configuracoes.facebook','tbl_configuracoes.youtube','tbl_configuracoes.twitter')
         ->leftJoin('tbl_configuracoes', 'tbl_igrejas.id', '=', 'tbl_configuracoes.id_igreja')
         ->where('url','=',$url)
         ->orderBy('nome', 'ASC')

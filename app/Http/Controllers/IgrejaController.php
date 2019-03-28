@@ -16,11 +16,6 @@ class IgrejaController extends Controller
             ->get();
         return view('layouts.template'.$igreja->id_template.'.index', compact('igreja','modulos','eventos_fixos'));
     }
-    public function eventos($url){
-        $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
-        return view('layouts.template'.$igreja->id_template.'.eventos', compact('igreja','modulos'));
-    }
     public function ministros($url){
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
@@ -57,5 +52,13 @@ class IgrejaController extends Controller
             ->where('id_igreja','=',$igreja->id)
             ->get();
         return view('layouts.template'.$igreja->id_template.'.eventosfixos', compact('igreja','modulos','eventos_fixos'));
+    }
+    public function eventos($url){
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $eventos = \DB::table('tbl_eventos')
+            ->where('id_igreja','=',$igreja->id)
+            ->get();
+        return view('layouts.template'.$igreja->id_template.'.eventos', compact('igreja','modulos','eventos'));
     }
 }

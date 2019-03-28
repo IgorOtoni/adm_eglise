@@ -16,7 +16,7 @@ class CreateTblEventosFixosTable extends Migration
         Schema::create('tbl_eventos_fixos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->string('dados_horario');
+            $table->string('dados_horario_local');
             $table->bigInteger('id_igreja')->unsigned();
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->string('foto')->nullable();

@@ -21,6 +21,9 @@ class CreateTblConfiguracoesTable extends Migration
             $table->foreign('id_template')->references('id')->on('tbl_templates');
             $table->string('url')->nullable();
             $table->text('texto_apresentativo')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('youtube')->nullable();
             $table->timestamps();
         });
     }

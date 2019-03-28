@@ -25,16 +25,18 @@ Auth::routes();
 Route::get('/', 'PlataformaController@eglise');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
+Route::get('/logout', function () {
+    //Session::flush();
+    auth()->logout();
+    return redirect('login');
+});
+
 Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
 Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
+Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');
 Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja.eventosfixos');
 Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');
 Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
-
-Route::get('/logout', function () {
-    Session::flush();
-    return redirect('login');
-});
 
 Route::group(['middleware' => 'auth'], function () {
     /*Route::get('/', function () {

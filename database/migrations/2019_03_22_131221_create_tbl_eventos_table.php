@@ -16,7 +16,9 @@ class CreateTblEventosTable extends Migration
         Schema::create('tbl_eventos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->datetime('dados_horario');
+            $table->datetime('dados_horario_inicio');
+            $table->datetime('dados_horario_fim')->nullable();
+            $table->string('dados_local');
             $table->bigInteger('id_igreja')->unsigned();
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->string('foto')->nullable();

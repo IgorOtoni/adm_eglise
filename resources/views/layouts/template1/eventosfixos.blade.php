@@ -47,7 +47,7 @@
                     <?php if($evento->descricao != null){ ?> <p>{{$evento->descricao}}</p> <?php } ?>
                     </div>
                     <ul class="info-table">
-                    <li><i class="fa fa-calendar"></i><i class="fa fa-map-marker"></i> {{$evento->dados_horario}}</li>
+                    <li><i class="fa fa-calendar"></i><i class="fa fa-map-marker"></i> {{$evento->dados_horario_local}}</li>
                     </ul>
                 </div>
                 </li>

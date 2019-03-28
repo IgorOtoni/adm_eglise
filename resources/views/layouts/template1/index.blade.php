@@ -50,7 +50,7 @@
                         
                 data-endspeed="300" 
             
-                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->dados_horario}} 
+                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->dados_horario_local}} 
                     </div>
                 </li>
                 <?php
