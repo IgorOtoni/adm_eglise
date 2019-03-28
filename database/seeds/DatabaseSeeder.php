@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Eventos_Fixos_Seeder::class);
         $this->call(Tbl_Noticias_Seeder::class);
         $this->call(Tbl_Eventos_Seeder::class);
+        $this->call(Tbl_Sermoes_Seeder::class);
     }
 }

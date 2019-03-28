@@ -4,7 +4,7 @@
     <!-- Basic Page Needs
     ================================================== -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Native Church</title>
+    <title>{{$igreja->nome}}</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
@@ -91,7 +91,7 @@
                     }
                     if(in_array(5, $ids_modulos_permitidos)){
                         ?>
-                        <li><a href="#">Sermões</a></li><?php
+                        <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
                     }
                     if(in_array(10, $ids_modulos_permitidos)){
                         ?>
@@ -244,5 +244,6 @@
             });				
         });	//ready
     </script>
+    @stack('script')
 </body>
 </html>

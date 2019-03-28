@@ -15,6 +15,11 @@ class CreateTblSermoesTable extends Migration
     {
         Schema::create('tbl_sermoes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nome');
+            $table->string('link');
+            $table->bigInteger('id_igreja')->unsigned();
+            $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }

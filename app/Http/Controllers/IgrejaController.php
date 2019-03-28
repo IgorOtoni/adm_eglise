@@ -33,7 +33,11 @@ class IgrejaController extends Controller
     public function sermoes($url){
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
-        return view('layouts.template'.$igreja->id_template.'.sermoes', compact('igreja','modulos'));
+        $sermoes = \DB::table('tbl_sermoes')
+            ->where('id_igreja','=',$igreja->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        return view('layouts.template'.$igreja->id_template.'.sermoes', compact('igreja','modulos','sermoes'));
     }
     public function contato($url){
         $igreja = obter_dados_igreja($url);
@@ -58,6 +62,11 @@ class IgrejaController extends Controller
         $modulos = obter_modulos_igreja($igreja);
         $eventos = \DB::table('tbl_eventos')
             ->where('id_igreja','=',$igreja->id)
+            ->where(function ($query) {
+                $query->where('dados_horario_inicio','>=',date('Y-m-d h:i:s', time()))
+                      ->orWhere('dados_horario_fim','>=',date('Y-m-d h:i:s', time()));
+            })
+            ->orderBy('dados_horario_inicio','DESC')
             ->get();
         return view('layouts.template'.$igreja->id_template.'.eventos', compact('igreja','modulos','eventos'));
     }

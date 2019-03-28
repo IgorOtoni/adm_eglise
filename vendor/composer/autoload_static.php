@@ -4004,6 +4004,7 @@ class ComposerStaticInit564996520d96a55fda414f3d2ba873aa
         'Tbl_Modulos_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Modulos_Seeder.php',
         'Tbl_Noticias_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Noticias_Seeder.php',
         'Tbl_Perfis_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Perfis_Seeder.php',
+        'Tbl_Sermoes_Seeder' => __DIR__ . '/../..' . '/database/seeds/Tbl_Sermoes_Seeder.php',
         'TemplateSeeder' => __DIR__ . '/../..' . '/database/seeds/TemplateSeeder.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',

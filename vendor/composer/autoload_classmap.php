@@ -3620,6 +3620,7 @@ return array(
     'Tbl_Modulos_Seeder' => $baseDir . '/database/seeds/Tbl_Modulos_Seeder.php',
     'Tbl_Noticias_Seeder' => $baseDir . '/database/seeds/Tbl_Noticias_Seeder.php',
     'Tbl_Perfis_Seeder' => $baseDir . '/database/seeds/Tbl_Perfis_Seeder.php',
+    'Tbl_Sermoes_Seeder' => $baseDir . '/database/seeds/Tbl_Sermoes_Seeder.php',
     'TemplateSeeder' => $baseDir . '/database/seeds/TemplateSeeder.php',
     'Tests\\CreatesApplication' => $baseDir . '/tests/CreatesApplication.php',
     'Tests\\Feature\\ExampleTest' => $baseDir . '/tests/Feature/ExampleTest.php',

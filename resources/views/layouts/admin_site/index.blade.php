@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
 
   <!-- jQuery 3 -->
-<script src="{{asset('template_adm/bower_components/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{asset('template_adm/bower_components/jquery/dist/jquery.min.js')}}"></script>
   <!-- HTML5 Shim and Respond.js')}} IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js')}} doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
