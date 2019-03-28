@@ -38,6 +38,7 @@ Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja
 Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');
 Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
 Route::get('/{url}/sermoes', 'IgrejaController@sermoes')->name('igreja.sermoes');
+Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
 
 Route::group(['middleware' => 'auth'], function () {
     /*Route::get('/', function () {
