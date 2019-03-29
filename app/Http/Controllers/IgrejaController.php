@@ -80,4 +80,26 @@ class IgrejaController extends Controller
         $igreja = obter_dados_igreja($url);
         return view('auth.login',compact('igreja'));
     }
+    public function galeria($url)
+    {
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $galerias = \DB::table('tbl_galerias')
+            ->where('id_igreja', '=', $igreja->id)
+            ->orderBy('data', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        $fotos = array();
+        foreach($galerias as $galeria){
+            $fotos_ = \DB::table('tbl_fotos')
+                ->where('id_galeria', '=', $galeria->id)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+            $fotos[$galeria->id] = $fotos_;
+        }
+        return view('layouts.template' . $igreja->id_template . '.galeria', compact('igreja', 'modulos', 'galerias', 'fotos'));
+    }
+    public function carrega_imagem($largura,$altura,$pasta,$arquivo){
+        return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));
+    }
 }
