@@ -10,8 +10,9 @@ function fistCharFromWord_toUpper($string)
     $st = '';
     $splitString = explode(' ', $string);
     foreach($splitString as $str){
-        $str = ucfirst(strtolower($str));
-        $st = $st.' '.$str;
+        $first_letter = mb_strtoupper(mb_substr($str, 0, 1, "UTF-8"), "UTF-8");
+        $str =  mb_substr($str, 1, mb_strlen($str, "UTF-8"), "UTF-8");
+        $st = $st.' '.$first_letter.$str;
     }
     return $st;   
 }
