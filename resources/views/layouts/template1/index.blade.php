@@ -77,6 +77,8 @@
         });				
     });	//ready
 </script>
+<!-- FlexSlider --> 
+<script src="{{asset('template_igreja/template-padrao/plugins/flexslider/js/jquery.flexslider.js')}}"></script>
 @endpush
 @section('content')
 <!-- Start Hero Slider -->
@@ -146,7 +148,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Notícias</h1>
+                <h1>Últimas notícias</h1>
             </div>
         </div>
     </div>
@@ -154,82 +156,130 @@
 <!-- End Page Header -->
 <!-- Start Content -->
 <div class="main" role="main">
-    <div id="content" class="content full">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="grid-holder col-3 events-grid">
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span> </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/800x600&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/600x400&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="grid-item post format-standard">
-                        <div class="grid-item-inner"> <a href="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"> <img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""> </a>
-                            <div class="grid-content">
-                            <h3><a href="blog-post.html">Blog post with featured image</a></h3>
-                            <span class="meta-data"><span><i class="fa fa-calendar"></i> 24th Nov, 2013</span><span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span></span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-                            </div>
-                        </div>
-                        </li>
-                    </ul>
-                    
-                    <!-- Pagination -->
-                    <ul class="pager pull-right">
-                        <li><a href="#">&larr; Older</a></li>
-                        <li><a href="#">Newer &rarr;</a></li>
-                    </ul>
+<div id="content" class="content full">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        <ul class="grid-holder col-3 events-grid">
+            <?php foreach($noticias as $noticia){ ?>
+                <li class="grid-item post format-standard">
+                <div class="grid-item-inner">  
+                    <?php if($noticia->foto != null){ ?>
+                        <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
+                    <?php }else{ ?>
+                        <img src="/storage/no-news.jpg" alt=""> 
+                    <?php } ?>
+                    <div class="grid-content">
+                    <h3><a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="">{{$noticia->nome}}</a></h3>
+                    <span class="meta-data"><span><i class="fa fa-calendar"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</span><!--<span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span>--></span>
+                    <?php
+                    if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
+                        ?>
+                        <span class="meta-data"><span><i class="fa fa-calendar"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</span></span>
+                        <?php
+                    }
+                    ?>
+                    <p>{{$noticia->descricao}}</p>
+                    </div>
                 </div>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+    </div>
+</div>
+</div>
+
+<!-- Start Page Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Últimos álbuns</h1>
             </div>
         </div>
     </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+<div id="content" class="content full">
+    <div class="container">
+    <div class="row">
+        <ul class="isotope-grid" data-sort-id="gallery">
+        <?php foreach($galerias as $galeria){ 
+            if(count($fotos[$galeria->id]) == 1){
+                $foto = $fotos[$galeria->id][0]; ?>
+                <li class="col-md-3 col-sm-3 grid-item post format-image"><h3>{{$galeria->nome}}</h3>
+                    <div class="grid-item-inner"> <a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto" class="media-box"> <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""> <!--<img src="/storage/galerias/{{$foto->foto}}" alt="">--> </a> </div>
+                </li>
+            <?php }else{ ?>
+                <li class="col-md-3 col-sm-3 grid-item post format-gallery"><h3>{{$galeria->nome}}</h3>
+                    <div class="grid-item-inner">
+                    <div class="media-box">
+                        <div class="flexslider" data-autoplay="yes" data-pagination="yes" data-arrows="yes" data-style="slide" data-pause="yes">
+                        <ul class="slides">
+                            <?php $fotos_ = $fotos[$galeria->id];
+                                foreach($fotos_ as $foto){ ?>
+                                <li class="item"><a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto[postname]"><img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""></a></li>
+                            <?php } ?>
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                </li>
+            <?php }
+        } ?>
+        </ul>
+    </div>
+    </div>
+</div>
+</div>
+<!-- Start Page Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Últimos eventos</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page Header -->
+<!-- Start Content -->
+<div class="main" role="main">
+<div id="content" class="content full">
+    <div class="container">
+    <ul class="timeline">
+        <?php 
+        $x = 0;
+        foreach($eventos as $evento){
+            $class = ($x % 2 == 0) ? "timeline-inverted" : "";
+            $x++;
+            ?>
+            <li class="{{$class}}">
+                <div class="timeline-badge"></div>
+                <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h3 class="timeline-title">
+                    <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}">{{$evento->nome}}</a>
+                    </h3>
+                </div>
+                <div class="timeline-body">
+                    <ul class="info-table">
+                        <li><i class="fa fa-calendar"></i> {{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}</li>
+                        <?php if($evento->dados_horario_fim != null){ ?>
+                            <li><i class="fa fa-clock-o"></i> Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}}</li>
+                        <?php } ?>
+                        <li><i class="fa fa-map-marker"></i> {{$evento->dados_local}}</li>
+                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                    </ul>
+                </div>
+                </div>
+            </li>
+        <?php } ?>
+    </ul>
+    </div>
+</div>
 </div>
 @endsection

@@ -12,7 +12,33 @@ class IgrejaController extends Controller
         $eventos_fixos = \DB::table('tbl_eventos_fixos')
             ->where('id_igreja', '=', $igreja->id)
             ->get();
-        return view('layouts.template' . $igreja->id_template . '.index', compact('igreja', 'modulos', 'eventos_fixos'));
+        $eventos = \DB::table('tbl_eventos')
+            ->where('id_igreja', '=', $igreja->id)
+            ->orderBy('dados_horario_inicio','DESC')
+            ->limit(3)
+            ->get();
+        $noticias = \DB::table('tbl_noticias')
+            ->where('id_igreja', '=', $igreja->id)
+            ->orderBy('created_at','DESC')
+            ->limit(3)
+            ->get();
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $galerias = \DB::table('tbl_galerias')
+            ->where('id_igreja', '=', $igreja->id)
+            ->orderBy('data', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->limit(4)
+            ->get();
+        $fotos = array();
+        foreach($galerias as $galeria){
+            $fotos_ = \DB::table('tbl_fotos')
+                ->where('id_galeria', '=', $galeria->id)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+            $fotos[$galeria->id] = $fotos_;
+        }
+        return view('layouts.template' . $igreja->id_template . '.index', compact('igreja', 'modulos', 'eventos_fixos', 'eventos', 'noticias', 'galerias', 'fotos'));
     }
     public function ministros($url)
     {

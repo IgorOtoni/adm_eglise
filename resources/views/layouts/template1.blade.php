@@ -45,7 +45,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-xs-8">
-                    <h1 class="logo"> <a href="#"><img style="witdh: 100px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt="Logo"></a> </h1>
+                    <h1 class="logo"> <a href="/{{$igreja->url}}/"><img style="witdh: 100px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt="Logo"></a> </h1>
                     </div>
                     <div class="col-md-8 col-sm-6 col-xs-4">
                     <ul class="top-navigation hidden-sm hidden-xs">
@@ -111,10 +111,10 @@
                             <li><a href="#">Projetos e causas</a></li>
                             </ul>
                             </li>
-                        </ul>
                         <?php
                     }
                     ?>
+                    </ul>
                 </nav>
                 </div>
             </div>
@@ -135,8 +135,8 @@
                             <i class="fa fa-facebook"></i></a> 
                     <?php } ?>
                     <?php if($igreja->twitter != null){ ?>
-                    <a href="{{$igreja->twitter}}" target="_blank">
-                        <i class="fa fa-twitter"></i></a> 
+                        <a href="{{$igreja->twitter}}" target="_blank">
+                            <i class="fa fa-twitter"></i></a> 
                     <?php } ?>
                     <!--<a href="http://www.pinterest.com/" target="_blank">
                         <i class="fa fa-pinterest"></i></a>-->
