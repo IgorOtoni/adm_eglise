@@ -12,13 +12,14 @@
     <title>{{$igreja->nome}}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="{{asset('template_igreja/template-escuro/img/core-img/favicon.ico')}}">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{asset('template_igreja/template-escuro/style.css')}}">
 </head>
 
 <body>
+
     <!-- ##### Preloader ##### -->
     <div id="preloader">
         <div class="circle">
@@ -37,7 +38,7 @@
                     <nav class="classy-navbar justify-content-between" id="faithNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img style="witdh: 120px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt=""></a>{{$igreja->nome}}
+                        <a class="nav-brand" href="index.html"><img style="witdh: 120px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt=""></a><h3>{{$igreja->nome}}</h3></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -81,26 +82,32 @@
                                             </ul>
                                         </li>
                                         <?php
-                                    }
-                                    if(in_array(5, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
-                                    }
-                                    if(in_array(10, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
-                                        <?php
-                                    }
-                                    if(in_array(9, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
-                                        <?php
-                                    }
-                                    if(in_array(11, $ids_modulos_permitidos)){
+                                    } ?>
+                                    <?php if(in_array(5, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
+                                        <li><a href="#">Mídia</a>
+                                            <ul class="dropdown">
+                                            <?php if(in_array(5, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
+                                            }
+                                            if(in_array(10, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
+                                                <?php
+                                            }
+                                            if(in_array(9, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
+                                                <?php
+                                            } ?>
+                                            </ul>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if(in_array(11, $ids_modulos_permitidos)){
                                         ?>
                                         <li><a href="#">Doações</a>
                                             <ul class="dropdown">
-                                            <li><a href="#">Doações para congregação</a></li>
+                                            <li><a href="#">Doações</a></li>
                                             <li><a href="#">Projetos e causas</a></li>
                                             </ul>
                                             </li>
@@ -111,7 +118,7 @@
 
                                 <!-- Donate Button -->
                                 <div class="donate-btn">
-                                    <a href="{{$igreja->url}}/login">Login</a>
+                                <a href="/{{$igreja->url}}/login">Login</a>
                                 </div>
 
                             </div>
@@ -129,88 +136,26 @@
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
         <!-- Main Footer Area -->
-        <div class="main-footer-area section-padding-100-0 bg-img foo-bg-overlay" style="background-image: url(img/bg-img/bg-1.jpg);">
+        <div class="main-footer-area section-padding-100-0 bg-img foo-bg-overlay" style="background-image: url(template_igreja/template-escuro/img/bg-img/bg-9.jpg);">
             <div class="container">
                 <div class="row">
-
                     <!-- Footer Widget Area -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="d-flex flex-wrap mb-100">
-                            <div class="footer-widget">
-                                <div class="widget-title">
-                                    <a href="#"><img src="img/core-img/logo2.png" alt=""></a>
-                                </div>
-                                <div class="footer-social-info">
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </div>
-                            </div>
-                            <div class="copywrite-text">
-                                <p>{{$igreja->nome}}</p>
-                            </div>
-                        </div>
+                    <div class="col-6 col-sm-6 col-xl-6">
+                        <p>{{$igreja->nome}}</p>
                     </div>
 
-                    <!-- Footer Widget Area -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget mb-100">
-                            <div class="widget-title">
-                                <h6>Contact Us</h6>
-                            </div>
-
-                            <!-- Single Contact Area -->
-                            <div class="single-contact-area mb-30">
-                                <p>Address:</p>
-                                <span>1481 Creekside Lane Avila <br>Beach, CA 93424 </span>
-                            </div>
-
-                            <!-- Single Contact Area -->
-                            <div class="single-contact-area mb-30">
-                                <p>Phone:</p>
-                                <span>+53 345 7953 32453 <br>+53 345 7557 822112</span>
-                            </div>
-
-                            <!-- Single Contact Area -->
-                            <div class="single-contact-area mb-30">
-                                <p>Email:</p>
-                                <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="641d0b111609050d08240309050d084a070b09">[email&#160;protected]</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer Widget Area -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget mb-100">
-                            <div class="widget-title">
-                                <h6>Usefull Links</h6>
-                            </div>
-                            <nav>
-                                <ul class="useful-links">
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Sermons</a></li>
-                                    <li><a href="#">Ministries</a></li>
-                                    <li><a href="#">Causes</a></li>
-                                    <li><a href="#">Testimonials</a></li>
-                                    <li><a href="#">Quotes</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Footer Widget Area -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget mb-100">
-                            <div class="widget-title">
-                                <h6>Why Choose us?</h6>
-                            </div>
-                            <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque.</p>
-                            <a href="#" class="btn faith-btn mt-70">Sunday Workship: 10:30 AM</a>
-                        </div>
+                    <div class="col-6 col-sm-6 col-xl-6">
+                        <?php if($igreja->facebook != null){ ?>
+                            <a href="{{$igreja->facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+                        <?php } ?>
+                        &NonBreakingSpace;
+                        <?php if($igreja->twitter != null){ ?>
+                            <a href="{{$igreja->twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
+                        <?php } ?>
+                        &NonBreakingSpace;
+                        <?php if($igreja->youtube != null){ ?>
+                            <a href="{{$igreja->youtube}}"><i class="fa fa-youtube" aria-hidden="true"></i> YouTube</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -220,22 +165,20 @@
 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script data-cfasync="false" src="{{asset('template_igreja/template-escuro/js/plugins/email-decode.min.js')}}"></script><script src="{{asset('template_igreja/template-escuro/js/jquery/jquery-2.2.4.min.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
+    <script data-cfasync="false" src="{{asset('template_igreja/template-escuro/js/plugins/email-decode.min.js')}}"></script><script src="{{asset('template_igreja/template-escuro/js/jquery/jquery-2.2.4.min.js')}}"></script>
     <!-- Popper js -->
-    <script src="{{asset('template_igreja/template-escuro/js/bootstrap/popper.min.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-escuro/js/bootstrap/popper.min.js')}}"></script>
     <!-- Bootstrap js -->
-    <script src="{{asset('template_igreja/template-escuro/js/bootstrap/bootstrap.min.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-escuro/js/bootstrap/bootstrap.min.js')}}"></script>
     <!-- All Plugins js -->
-    <script src="{{asset('template_igreja/template-escuro/js/plugins/plugins.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript')}}"></script>
-    <script src="{{asset('template_igreja/template-escuro/js/plugins/audioplayer.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-escuro/js/plugins/plugins.js')}}"></script>
+    <script src="{{asset('template_igreja/template-escuro/js/plugins/audioplayer.js')}}"></script>
     <!-- Active js -->
-    <script src="{{asset('template_igreja/template-escuro/js/wow.min.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
-    <!-- Active js -->
-    <script src="{{asset('template_igreja/template-escuro/js/active.js')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-escuro/js/active.js')}}"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="{{asset('template_igreja/template-escuro/js/plugins/js?id=UA-23581568-13')}}" type="dd394fb7c37d66307a7e0305-text/javascript"></script>
-    <script type="dd394fb7c37d66307a7e0305-text/javascript">
+    <!-- Global site tag (gtag.js')}}) - Google Analytics -->
+    <script async src="{{asset('template_igreja/template-escuro/js/plugins/js?id=UA-23581568-13')}}"></script>
+    <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -244,8 +187,7 @@
     </script>
 
 
-<script src="{{asset('template_igreja/template-escuro/js/plugins/rocket-loader.min.js')}}" data-cf-settings="dd394fb7c37d66307a7e0305-|49" defer=""></script>
-@stack('script')
-</body>
+    <script src="{{asset('template_igreja/template-escuro/js/plugins/rocket-loader.min.js')}}" data-cf-settings="dd394fb7c37d66307a7e0305-|49" defer=""></script></body>
 
+    @stack('script')
 </html>

@@ -15,7 +15,7 @@ class IgrejaController extends Controller
         $eventos = \DB::table('tbl_eventos')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('dados_horario_inicio','DESC')
-            ->limit(3)
+            ->limit(4)
             ->get();
         $noticias = \DB::table('tbl_noticias')
             ->where('id_igreja', '=', $igreja->id)

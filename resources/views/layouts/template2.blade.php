@@ -12,7 +12,7 @@
     <title>{{$igreja->nome}}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="{{asset('template_igreja/template-vermelho/img/core-img/favicon.ico')}}">
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="{{asset('template_igreja/template-vermelho/style.css')}}">
@@ -80,26 +80,32 @@
                                             </ul>
                                         </li>
                                         <?php
-                                    }
-                                    if(in_array(5, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
-                                    }
-                                    if(in_array(10, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
-                                        <?php
-                                    }
-                                    if(in_array(9, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
-                                        <?php
-                                    }
-                                    if(in_array(11, $ids_modulos_permitidos)){
+                                    } ?>
+                                    <?php if(in_array(5, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
+                                        <li><a href="#">Mídia</a>
+                                            <ul class="dropdown">
+                                            <?php if(in_array(5, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
+                                            }
+                                            if(in_array(10, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
+                                                <?php
+                                            }
+                                            if(in_array(9, $ids_modulos_permitidos)){
+                                                ?>
+                                                <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
+                                                <?php
+                                            } ?>
+                                            </ul>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if(in_array(11, $ids_modulos_permitidos)){
                                         ?>
                                         <li><a href="#">Doações</a>
                                             <ul class="dropdown">
-                                            <li><a href="#">Doações para congregação</a></li>
+                                            <li><a href="#">Doações</a></li>
                                             <li><a href="#">Projetos e causas</a></li>
                                             </ul>
                                             </li>
@@ -109,7 +115,7 @@
                                 </ul>
 
                                 <!-- Donate Button -->
-                                <a href="{{$igreja->url}}/login" class="btn crose-btn header-btn">Login</a>
+                                <a href="/{{$igreja->url}}/login" class="btn crose-btn header-btn">Login</a>
 
                             </div>
                             <!-- Nav End -->
@@ -144,7 +150,7 @@
                                 <a href="{{$igreja->facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <?php } ?>
                             <?php if($igreja->twitter != null){ ?>
-                                <a href="$igreja->twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="{{$igreja->twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                             <?php } ?>
                             <?php if($igreja->youtube != null){ ?>
                                 <a href="{{$igreja->youtube}}"><i class="fa fa-youtube" aria-hidden="true"></i></a>
@@ -159,19 +165,19 @@
 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="{{asset('template_igreja/template-vermelho/js/jquery/jquery-2.2.4.min.js')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-vermelho/js/jquery/jquery-2.2.4.min.js')}}"></script>
     <!-- Popper js -->
-    <script src="{{asset('template_igreja/template-vermelho/js/bootstrap/popper.min.js')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-vermelho/js/bootstrap/popper.min.js')}}"></script>
     <!-- Bootstrap js -->
-    <script src="{{asset('template_igreja/template-vermelho/js/bootstrap/bootstrap.min.js')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-vermelho/js/bootstrap/bootstrap.min.js')}}"></script>
     <!-- All Plugins js -->
-    <script src="{{asset('template_igreja/template-vermelho/js/plugins/plugins.js')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-vermelho/js/plugins/plugins.js')}}"></script>
     <!-- Active js -->
-    <script src="{{asset('template_igreja/template-vermelho/js/active.js')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
+    <script src="{{asset('template_igreja/template-vermelho/js/active.js')}}"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="{{asset('template_igreja/template-vermelho/js/plugins/js?id=UA-23581568-13')}}" type="7039e4ca662a388f1620a4f5-text/javascript"></script>
-    <script type="7039e4ca662a388f1620a4f5-text/javascript">
+    <script async src="{{asset('template_igreja/template-vermelho/js/plugins/js?id=UA-23581568-13')}}"></script>
+    <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -180,7 +186,8 @@
     </script>
     
     <script src="{{asset('template_igreja/template-vermelho/js/plugins/rocket-loader.min.js')}}" data-cf-settings="7039e4ca662a388f1620a4f5-|49" defer=""></script>
-@stack('script')
+    
+    @stack('script')
 </body>
 
 </html>

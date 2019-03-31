@@ -65,7 +65,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id'=>7,
             'nome'=>"Grupo de oração semanal",
             'dados_horario_local'=>"Todas as quartas as 6 horas da manhã na igreja.",
-            'id_igreja'=>1,
+            'id_igreja'=>2,
             'foto'=>"evento-1-2.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 6:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
         ]);
@@ -73,7 +73,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id'=>8,
             'nome'=>"Culto semanal",
             'dados_horario_local'=>"Todas as sextas as 18 horas na igreja.",
-            'id_igreja'=>1,
+            'id_igreja'=>2,
             'foto'=>"evento-2-2.jpg",
             'descricao'=>null,
         ]);
@@ -81,7 +81,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id'=>9,
             'nome'=>"Atendimento aos membros",
             'dados_horario_local'=>"Sábados das 13 ás 15 horas na igreja.",
-            'id_igreja'=>1,
+            'id_igreja'=>2,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
         ]);

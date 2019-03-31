@@ -79,6 +79,88 @@
 </script>
 <!-- FlexSlider --> 
 <script src="{{asset('template_igreja/template-padrao/plugins/flexslider/js/jquery.flexslider.js')}}"></script>
+<script>
+$('#modal-noticia').on('hide.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+
+    var modal = $(this);
+
+    modal.find('.modal-content #nome').html("");
+    modal.find('.modal-content #descricao').html("");
+    modal.find('.modal-content #dth_publicacao').html("");
+    modal.find('.modal-content #dth_atualizacao').html("");
+    modal.find('.modal-content #foto').show();
+    modal.find('.modal-content #dth_atualizacao').show();
+});
+
+$('#modal-noticia').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+    var nome = button.data('nome');
+    var descricao = button.data('descricao');
+    var publicacao = button.data('publicacao');
+    var atualizacao = button.data('atualizacao');
+    var foto = button.data('foto');
+
+    var modal = $(this);
+
+    if(nome != null) modal.find('.modal-content #nome').append(nome);
+    if(descricao != null) modal.find('.modal-content #descricao').append(descricao);
+    if(publicacao != null) modal.find('.modal-content #dth_publicacao').append(' ' + publicacao);
+    if(atualizacao != null && atualizacao != ''){
+        modal.find('.modal-content #dth_atualizacao').append(' Atualizada ' + atualizacao);
+    }else{
+        modal.find('.modal-content #dth_atualizacao').hide();
+    }
+    if(foto != null && foto != ''){
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/noticias/')}}' + '/' + foto);
+    }else{
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/')}}' + '/no-news.jpg');
+    }
+});
+</script>
+<script>
+$('#modal-evento').on('hide.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+
+    var modal = $(this);
+
+    modal.find('.modal-content #nome').html("");
+    modal.find('.modal-content #descricao').html("");
+    modal.find('.modal-content #dth_inicio').html("");
+    modal.find('.modal-content #dth_fim').html("");
+    modal.find('.modal-content #local').html("");
+    modal.find('.modal-content #src').prop('src', '');
+    modal.find('.modal-content #dth_fim').show();
+    modal.find('.modal-content #foto').show();
+});
+
+$('#modal-evento').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+    var nome = button.data('nome');
+    var descricao = button.data('descricao');
+    var inicio = button.data('inicio');
+    var fim = button.data('fim');
+    var local = button.data('local');
+    var foto = button.data('foto');
+
+    var modal = $(this);
+
+    if(nome != null) modal.find('.modal-content #nome').append(nome);
+    if(descricao != null) modal.find('.modal-content #descricao').append(descricao);
+    if(inicio != null) modal.find('.modal-content #dth_inicio').append(' ' + inicio);
+    if(fim != null && fim != ''){
+        modal.find('.modal-content #dth_fim').append(' Final previsto para ' + fim);
+    }else{
+        modal.find('.modal-content #dth_fim').hide();
+    }
+    if(local != null) modal.find('.modal-content #local').append(' ' + local);
+    if(foto != null && foto != ''){
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/timeline/')}}' + '/' + foto);
+    }else{
+        modal.find('.modal-content #foto').hide();
+    }
+});
+</script>
 @endpush
 @section('content')
 <!-- Start Hero Slider -->
@@ -282,4 +364,91 @@
     </div>
 </div>
 </div>
+
+<!-- modals -->
+<div class="modal fade" id="modal-noticia">
+    <input type="hidden" name="id" id="id">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nome"></h4>
+        </div>
+        <div class="modal-body">
+        <div class="box-body">
+            <!--<article class="post-content">-->
+            <div class="event-description"> <img id="foto" src="" class="img-responsive">
+                <div class="spacer-20"></div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Detalhes da notícia</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="info-table">
+                        <li><i class="fa fa-calendar" id="dth_publicacao"></i> </li>
+                        <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> </li>
+                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <p id="descricao"></p>
+            </div>
+            <!--</article>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-evento">
+    <input type="hidden" name="id" id="id">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nome"></h4>
+        </div>
+        <div class="modal-body">
+        <div class="box-body">
+            <!--<article class="post-content">-->
+            <div class="event-description"> <img id="foto" src="" class="img-responsive">
+                <div class="spacer-20"></div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Detalhes do evento</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="info-table">
+                        <li><i class="fa fa-calendar" id="dth_inicio"></i> </li>
+                        <li><i class="fa fa-clock-o" id="dth_fim"></i> </li>
+                        <li><i class="fa fa-map-marker" id="local"></i> </li>
+                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <p id="descricao"></p>
+            </div>
+            <!--</article>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- end modals -->
 @endsection

@@ -61,7 +61,7 @@
                 <div class="col-md-12">
                 <nav class="navigation">
                     <ul class="sf-menu">
-                    <li><a href="{{$igreja->url}}/login" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li>
+                    <li><a href="/{{$igreja->url}}/login" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li>
                     <?php
                     $ids_modulos_permitidos = array();
                     $x = 0;

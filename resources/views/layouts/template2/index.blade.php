@@ -1,6 +1,88 @@
 @extends('layouts.template2')
 @push('script')
+<script>
+$('#modal-noticia').on('hide.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
 
+    var modal = $(this);
+
+    modal.find('.modal-content #nome').html("");
+    modal.find('.modal-content #descricao').html("");
+    modal.find('.modal-content #dth_publicacao').html("");
+    modal.find('.modal-content #dth_atualizacao').html("");
+    modal.find('.modal-content #foto').show();
+    modal.find('.modal-content #dth_atualizacao').show();
+});
+
+$('#modal-noticia').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+    var nome = button.data('nome');
+    var descricao = button.data('descricao');
+    var publicacao = button.data('publicacao');
+    var atualizacao = button.data('atualizacao');
+    var foto = button.data('foto');
+
+    var modal = $(this);
+
+    if(nome != null) modal.find('.modal-content #nome').append(nome);
+    if(descricao != null) modal.find('.modal-content #descricao').append(descricao);
+    if(publicacao != null) modal.find('.modal-content #dth_publicacao').append(' ' + publicacao);
+    if(atualizacao != null && atualizacao != ''){
+        modal.find('.modal-content #dth_atualizacao').append(' Atualizada ' + atualizacao);
+    }else{
+        modal.find('.modal-content #dth_atualizacao').hide();
+    }
+    if(foto != null && foto != ''){
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/noticias/')}}' + '/' + foto);
+    }else{
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/')}}' + '/no-news.jpg');
+    }
+});
+</script>
+
+<script>
+$('#modal-evento').on('hide.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+
+    var modal = $(this);
+
+    modal.find('.modal-content #nome').html("");
+    modal.find('.modal-content #descricao').html("");
+    modal.find('.modal-content #dth_inicio').html("");
+    modal.find('.modal-content #dth_fim').html("");
+    modal.find('.modal-content #local').html("");
+    modal.find('.modal-content #src').prop('src', '');
+    modal.find('.modal-content #dth_fim').show();
+    modal.find('.modal-content #foto').show();
+});
+
+$('#modal-evento').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) ;
+    var nome = button.data('nome');
+    var descricao = button.data('descricao');
+    var inicio = button.data('inicio');
+    var fim = button.data('fim');
+    var local = button.data('local');
+    var foto = button.data('foto');
+
+    var modal = $(this);
+
+    if(nome != null) modal.find('.modal-content #nome').append(nome);
+    if(descricao != null) modal.find('.modal-content #descricao').append(descricao);
+    if(inicio != null) modal.find('.modal-content #dth_inicio').append(' ' + inicio);
+    if(fim != null && fim != ''){
+        modal.find('.modal-content #dth_fim').append(' Final previsto para ' + fim);
+    }else{
+        modal.find('.modal-content #dth_fim').hide();
+    }
+    if(local != null) modal.find('.modal-content #local').append(' ' + local);
+    if(foto != null && foto != ''){
+        modal.find('.modal-content #foto').prop('src', '{{asset('storage/timeline/')}}' + '/' + foto);
+    }else{
+        modal.find('.modal-content #foto').hide();
+    }
+});
+</script>
 @endpush
 @section('content')
 <!-- ##### Hero Area Start ##### -->
@@ -56,7 +138,7 @@
                             </a>
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">
+                            <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#" class="post-title">
                                 <h4>{{$noticia->nome}}</h4>
                             </a>
                             <div class="post-meta d-flex">
@@ -88,8 +170,7 @@
                 <!-- Section Heading -->
                 <div class="col-12">
                     <div class="section-heading text-left white">
-                        <h2>Upcoming Events</h2>
-                        <p>Be sure to visit our Upcoming Events page regularly to get infomartion</p>
+                        <h2>Últimos eventos</h2>
                     </div>
                 </div>
             </div>
@@ -117,12 +198,16 @@
                             <div class="single-upcoming-events-area d-flex flex-wrap align-items-center">
                                 <!-- Thumbnail -->
                                 <div class="upcoming-events-thumbnail">
-                                    <img src="/storage/eventos/{{$evento->foto}}" alt="">
+                                    <?php if($evento->foto != null){ ?>
+                                        <img src="/storage/timeline/{{$evento->foto}}" alt="">
+                                    <?php }else{ ?>
+                                        <img src="/storage/no-event.jpg" alt="">
+                                    <?php } ?>
                                 </div>
                                 <!-- Content -->
                                 <div class="upcoming-events-content d-flex flex-wrap align-items-center">
                                     <div class="events-text">
-                                        <h4>{{$evento->nome}}}</h4>
+                                        <h4>{{$evento->nome}}</h4>
                                         <div class="events-meta">
                                             <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}</a>
                                             <?php if($evento->dados_horario_fim != null){ ?>
@@ -134,7 +219,7 @@
                                         <!--<a href="#">Read More <i class="fa fa-angle-double-right"></i></a>-->
                                     </div>
                                     <div class="find-out-more-btn">
-                                        <a href="#" class="btn crose-btn btn-2">Find Out More</a>
+                                        <a href="#" data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" class="btn crose-btn btn-2">Find Out More</a>
                                     </div>
                                 </div>
                             </div>
@@ -157,6 +242,7 @@
 </section>
 <!-- ##### Upcoming Events Area End ##### -->
 
+<!-- ##### Gallery Area Start ##### -->
 <section class="upcoming-events-area section-padding-0-100">
     <div class="container">
         <div class="row">
@@ -187,4 +273,91 @@
     </div>
 </section>
 <!-- ##### Gallery Area End ##### -->
+
+<!-- modals -->
+<div class="modal fade" id="modal-noticia">
+    <input type="hidden" name="id" id="id">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title" id="nome"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <div class="box-body">
+            <!--<article class="post-content">-->
+            <div class="event-description"> <img id="foto" src="" class="img-responsive">
+                <div class="spacer-20"></div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Detalhes da notícia</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="info-table">
+                        <li><i class="fa fa-calendar" id="dth_publicacao"></i> </li>
+                        <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> </li>
+                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <p id="descricao"></p>
+            </div>
+            <!--</article>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn crose-btn btn-2" data-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-evento">
+    <input type="hidden" name="id" id="id">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title" id="nome"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <div class="box-body">
+            <!--<article class="post-content">-->
+            <div class="event-description"> <img id="foto" src="" class="img-responsive">
+                <div class="spacer-20"></div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Detalhes do evento</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="info-table">
+                        <li><i class="fa fa-calendar" id="dth_inicio"></i> </li>
+                        <li><i class="fa fa-clock-o" id="dth_fim"></i> </li>
+                        <li><i class="fa fa-map-marker" id="local"></i> </li>
+                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <p id="descricao"></p>
+            </div>
+            <!--</article>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn crose-btn btn-2" data-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- end modals -->
 @endsection
