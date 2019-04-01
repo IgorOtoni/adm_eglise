@@ -53,7 +53,7 @@
             <!-- Team Members Area -->
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url(img/bg-img/33.jpg);">
+                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/33.jpg')}});">
                         <div class="team-social-info">
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -68,7 +68,7 @@
             <!-- Team Members Area -->
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url(img/bg-img/34.jpg);">
+                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/34.jpg')}});">
                         <div class="team-social-info">
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -83,7 +83,7 @@
             <!-- Team Members Area -->
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url(img/bg-img/35.jpg);">
+                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/35.jpg')}});">
                         <div class="team-social-info">
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -98,7 +98,7 @@
             <!-- Team Members Area -->
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url(img/bg-img/36.jpg);">
+                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/36.jpg')}});">
                         <div class="team-social-info">
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>

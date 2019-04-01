@@ -64,19 +64,24 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 
 <!-- ##### Upcoming Events Area Start ##### -->
 <section class="upcoming-events-area section-padding-0-100">
+    <!-- Upcoming Events Heading Area -->
+    <div class="upcoming-events-heading bg-img bg-overlay bg-fixed" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/1.jpg')}});">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-left white">
+                        <h2>Eventos</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Upcoming Events Slide -->
     <div class="upcoming-events-slides-area">
         <div class="container">
             <div class="row">
-                    <!-- Section Heading -->
-                    <div class="col-12">
-                        <div class="section-heading">
-                            <h2>Linha do tempo</h2>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-12">
                     <div class="upcoming-slides owl-carousel">
 
@@ -84,9 +89,10 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                         $x = 0;
                         foreach($eventos as $evento){
                             if($x % 4 == 0){
-                                ?>
-                                <div class="single-slide">
-                                <?php
+                                if($x != 0){
+                                    ?> </div> <?php
+                                }
+                                ?> <div class="single-slide"> <?php
                             }
                             ?>
 
@@ -121,11 +127,6 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                             </div>
 
                             <?php
-                            if(($x - 1) % 4 == 0 && $x > 3){
-                                ?>
-                                </div>
-                                <?php
-                            }
                             $x++;
                         }
                         ?>

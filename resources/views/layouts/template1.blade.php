@@ -89,7 +89,7 @@
                         </li>
                         <?php
                     }
-                    if(in_array(5, $ids_modulos_permitidos)){
+                    if(in_array(12, $ids_modulos_permitidos)){
                         ?>
                         <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
                     }

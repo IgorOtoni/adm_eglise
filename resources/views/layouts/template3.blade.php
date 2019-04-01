@@ -23,7 +23,7 @@
     <!-- ##### Preloader ##### -->
     <div id="preloader">
         <div class="circle">
-            <img src="{{asset('template_igreja/template-escuro/img/core-img/church.png')}}" alt="">
+            <img src="{{asset('template_igreja/template-escuro/img/core-img/holy-star.png')}}" alt="">
         </div>
     </div>
 
@@ -83,10 +83,10 @@
                                         </li>
                                         <?php
                                     } ?>
-                                    <?php if(in_array(5, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
+                                    <?php if(in_array(12, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
                                         <li><a href="#">Mídia</a>
                                             <ul class="dropdown">
-                                            <?php if(in_array(5, $ids_modulos_permitidos)){
+                                            <?php if(in_array(12, $ids_modulos_permitidos)){
                                                 ?>
                                                 <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
                                             }

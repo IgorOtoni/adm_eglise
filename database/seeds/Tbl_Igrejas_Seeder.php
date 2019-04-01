@@ -32,6 +32,7 @@ class Tbl_Igrejas_Seeder extends Seeder
             'cep'=>'35.181-018',
             'logo'=> 'logo-igreja-2.jpg',
             'telefone'=>'(99) 99999-9999',
+            'email' => 'segundaiba@eglise.com'
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Terceira Igreja Batista',
@@ -41,6 +42,7 @@ class Tbl_Igrejas_Seeder extends Seeder
             'rua' => '7',
             'num'=>'230',
             'cep'=>'35.181-018',
+            'email' => 'terceira@eglise.com'
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Quarta Igreja Batista',

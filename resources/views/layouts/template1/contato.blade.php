@@ -36,8 +36,8 @@
                     <h2 class="post-title">Nossos contatos</h2>
                 </header>
                 <div class="post-content">
-                    <p>Email:</p>
-                    <p>Telefone: {{$igreja->telefone}}</p>
+                    <p>Email: <?php if($igreja->email != null){ echo $igreja->email; }else{ ?> <span class="label label-danger">Não informado</span> <?php } ?> </p>
+                    <p>Telefone: <?php if($igreja->telefone != null){ echo $igreja->telefone; }else{ ?> <span class="label label-danger">Não informado</span> <?php } ?> </p>
                 </div>
                 <header class="single-post-header clearfix">
                     <h2 class="post-title">Nossa localização</h2>

@@ -91,14 +91,25 @@ class IgrejaController extends Controller
     {
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
-        $eventos = \DB::table('tbl_eventos')
-            ->where('id_igreja', '=', $igreja->id)
-            ->where(function ($query) {
-                $query->where('dados_horario_inicio', '>=', date('Y-m-d h:i:s', time()))
-                    ->orWhere('dados_horario_fim', '>=', date('Y-m-d h:i:s', time()));
-            })
-            ->orderBy('dados_horario_inicio', 'DESC')
-            ->get();
+        if($igreja->id_template != 2){
+            $eventos = \DB::table('tbl_eventos')
+                ->where('id_igreja', '=', $igreja->id)
+                ->where(function ($query) {
+                    $query->where('dados_horario_inicio', '>=', date('Y-m-d h:i:s', time()))
+                        ->orWhere('dados_horario_fim', '>=', date('Y-m-d h:i:s', time()));
+                })
+                ->orderBy('dados_horario_inicio', 'DESC')
+                ->paginate(2);
+        }else{
+            $eventos = \DB::table('tbl_eventos')
+                ->where('id_igreja', '=', $igreja->id)
+                ->where(function ($query) {
+                    $query->where('dados_horario_inicio', '>=', date('Y-m-d h:i:s', time()))
+                        ->orWhere('dados_horario_fim', '>=', date('Y-m-d h:i:s', time()));
+                })
+                ->orderBy('dados_horario_inicio', 'DESC')
+                ->get();
+        }
         return view('layouts.template' . $igreja->id_template . '.eventos', compact('igreja', 'modulos', 'eventos'));
     }
     public function login($url)

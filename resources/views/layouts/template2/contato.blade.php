@@ -33,8 +33,8 @@
                         <div class="col-12 col-md-6">
                             <div class="contact-content contact-information">
                                 <h4>Contatos</h4>
-                                <p>Email: </p>
-                                <p>Telefone: {{$igreja->telefone}}</p>
+                                <p>Email: <?php if($igreja->email != null){ echo $igreja->email; }else{ ?> <span class="text-red">Não informado</span> <?php } ?> </p>
+                                <p>Telefone: <?php if($igreja->telefone != null){ echo $igreja->telefone; }else{ ?> <span class="text-red">Não informado</span> <?php } ?> </p>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">

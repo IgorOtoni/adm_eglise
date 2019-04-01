@@ -41,7 +41,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'nome'=>"Grupo de oração semanal",
             'dados_horario_local'=>"Todas as quartas as 8 horas da manhã na igreja.",
             'id_igreja'=>1,
-            'foto'=>"evento-1-1.jpg",
+            'foto'=>"evento-4-1.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 8:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
@@ -49,7 +49,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'nome'=>"Culto semanal",
             'dados_horario_local'=>"Todas as sextas as 19 horas na igreja.",
             'id_igreja'=>1,
-            'foto'=>"evento-2-1.jpg",
+            'foto'=>"evento-5-1.jpg",
             'descricao'=>null,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
@@ -66,7 +66,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'nome'=>"Grupo de oração semanal",
             'dados_horario_local'=>"Todas as quartas as 6 horas da manhã na igreja.",
             'id_igreja'=>2,
-            'foto'=>"evento-1-2.jpg",
+            'foto'=>"evento-7-2.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 6:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
@@ -74,7 +74,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'nome'=>"Culto semanal",
             'dados_horario_local'=>"Todas as sextas as 18 horas na igreja.",
             'id_igreja'=>2,
-            'foto'=>"evento-2-2.jpg",
+            'foto'=>"evento-8-2.jpg",
             'descricao'=>null,
         ]);
         DB::table('tbl_eventos_fixos')->insert([

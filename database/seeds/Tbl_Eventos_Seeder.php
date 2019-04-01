@@ -121,5 +121,33 @@ class Tbl_Eventos_Seeder extends Seeder
             'foto'=>"timeline-4-3.jpg",
             'descricao'=>"Palestra divulgando a plataforma Église e sua utilização para ministros e membros.",
         ]);
+
+        DB::table('tbl_eventos')->insert([
+            'id'=>13,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(50),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(51),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>1,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
+        DB::table('tbl_eventos')->insert([
+            'id'=>14,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(60),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(61),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>2,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
+        DB::table('tbl_eventos')->insert([
+            'id'=>15,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(70),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(71),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>3,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
     }
 }

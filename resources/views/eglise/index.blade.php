@@ -64,6 +64,7 @@
         </h1>
       </section>
 
+      <center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center>
       <!-- Main content -->
       <section class="content">
         @foreach ($igrejas_e_configuracoes as $igreja)
@@ -82,11 +83,9 @@
                 </h4>
 
                 <div class="attachment-text">
-                Estado: {{$igreja->estado}}<br/>
-                Cidade: {{$igreja->cidade}}<br/>
+                Cidade: {{$igreja->cidade}} - {{$igreja->estado}}<br/>
                 Bairro: {{$igreja->bairro}}<br/>
-                Rua: {{$igreja->rua}}<br/>
-                Número: {{$igreja->num}}<br/>
+                Rua: {{$igreja->rua}}, n°: {{$igreja->num}}<br/>
                 @if ($igreja->complemento != null)
                   Complemento: {{$igreja->complemento}}
                 @else
@@ -98,6 +97,12 @@
                 @else
                   Telefone: <span class="label bg-red">Não informado</span>
                 @endif
+                <br />
+                @if ($igreja->email != null)
+                  Email: {{$igreja->email}}
+                @else
+                  Email: <span class="label bg-red">Não informado</span>
+                @endif
                 </div>
                 <!-- /.attachment-text -->
             </div>
@@ -108,6 +113,7 @@
         @endforeach
       </section>
       <!-- /.content -->
+      <center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center>
     </div>
     <!-- /.container -->
   </div>
