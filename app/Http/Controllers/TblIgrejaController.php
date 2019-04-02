@@ -72,6 +72,7 @@ class TblIgrejaController extends Controller
         $igreja->bairro = $request->bairro;
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
+        $igreja->email = $request->email;
 
         $count = TblIgreja::where("nome", "=", $igreja->nome)->count();
         if($count == 0){
@@ -161,6 +162,7 @@ class TblIgrejaController extends Controller
         $igreja->bairro = $request->bairro;
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
+        $igreja->email = $request->email;
 
         $count = TblIgreja::where("nome", "=", $igreja->nome)->where("id", "<>", $request->id)->count();
         if($count == 0){

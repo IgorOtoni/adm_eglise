@@ -351,6 +351,12 @@ $('#modal-configuracoes').on('show.bs.modal', function (event) {
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label >Email</label>
+                            <input name="email" type="text" class="form-control" placeholder="Email">
+                        </div>
+                    </div>
                   </div>
                   
                   <div class="row">

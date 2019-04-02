@@ -233,6 +233,12 @@ $(function () {
                       <div class="help-block with-errors"></div>
                   </div>
               </div>
+              <div class="col-md-8">
+                  <div class="form-group">
+                      <label >Email</label>
+                      <input name="email" type="text" class="form-control" placeholder="Email" value="{{$igreja->email}}">
+                  </div>
+              </div>
             </div>
             
             <div class="row">
