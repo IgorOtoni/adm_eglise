@@ -175,18 +175,7 @@
     <script src="{{asset('template_igreja/template-escuro/js/plugins/audioplayer.js')}}"></script>
     <!-- Active js -->
     <script src="{{asset('template_igreja/template-escuro/js/active.js')}}"></script>
-
-    <!-- Global site tag (gtag.js')}}) - Google Analytics -->
-    <script async src="{{asset('template_igreja/template-escuro/js/plugins/js?id=UA-23581568-13')}}"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-23581568-13');
-    </script>
-
-
+    <!-- Rocket Loader -->
     <script src="{{asset('template_igreja/template-escuro/js/plugins/rocket-loader.min.js')}}" data-cf-settings="dd394fb7c37d66307a7e0305-|49" defer=""></script></body>
 
     @stack('script')

@@ -70,6 +70,9 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
 <div class="main" role="main">
 <div id="content" class="content full">
     <div class="container">
+    <center>
+        {{ $noticias->appends(request()->query())->links() }}
+    </center>
     <div class="row">
         <div class="col-md-12">
         <ul class="grid-holder col-3 events-grid">
@@ -97,14 +100,11 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
                 </li>
             <?php } ?>
         </ul>
-        
-        <!-- Pagination -->
-        <ul class="pager pull-right">
-            <li><a href="#">&larr; Older</a></li>
-            <li><a href="#">Newer &rarr;</a></li>
-        </ul>
         </div>
     </div>
+    <center>
+        {{ $noticias->appends(request()->query())->links() }}
+    </center>
     </div>
 </div>
 </div>

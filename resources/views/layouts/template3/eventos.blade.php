@@ -57,7 +57,8 @@ $('#modal-evento').on('show.bs.modal', function (event) {
         </div>
 
         <div class="row d-flex justify-content-center section-padding-0-50">
-            {{ $eventos->appends(request()->query())->links() }}</div>
+            {{ $eventos->appends(request()->query())->links() }}
+        </div>
 
         <div class="row">
             <div class="col-12 col-lg-12">
@@ -94,6 +95,10 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 
                 </div>
             </div>
+        </div>
+
+        <div class="row d-flex justify-content-center section-padding-0-50">
+            {{ $eventos->appends(request()->query())->links() }}
         </div>
     </div>
 </section>

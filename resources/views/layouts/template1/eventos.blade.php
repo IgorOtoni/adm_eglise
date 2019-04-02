@@ -75,6 +75,9 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 <div class="main" role="main">
 <div id="content" class="content full">
     <div class="container">
+    <center>
+        {{ $eventos->appends(request()->query())->links() }}
+    </center>
     <ul class="timeline">
         <?php 
         $x = 0;
@@ -83,7 +86,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
             $x++;
             ?>
             <li class="{{$class}}">
-                <div class="timeline-badge">Mar<span>2014</span></div>
+                <div class="timeline-badge">{{strtoupper(\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('MMM YYYY'))}}</div>
                 <div class="timeline-panel">
                 <div class="timeline-heading">
                     <h3 class="timeline-title">
@@ -104,6 +107,9 @@ $('#modal-evento').on('show.bs.modal', function (event) {
             </li>
         <?php } ?>
     </ul>
+    <center>
+        {{ $eventos->appends(request()->query())->links() }}
+    </center>
     </div>
 </div>
 </div>

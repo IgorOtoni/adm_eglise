@@ -44,6 +44,7 @@ class IgrejaController extends Controller
     {
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
+
         return view('layouts.template' . $igreja->id_template . '.ministros', compact('igreja', 'modulos'));
     }
     public function noticias($url)
@@ -53,7 +54,7 @@ class IgrejaController extends Controller
         $noticias = \DB::table('tbl_noticias')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->paginate(3);
         return view('layouts.template' . $igreja->id_template . '.noticias', compact('igreja', 'modulos', 'noticias'));
     }
     public function sermoes($url)
@@ -63,7 +64,7 @@ class IgrejaController extends Controller
         $sermoes = \DB::table('tbl_sermoes')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->paginate(4);
         return view('layouts.template' . $igreja->id_template . '.sermoes', compact('igreja', 'modulos', 'sermoes'));
     }
     public function contato($url)
@@ -82,9 +83,19 @@ class IgrejaController extends Controller
     {
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
-        $eventos_fixos = \DB::table('tbl_eventos_fixos')
-            ->where('id_igreja', '=', $igreja->id)
-            ->get();
+        if($igreja->id_template == 2){
+            $eventos_fixos = \DB::table('tbl_eventos_fixos')
+                ->where('id_igreja', '=', $igreja->id)
+                ->get();
+        }else if($igreja->id_template == 1){
+            $eventos_fixos = \DB::table('tbl_eventos_fixos')
+                ->where('id_igreja', '=', $igreja->id)
+                ->paginate(3);
+        }else{
+            $eventos_fixos = \DB::table('tbl_eventos_fixos')
+                ->where('id_igreja', '=', $igreja->id)
+                ->paginate(4);
+        }
         return view('layouts.template' . $igreja->id_template . '.eventosfixos', compact('igreja', 'modulos', 'eventos_fixos'));
     }
     public function eventos($url)
@@ -99,7 +110,7 @@ class IgrejaController extends Controller
                         ->orWhere('dados_horario_fim', '>=', date('Y-m-d h:i:s', time()));
                 })
                 ->orderBy('dados_horario_inicio', 'DESC')
-                ->paginate(2);
+                ->paginate(4);
         }else{
             $eventos = \DB::table('tbl_eventos')
                 ->where('id_igreja', '=', $igreja->id)
@@ -125,7 +136,7 @@ class IgrejaController extends Controller
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('data', 'DESC')
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->paginate(4);
         $fotos = array();
         foreach($galerias as $galeria){
             $fotos_ = \DB::table('tbl_fotos')

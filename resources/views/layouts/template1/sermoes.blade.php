@@ -29,6 +29,9 @@
 <div class="main" role="main">
 <div id="content" class="content full">
     <div class="container">
+    <center>
+        {{ $sermoes->appends(request()->query())->links() }}
+    </center>
     <div class="row">
         <div class="col-md-12 sermon-archive"> 
         <!-- Sermons Listing -->
@@ -52,17 +55,11 @@
                 </div>
             </article>
         <?php } ?>
-        <ul class="pagination">
-            <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-        </ul>
         </div>
     </div>
+    <center>
+        {{ $sermoes->appends(request()->query())->links() }}
+    </center>
     </div>
 </div>
 </div>

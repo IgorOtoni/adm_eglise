@@ -1,4 +1,4 @@
-@extends('layouts.template2')
+@extends('layouts.template3')
 @push('script')
 <script>
 $('#modal-noticia').on('hide.bs.modal', function (event) {
@@ -41,87 +41,60 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
 </script>
 @endpush
 @section('content')
-<!-- ##### Breadcrumb Area Start ##### -->
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/{{$igreja->url}}"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Notícias</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ##### Breadcrumb Area End ##### -->
-
 <!-- ##### Blog Area Start ##### -->
-<section class="blog-area section-padding-0-0">
+<div class="faith-blog-area section-padding-100-0">
     <div class="container">
         <div class="row">
-            <!-- Section Heading -->
             <div class="col-12">
-                <div class="section-heading">
-                    <h2>Notícias</h2>
+                <div class="section-heading text-center mx-auto">
+                    <h3>Últimas notícias</h3>
                 </div>
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center section-padding-0-100">
-            <div class="pagination-area mt-70">
-                <nav aria-label="Page navigation example">
-                    {{ $noticias->appends(request()->query())->links() }}
-                </nav>
-            </div>
+        <div class="row d-flex justify-content-center section-padding-0-50">
+            {{ $noticias->appends(request()->query())->links() }}
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row">
+
             <?php foreach($noticias as $noticia){ ?>
-                <!-- Single Blog Post Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-blog-post mb-100">
-                        <div class="post-thumbnail">
-                            <a href="single-post.html">
-                                <?php if($noticia->foto != null){ ?>
-                                    <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
-                                <?php }else{ ?>
-                                    <img src="/storage/no-news.jpg" alt=""> 
-                                <?php } ?>
-                            </a>
-                        </div>
-                        <div class="post-content">
-                            <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#" class="post-title">
-                                <h4>{{$noticia->nome}}</h4>
-                            </a>
-                            <div class="post-meta d-flex">
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
-                                <?php
-                                if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
-                                    ?>
-                                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</a>
-                                    <?php
-                                }
-                                ?>
+                <!-- Single Blog Area -->
+                <div class="col-12 col-lg-4">
+                    <div class="single-blog-area mb-100">
+                        <div class="blog-thumbnail">
+                            <?php if($noticia->foto != null){ ?>
+                                <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
+                            <?php }else{ ?>
+                                <img src="/storage/no-news.jpg" alt=""> 
+                            <?php } ?>
+                            <div class="post-date">
+                                <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#"> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
                             </div>
-                            <p class="post-excerpt">{{$noticia->descricao}}</p>
+                        </div>
+                        <div class="blog-content">
+                            <a href="#" class="blog-title">{{$noticia->nome}}</a>
+                            <p>{{$noticia->descricao}}</p>
+                            <?php
+                            if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
+                                ?>
+                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</a>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
             <?php } ?>
+
         </div>
 
-        <div class="row d-flex justify-content-center section-padding-0-100">
-            <div class="pagination-area mt-70">
-                <nav aria-label="Page navigation example">
-                    {{ $noticias->appends(request()->query())->links() }}
-                </nav>
-            </div>
+        <div class="row d-flex justify-content-center section-padding-0-50">
+            {{ $noticias->appends(request()->query())->links() }}
         </div>
+
     </div>
-</section>
+</div>
 <!-- ##### Blog Area End ##### -->
 
 <!-- modals -->
@@ -166,5 +139,5 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
     </div>
     </div>
 </div>
-<!-- end modals -->
+<!-- Modals end -->
 @endsection

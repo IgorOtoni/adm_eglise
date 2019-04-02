@@ -109,5 +109,56 @@ class Tbl_Galeria_Seeder extends Seeder
             'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-20),
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
         ]);
+
+        DB::table('tbl_galerias')->insert([
+            'id'=>13,
+            'nome'=>"Álbum 5",
+            'id_igreja'=>1,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_galerias')->insert([
+            'id'=>14,
+            'nome'=>"Álbum 6",
+            'id_igreja'=>1,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-40),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+
+        DB::table('tbl_galerias')->insert([
+            'id'=>15,
+            'nome'=>"Álbum 5",
+            'id_igreja'=>2,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_galerias')->insert([
+            'id'=>16,
+            'nome'=>"Álbum 6",
+            'id_igreja'=>2,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-40),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+
+        DB::table('tbl_galerias')->insert([
+            'id'=>17,
+            'nome'=>"Álbum 5",
+            'id_igreja'=>3,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_galerias')->insert([
+            'id'=>18,
+            'nome'=>"Álbum 6",
+            'id_igreja'=>3,
+            'descricao'=>"Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla.",
+            'data'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-40),
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
     }
 }

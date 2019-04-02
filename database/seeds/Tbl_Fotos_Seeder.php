@@ -229,5 +229,42 @@ class Tbl_Fotos_Seeder extends Seeder
             'foto'=>'foto-36-12-2.jpg',
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
         ]);
+
+        DB::table('tbl_fotos')->insert([
+            'id'=>37,
+            'id_galeria'=>13,
+            'foto'=>'foto-37-13-1.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_fotos')->insert([
+            'id'=>38,
+            'id_galeria'=>14,
+            'foto'=>'foto-38-14-2.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_fotos')->insert([
+            'id'=>39,
+            'id_galeria'=>15,
+            'foto'=>'foto-39-15-3.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_fotos')->insert([
+            'id'=>40,
+            'id_galeria'=>16,
+            'foto'=>'foto-40-16-1.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_fotos')->insert([
+            'id'=>41,
+            'id_galeria'=>17,
+            'foto'=>'foto-41-17-2.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
+        DB::table('tbl_fotos')->insert([
+            'id'=>42,
+            'id_galeria'=>18,
+            'foto'=>'foto-42-18-3.jpg',
+            'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time())),
+        ]);
     }
 }

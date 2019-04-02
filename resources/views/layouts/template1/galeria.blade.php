@@ -32,6 +32,9 @@
 <div class="main" role="main">
 <div id="content" class="content full">
     <div class="container">
+    <center>
+        {{ $galerias->appends(request()->query())->links() }}
+    </center>
     <div class="row">
         <ul class="isotope-grid" data-sort-id="gallery">
         <?php foreach($galerias as $galeria){ 
@@ -59,17 +62,9 @@
         } ?>
         </ul>
     </div>
-    <div class="text-align-center">
-        <ul class="pagination">
-        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-        </ul>
-    </div>
+    <center>
+        {{ $galerias->appends(request()->query())->links() }}
+    </center>
     </div>
 </div>
 </div>

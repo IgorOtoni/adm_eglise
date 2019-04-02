@@ -340,7 +340,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
             $x++;
             ?>
             <li class="{{$class}}">
-                <div class="timeline-badge"></div>
+                <div class="timeline-badge">{{strtoupper(\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('MMM YYYY'))}}</div>
                 <div class="timeline-panel">
                 <div class="timeline-heading">
                     <h3 class="timeline-title">

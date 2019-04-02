@@ -149,5 +149,33 @@ class Tbl_Eventos_Seeder extends Seeder
             'id_igreja'=>3,
             'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
         ]);
+
+        DB::table('tbl_eventos')->insert([
+            'id'=>16,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(80),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(81),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>1,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
+        DB::table('tbl_eventos')->insert([
+            'id'=>17,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(90),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(91),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>2,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
+        DB::table('tbl_eventos')->insert([
+            'id'=>18,
+            'nome'=>"Evento de teste",
+            'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(100),
+            'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(101),
+            'dados_local'=>"Em qualquer lugar.",
+            'id_igreja'=>3,
+            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+        ]);
     }
 }

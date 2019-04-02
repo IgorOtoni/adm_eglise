@@ -85,5 +85,49 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
         ]);
+
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>10,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>1,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>11,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>2,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>12,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>3,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
+
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>13,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>1,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>14,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>2,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
+        DB::table('tbl_eventos_fixos')->insert([
+            'id'=>15,
+            'nome'=>"Evento de teste",
+            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'id_igreja'=>3,
+            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+        ]);
     }
 }
