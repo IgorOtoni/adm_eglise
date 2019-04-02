@@ -67,56 +67,113 @@ $(function () {
 </script>
 @endpush
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Perfis
-        <small>Lista de todos os perfis</small>
-      </h1>
-    </section>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Perfis
+    <small>Lista de todos os perfis</small>
+  </h1>
+</section>
 
-    <!-- Main content -->
-    <section class="content">
+<!-- Main content -->
+<section class="content">
 
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title"></h3>
-          <div class="pull-right">
-            <a class="btn btn-success"><i class="fa fa-plus"></i>&nbspIncluír perfil</a>
-          </div>
-        </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <table id="tbl_perfis" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                    </table>
-                </div>
+  <!-- Default box -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title"></h3>
+      <div class="pull-right">
+        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluír perfil</a>
+      </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tbl_perfis" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+                </table>
             </div>
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
-      </div>
-      <!-- /.box -->
-
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      Footer
+    </div>
+    <!-- /.box-footer-->
   </div>
-  <!-- /.content-wrapper -->
+  <!-- /.box -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div class="modal fade" id="modal-incluir">
+  <form id="incluirPerfilFormulario" data-toggle="validator" method="POST" role="form" action="{{route('perfis.incluir')}}" enctype="multipart/form-data">
+  @csrf
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Incluir perfil</h4>
+        </div>
+        <div class="modal-body">
+          <!-- form start -->
+          
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                        <label >Nome</label>
+                        <input name="nome" type="text" class="form-control" placeholder="Nome" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group">
+                        <label >Descrição</label>
+                        <textarea class="form-control" rows="3" placeholder="Descrição"></textarea>
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                        <label>Selecione a Igreja associada ao perfil:</label>
+                        <select class="form-control" required>
+                          <option value="-1" selected>Administrador da plataforma Église</option>
+                          <?php $igrejas = App\TblIgreja::orderBy('nome','ASC')->get(); ?>
+                          @foreach ($igrejas as $igreja)
+                            <option value="{{$igreja->id}}">{{$igreja->nome}}</option>
+                          @endforeach
+                        </select>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Incluir</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </form>
+</div>
+<!-- /.modal -->
 @endsection

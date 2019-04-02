@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
+        Route::get('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
 		Route::get('perfis/switchStatus/{id}', 'TblperfilController@switchStatus')->name('perfis.switchStatus');
 

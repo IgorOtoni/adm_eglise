@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-class ConfiguracaoSeeder extends Seeder
+
+class Tbl_Configuracao_Seeder extends Seeder
 {
     /**
      * Run the database seeds.

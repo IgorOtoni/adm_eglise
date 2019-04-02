@@ -12,6 +12,16 @@ class Tbl_Modulos_Seeder extends Seeder
     public function run()
     {
         DB::table('tbl_modulos')->insert([
+            'id'=>13,
+            'nome'=>'Usuários',
+            'descricao'=>'Funcionalidade do site gerencial.'
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>14,
+            'nome'=>'Perfis',
+            'descricao'=>'Funcionalidade do site gerencial.'
+        ]);
+        DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>''
@@ -34,7 +44,7 @@ class Tbl_Modulos_Seeder extends Seeder
         DB::table('tbl_modulos')->insert([
             'id'=>5,
             'nome'=>'Eventos',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>6,
@@ -49,27 +59,27 @@ class Tbl_Modulos_Seeder extends Seeder
         DB::table('tbl_modulos')->insert([
             'id'=>8,
             'nome'=>'Configurações',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>9,
             'nome'=>'Notícias',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>10,
             'nome'=>'Galeria',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>11,
             'nome'=>'Doações',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>12,
             'nome'=>'Sermões',
-            'descricao'=>''
+            'descricao'=>'Funcionalidade do site apresentativo.'
         ]);
     }
 }
