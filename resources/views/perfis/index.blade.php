@@ -1,5 +1,10 @@
 @extends('layouts.admin_site.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
+
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -18,7 +23,49 @@ function switch_status(comp){
   }
 }
 
+$("#igreja").on("change", function(){
+
+  var id_igreja = $("#igreja").val();
+
+  $("#list-area").html("");
+
+  $("#list-area").append("<div class='form-group has-feedback'><label>Selecione quais módulos da igreja o perfil irá acessar:</label><select class='form-control' id='modulos' multiple='multiple' required></select><div class='help-block with-errors'></div></div>");
+
+  if(id_igreja > 0){
+    $.ajax({
+        url: '/admin/igrejas/carregarModulos/'+id_igreja,
+        type: 'get',
+        dataType: 'json',
+        success: function(response){
+
+          var len = 0;
+
+          if(response['data'] != null){
+            len = response['data'].length;
+          }
+
+          if(len > 0){
+            for(var i=0; i<len; i++){
+
+              var id = response['data'][i].id;
+              var nome = response['data'][i].nome;
+
+              var result = "<option value="+id+">"+nome+"</option>"; 
+              $("#modulos").append(result);
+            }
+          }
+
+        }
+    });
+  }
+
+  $('#modulos').select2();
+});
+
 $(function () {
+
+    //$('#modulos').multiSelect();
+    $('#modulos').select2();
 
     $('#tbl_perfis').DataTable({
     'paging'      : true,
@@ -150,17 +197,24 @@ $(function () {
                       </div>
                   </div>
                   <div class="col-md-12">
-                      <div class="form-group has-feedback">
-                        <label>Selecione a Igreja associada ao perfil:</label>
-                        <select class="form-control" required>
-                          <option value="-1" selected>Administrador da plataforma Église</option>
-                          <?php $igrejas = App\TblIgreja::orderBy('nome','ASC')->get(); ?>
-                          @foreach ($igrejas as $igreja)
-                            <option value="{{$igreja->id}}">{{$igreja->nome}}</option>
-                          @endforeach
-                        </select>
-                        <div class="help-block with-errors"></div>
-                      </div>
+                    <div class="form-group has-feedback">
+                      <label>Selecione a Igreja associada ao perfil:</label>
+                      <select id="igreja" name="igreja" class="form-control" required>
+                        <option value="-1" selected>Administrador da plataforma Église</option>
+                        <?php $igrejas = App\TblIgreja::orderBy('nome','ASC')->get(); ?>
+                        @foreach ($igrejas as $igreja)
+                          <option value="{{$igreja->id}}">{{$igreja->nome}}</option>
+                        @endforeach
+                      </select>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" id="list-area">
+                    <div class="form-group has-feedback">
+                      <label>Selecione quais módulos da igreja o perfil irá acessar:</label>
+                      <select name="modulos[]" data-placeholder="Selecione os módulos" class="form-control select2" id='modulos' style="width: 100%;" multiple='multiple' required></select>
+                      <div class="help-block with-errors"></div>
+                    </div>
                   </div>
                 </div>
               </div>

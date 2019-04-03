@@ -12,150 +12,217 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
     public function run()
     {
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>1,
             'id_igreja'=>3,
             'id_modulo'=>1,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>2,
             'id_igreja'=>3,
             'id_modulo'=>2,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>3,
             'id_igreja'=>3,
             'id_modulo'=>3,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>4,
             'id_igreja'=>3,
             'id_modulo'=>4,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>5,
             'id_igreja'=>3,
             'id_modulo'=>5,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>6,
             'id_igreja'=>3,
             'id_modulo'=>6,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>7,
             'id_igreja'=>3,
             'id_modulo'=>7,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>8,
             'id_igreja'=>3,
             'id_modulo'=>8,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>9,
             'id_igreja'=>3,
             'id_modulo'=>9,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>10,
             'id_igreja'=>3,
             'id_modulo'=>10,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>11,
             'id_igreja'=>3,
             'id_modulo'=>11,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>12,
             'id_igreja'=>3,
             'id_modulo'=>12,
         ]);
 
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>13,
             'id_igreja'=>1,
             'id_modulo'=>1,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>14,
             'id_igreja'=>1,
             'id_modulo'=>2,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>15,
             'id_igreja'=>1,
             'id_modulo'=>3,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>16,
             'id_igreja'=>1,
             'id_modulo'=>4,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>17,
             'id_igreja'=>1,
             'id_modulo'=>5,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>18,
             'id_igreja'=>1,
             'id_modulo'=>6,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>19,
             'id_igreja'=>1,
             'id_modulo'=>7,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>20,
             'id_igreja'=>1,
             'id_modulo'=>8,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>21,
             'id_igreja'=>1,
             'id_modulo'=>9,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>22,
             'id_igreja'=>1,
             'id_modulo'=>10,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>23,
             'id_igreja'=>1,
             'id_modulo'=>11,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>24,
             'id_igreja'=>1,
             'id_modulo'=>12,
         ]);
 
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>25,
             'id_igreja'=>2,
             'id_modulo'=>1,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>26,
             'id_igreja'=>2,
             'id_modulo'=>2,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>27,
             'id_igreja'=>2,
             'id_modulo'=>3,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>28,
             'id_igreja'=>2,
             'id_modulo'=>4,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>29,
             'id_igreja'=>2,
             'id_modulo'=>5,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>30,
             'id_igreja'=>2,
             'id_modulo'=>6,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>31,
             'id_igreja'=>2,
             'id_modulo'=>7,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>32,
             'id_igreja'=>2,
             'id_modulo'=>8,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>33,
             'id_igreja'=>2,
             'id_modulo'=>9,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>34,
             'id_igreja'=>2,
             'id_modulo'=>10,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>35,
             'id_igreja'=>2,
             'id_modulo'=>11,
         ]);
         DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>36,
             'id_igreja'=>2,
             'id_modulo'=>12,
+        ]);
+
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>37,
+            'id_igreja'=>1,
+            'id_modulo'=>13,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>38,
+            'id_igreja'=>2,
+            'id_modulo'=>13,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>39,
+            'id_igreja'=>3,
+            'id_modulo'=>13,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>40,
+            'id_igreja'=>1,
+            'id_modulo'=>14,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>41,
+            'id_igreja'=>2,
+            'id_modulo'=>14,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([
+            'id'=>42,
+            'id_igreja'=>3,
+            'id_modulo'=>14,
         ]);
     }
 }

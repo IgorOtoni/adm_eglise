@@ -373,7 +373,7 @@ $('#modal-configuracoes').on('show.bs.modal', function (event) {
                     <div class="col-md-12">
                       <div class="form-group has-feedback">
                         <label>Módulos do sistema</label>
-                        <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione o módulo"
+                        <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione os módulos"
                                 style="width: 100%;" required>
                           <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
                           @foreach ($modulos as $modulo)

@@ -13,18 +13,18 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
     {
         // Permissões do módulo de usuário
         DB::table('tbl_modulos_permissoes')->insert([
-            'id'=>13,
+            'id'=>1,
             'id_modulo'=>13,
             'id_permissao'=>1,
         ]);
         DB::table('tbl_modulos_permissoes')->insert([
             'id'=>2,
-            'id_modulo'=>1,
+            'id_modulo'=>13,
             'id_permissao'=>2,
         ]);
         DB::table('tbl_modulos_permissoes')->insert([
             'id'=>3,
-            'id_modulo'=>1,
+            'id_modulo'=>13,
             'id_permissao'=>3,
         ]);
         //////////////////////////////////////
@@ -37,12 +37,12 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
         ]);
         DB::table('tbl_modulos_permissoes')->insert([
             'id'=>5,
-            'id_modulo'=>2,
+            'id_modulo'=>14,
             'id_permissao'=>2,
         ]);
         DB::table('tbl_modulos_permissoes')->insert([
             'id'=>6,
-            'id_modulo'=>2,
+            'id_modulo'=>14,
             'id_permissao'=>3,
         ]);
         //////////////////////////////////////

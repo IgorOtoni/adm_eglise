@@ -22,6 +22,15 @@ class TblIgrejaController extends Controller
         return view('igrejas.index');
     }
 
+    public function modulos_igreja($id){
+        $modulos['data'] = \DB::table('tbl_modulos')
+            ->select('tbl_modulos.*')
+            ->leftJoin('tbl_igrejas_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
+            ->where('tbl_igrejas_modulos.id_igreja','=',$id)
+            ->get();
+        return json_encode($modulos);
+    }
+
     public function tbl_igrejas(){
         //$igrejas = TblIgreja::orderBy('nome', 'ASC');
         $igrejas = \DB::table('tbl_igrejas')

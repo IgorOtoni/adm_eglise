@@ -126,7 +126,7 @@ $(function () {
             alert("CEP não encontrado.");
         }
     });
-  })
+  });
 
   $('#incluirIgrejaFormulario').validator({
     update: true,
@@ -140,11 +140,11 @@ $(function () {
   });
 
     
-})
+});
 </script>
 @endpush
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -255,7 +255,7 @@ $(function () {
               <div class="col-md-12">
                 <div class="form-group has-feedback">
                   <label>Módulos do sistema</label>
-                  <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione o módulo"
+                  <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione os módulos"
                           style="width: 100%;" required>
                     <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get();
                     foreach ($modulos as $modulo){
@@ -288,7 +288,6 @@ $(function () {
             <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
           </div>
         </div>
-      </div>
 
     </section>
     <!-- /.content -->

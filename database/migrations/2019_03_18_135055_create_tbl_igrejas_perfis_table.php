@@ -13,10 +13,14 @@ class CreateTblIgrejasPerfisTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_igrejas_perfis', function (Blueprint $table) {
+        /*Schema::create('tbl_igrejas_perfis', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('id_igreja')->unsigned();
+            $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
+            $table->bigInteger('id_perfil')->unsigned();
+            $table->foreign('id_perfil')->references('id')->on('tbl_perfis');
             $table->timestamps();
-        });
+        });*/
     }
 
     /**

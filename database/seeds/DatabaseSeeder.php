@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Modulos_Seeder::class);
         $this->call(Tbl_Permissoes_Seeder::class);
         $this->call(Tbl_Permissoes_Modulos_Seeder::class);
+        $this->call(Tbl_Igrejas_Modulos_Seeder::class);
         $this->call(Tbl_Permissoes_Modulos_Perfis_Seeder::class);
         $this->call(Tbl_Igrejas_Seeder::class);
         $this->call(Tbl_Template_Seeder::class);
         $this->call(Tbl_Configuracao_Seeder::class);
-        $this->call(Tbl_Igrejas_Modulos_Seeder::class);
         $this->call(Tbl_Eventos_Fixos_Seeder::class);
         $this->call(Tbl_Noticias_Seeder::class);
         $this->call(Tbl_Eventos_Seeder::class);

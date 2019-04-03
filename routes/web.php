@@ -77,11 +77,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('igrejas/atualizar', 'TbligrejaController@update')->name('igrejas.atualizar');
         Route::post('igrejas/excluirLogo', 'TbligrejaController@excluirLogo')->name('igrejas.excluirLogo');
         Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
+        Route::get('igrejas/carregarModulos/{id}', 'TbligrejaController@modulos_igreja')->name('igrejas.carregarModulos');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::get('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
 		Route::get('perfis/switchStatus/{id}', 'TblperfilController@switchStatus')->name('perfis.switchStatus');
+        Route::get('perfis/carregarPermissoes/{id}', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
+        Route::post('perfis/carregarPermissoes', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
+        Route::post('perfis/atualizarPermissoes/', 'TblperfilController@atualizarPermissoes')->name('perfis.atualizarPermissoes');
 
         Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 

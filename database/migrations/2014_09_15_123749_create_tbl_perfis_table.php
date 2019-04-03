@@ -17,6 +17,8 @@ class CreateTblPerfisTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->text('descricao')->nullable();
+            $table->bigInteger('id_igreja')->unsigned()->nullable();
+            $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

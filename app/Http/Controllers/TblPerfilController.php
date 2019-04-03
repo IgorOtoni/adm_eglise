@@ -22,11 +22,51 @@ class TblPerfilController extends Controller
     {
         $perfis = TblPerfil::orderBy('nome', 'ASC');
         return DataTables::of($perfis)->addColumn('action',function($perfis){
-            return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
-            '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';;
+            return '<form class="form-inline" method="post" action="perfis/carregarPermissoes">'.
+            '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            '<input type="hidden" name="id" value="'.$perfis->id.'">'.
+            '<button type="submit" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button>'.'&nbsp'.
+            '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>'.
+            '</form>';
         })
         ->make(true);
+    }
+
+    public function carregarPermissoes($id){
+        $perfil = \DB::table('tbl_perfis')
+            ->select('tbl_perfis.*')
+            ->where('tbl_perfis.id','=',$id)
+            ->get();
+        $perfil = $perfil[0];
+        $modulos = \DB::table('tbl_modulos')
+            ->select(\DB::raw('distinct tbl_modulos.*'))
+            ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
+            ->leftJoin('tbl_perfis_modulos_permissoes', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_modulos_permissoes.id_modulo_igreja')
+            ->leftJoin('tbl_perfis', 'tbl_perfis_modulos_permissoes.id_perfil', '=', 'tbl_perfis.id')
+            ->where('tbl_perfis.id','=',$id)
+            //->groupBy('tbl_modulos.id')
+            ->orderBy('nome', 'ASC')
+            ->get();
+        $permissoes = array();
+        foreach($modulos as $modulo){
+            $permissoes_ativas = \DB::table('tbl_permissoes')
+                ->select('tbl_permissoes.*')
+                ->leftJoin('tbl_perfis_modulos_permissoes', 'tbl_permissoes.id', '=', 'tbl_perfis_modulos_permissoes.id_permissao')
+                ->leftJoin('tbl_igrejas_modulos', 'tbl_perfis_modulos_permissoes.id_modulo_igreja', '=', 'tbl_igrejas_modulos.id')
+                ->where('tbl_igrejas_modulos.id_modulo','=',$modulo->id)
+                ->where('tbl_perfis_modulos_permissoes.id_perfil','=',$id)
+                ->get();
+            $permissoes[$modulo->id]['ativas'] = $permissoes_ativas;
+            $permissoes_todas = \DB::table('tbl_permissoes')
+                ->select('tbl_permissoes.*')
+                ->leftJoin('tbl_modulos_permissoes', 'tbl_modulos_permissoes.id_permissao', '=', 'tbl_permissoes.id')
+                ->leftJoin('tbl_modulos', 'tbl_modulos.id', '=', 'tbl_modulos_permissoes.id_modulo')
+                ->where('tbl_modulos.id','=',$modulo->id)
+                ->orderBy('nome', 'ASC')
+                ->get();
+            $permissoes[$modulo->id]['todas'] = $permissoes_todas;
+        }
+        return view('perfis.permissoes', compact('perfil','modulos', 'permissoes'));
     }
 
     public function switchStatus(Request $request){
