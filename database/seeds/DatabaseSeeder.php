@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Sermoes_Seeder::class);
         $this->call(Tbl_Galeria_Seeder::class);
         $this->call(Tbl_Fotos_Seeder::class);
+        $this->call(Tbl_Menus_Seeder::class);
+        $this->call(Tbl_Sub_Menus_Seeder::class);
+        $this->call(Tbl_Sub_Sub_Menus_Seeder::class);
     }
 }

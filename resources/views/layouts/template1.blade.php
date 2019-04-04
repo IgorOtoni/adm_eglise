@@ -61,8 +61,42 @@
                 <div class="col-md-12">
                 <nav class="navigation">
                     <ul class="sf-menu">
-                    <li><a href="/{{$igreja->url}}/login" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li>
-                    <?php
+                        
+                    <?php foreach($menus as $menu){
+                        if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
+                            <li><a href="#">{{$menu->nome}}</a>
+                                <ul class="dropdown">
+                                    <?php foreach($submenus[$menu->id] as $submenu){
+                                        if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
+                                            <li><a href="#">{{$submenu->nome}}</a>
+                                                <ul class="dropdown">
+                                                    <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
+                                                        if($subsubmenu->link != null){
+                                                            ?> <li><a href="/{{$igreja->url}}/{{$subsubmenu->link}}">{{$subsubmenu->nome}}</a></li> <?php
+                                                        }else{
+                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$subsubmenu->nome}}</a></li> <?php
+                                                        }
+                                                    } ?>
+                                                </ul>
+                                            </li>
+                                        <?php }else if($submenu->link != null){
+                                            ?> <li><a href="/{{$igreja->url}}/{{$submenu->link}}">{{$submenu->nome}}</a></li> <?php
+                                        }else{
+                                            ?> <li><a href="/{{$igreja->url}}/#">{{$submenu->nome}}</a></li> <?php
+                                        }
+                                    } ?>
+                                </ul>
+                            </li>
+                            <?php
+                        }else if($menu->link != null){
+                            ?> <li><a href="/{{$igreja->url}}/{{$menu->link}}">{{$menu->nome}}</a></li> <?php
+                        }else{
+                            ?> <li><a href="/{{$igreja->url}}/#">{{$menu->nome}}</a></li> <?php
+                        }
+                    }
+
+                    /*
+                    ?> <li><a href="/{{$igreja->url}}/login" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li> <?php
                     $ids_modulos_permitidos = array();
                     $x = 0;
                     foreach($modulos as $modulo){
@@ -112,7 +146,7 @@
                             </ul>
                             </li>
                         <?php
-                    }
+                    }*/
                     ?>
                     </ul>
                 </nav>

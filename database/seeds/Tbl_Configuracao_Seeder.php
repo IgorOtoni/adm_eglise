@@ -12,6 +12,7 @@ class Tbl_Configuracao_Seeder extends Seeder
     public function run()
     {
         DB::table('tbl_configuracoes')->insert([
+            'id'=>1,
             'id_igreja'=>1,
             'id_template'=>2,
             'url'=>'primeiraiba',
@@ -23,6 +24,7 @@ class Tbl_Configuracao_Seeder extends Seeder
         ]);
 
         DB::table('tbl_configuracoes')->insert([
+            'id'=>2,
             'id_igreja'=>2,
             'id_template'=>3,
             'url'=>'segundaiba',
@@ -34,6 +36,7 @@ class Tbl_Configuracao_Seeder extends Seeder
         ]);
 
         DB::table('tbl_configuracoes')->insert([
+            'id'=>3,
             'id_igreja'=>3,
             'url'=>'terceiraiba',
             'twitter'=>'http://www.twitter.com/profile/primeiraIgrejaBatista',

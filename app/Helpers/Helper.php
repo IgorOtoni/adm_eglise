@@ -32,6 +32,31 @@ function obter_modulos_igreja($igreja){
         ->get();
     return $modulos;
 }
+function obter_menus_configuracao($id){
+    $menus = \DB::table('tbl_menus')
+        ->where('id_configuracao', '=', $id)
+        ->orderBy('ordem', 'ASC')
+        ->get();
+    $submenus = array();
+    foreach($menus as $menu){
+        $submenus_ = \DB::table('tbl_sub_menus')
+            ->where('id_menu', '=', $menu->id)
+            ->orderBy('ordem', 'ASC')
+            ->get();
+        if($submenus_ != null && count($submenus_) > 0) $submenus[$menu->id] = $submenus_;
+    }
+    $subsubmenus = array();
+    foreach($submenus as $submenu__){
+        foreach($submenu__ as $submenu){
+            $subsubmenus_ = \DB::table('tbl_sub_sub_menus')
+                ->where('id_submenu', '=', $submenu->id)
+                ->orderBy('ordem', 'ASC')
+                ->get();
+            if($subsubmenus_ != null && count($subsubmenus_) > 0) $subsubmenus[$submenu->id] = $subsubmenus_;
+        }
+    }
+    return array($menus, $submenus, $subsubmenus);
+}
 function muda_cep($cep){
     return str_replace(".", "", str_replace("-", "", $cep));
 }
