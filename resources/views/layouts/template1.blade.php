@@ -64,11 +64,11 @@
                         
                     <?php foreach($menus as $menu){
                         if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
-                            <li><a href="#">{{$menu->nome}}</a>
+                            <li><a href="/{{$igreja->url}}/{{($menu->link != null) ? $menu->link != null : "#"}}">{{$menu->nome}}</a>
                                 <ul class="dropdown">
                                     <?php foreach($submenus[$menu->id] as $submenu){
                                         if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
-                                            <li><a href="#">{{$submenu->nome}}</a>
+                                            <li><a href="/{{$igreja->url}}/{{($submenu->link != null) ? $submenu->link != null : "#"}}">{{$submenu->nome}}</a>
                                                 <ul class="dropdown">
                                                     <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
                                                         if($subsubmenu->link != null){
