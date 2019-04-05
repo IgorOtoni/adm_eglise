@@ -1,7 +1,9 @@
 @extends('layouts.template1')
 @push('script')
 <script>
-
+$(function(){
+    $("#html-append").html({{$publicacao->html}});
+});
 </script>
 @endpush
 @section('content')
@@ -35,9 +37,11 @@
 <div id="content" class="content full">
     <div class="container">
     <div class="row">
-        <div class="col-md-12 sermon-archive"> 
+        <div class="col-md-12 sermon-archive" id="html-append"> 
         <!-- Sermons Listing -->
-        {{$publicacao->html}}
+        @php
+            echo $publicacao->html
+        @endphp
         </div>
     </div>
     </div>
