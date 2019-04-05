@@ -181,6 +181,21 @@ class IgrejaController extends Controller
         }
         return view('layouts.template' . $igreja->id_template . '.galeria', compact('igreja', 'modulos', 'galerias', 'fotos', 'menus', 'submenus', 'subsubmenus'));
     }
+    public function publicacao($url,$id){
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $retorno = obter_menus_configuracao($igreja->id_configuracao);
+        $menus = $retorno[0];
+        $submenus = $retorno[1];
+        $subsubmenus = $retorno[2];
+        $publicacao = \DB::table('tbl_publicacoes')
+            ->where('id_igreja', '=', $igreja->id)
+            ->where('id', '=', $id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        $publicacao = $publicacao[0];
+        return view('layouts.template' . $igreja->id_template . '.publicacao', compact('igreja', 'modulos', 'publicacao', 'menus', 'submenus', 'subsubmenus'));
+    }
     public function carrega_imagem($largura,$altura,$pasta,$arquivo){
         return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));
     }

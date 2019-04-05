@@ -100,6 +100,7 @@
         <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{route('igrejas')}}"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
         <li><a href="{{route('perfis')}}"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
+        <li><a href="{{route('publicacoes')}}"><i class="fa fa-sticky-note"></i> <span>Publicacoes</span></a></li>
         <li><a href="/usuarios"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
       </ul>
     </section>

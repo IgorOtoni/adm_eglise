@@ -54,6 +54,7 @@ Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticia
 Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
 Route::get('/{url}/sermoes', 'IgrejaController@sermoes')->name('igreja.sermoes');
 Route::get('/{url}/galeria','IgrejaController@galeria')->name('igreja.galeria');
+Route::get('/{url}/publicacao/{id}','IgrejaController@publicacao')->name('igreja.publicacao');
 Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
 Route::get('/carrega_imagem/{largura},{altura},{pasta},{arquivo}','IgrejaController@carrega_imagem')->name('igreja.carrega_imagem');
 
@@ -86,6 +87,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('perfis/carregarPermissoes/{id}', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
         Route::post('perfis/carregarPermissoes', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
         Route::post('perfis/atualizarPermissoes/', 'TblperfilController@atualizarPermissoes')->name('perfis.atualizarPermissoes');
+
+        Route::get('publicacoes', 'TblpublicacoesController@index')->name('publicacoes');
+        Route::post('publicacoes/incluir', 'TblpublicacoesController@store')->name('publicacoes.incluir');
 
         Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 
