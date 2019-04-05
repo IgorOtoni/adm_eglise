@@ -1,50 +1,27 @@
-@extends('layouts.template1')
+@extends('layouts.template3')
 @push('script')
 <script>
-$(function(){
-    $("#html-append").html({{$publicacao->html}});
-});
+
 </script>
 @endpush
 @section('content')
-<!-- Start Nav Backed Header -->
-<div class="nav-backed-header parallax">
-<div class="container">
-    <div class="row">
-    <div class="col-md-12">
-        <ol class="breadcrumb">
-        <li><a href="/{{$igreja->url}}/">Home</a></li>
-        <li class="active">Publicação</li>
-        </ol>
-    </div>
-    </div>
-</div>
-</div>
-<!-- End Nav Backed Header --> 
-<!-- Start Page Header -->
-<div class="page-header">
-<div class="container">
-    <div class="row">
-    <div class="col-md-12">
-        <h1>Publicação: {{$publicacao->nome}}</h1>
-    </div>
-    </div>
-</div>
-</div>
-<!-- End Page Header --> 
-<!-- Start Content -->
-<div class="main" role="main">
-<div id="content" class="content full">
+<!-- ##### Blog Area Start ##### -->
+<div class="faith-blog-area section-padding-100-0">
     <div class="container">
-    <div class="row">
-        <div class="col-md-12 sermon-archive" id="html-append"> 
-        <!-- Sermons Listing -->
-        @php
-            echo $publicacao->html
-        @endphp
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mx-auto">
+                    <h3>Publicação: {{$publicacao->nome}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" id="html-append">
+                <?php echo $publicacao->html; ?>
+            </div>
         </div>
     </div>
-    </div>
 </div>
-</div>
+<!-- ##### Blog Area End ##### -->
 @endsection
