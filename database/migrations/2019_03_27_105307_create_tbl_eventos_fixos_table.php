@@ -21,6 +21,7 @@ class CreateTblEventosFixosTable extends Migration
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->string('foto')->nullable();
             $table->text('descricao')->nullable();
+            //$table->boolean('banner')->default(false);
             $table->timestamps();
         });
     }

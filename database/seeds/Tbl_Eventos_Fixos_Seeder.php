@@ -18,6 +18,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>3,
             'foto'=>"evento-1-3.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 7:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>2,
@@ -34,6 +35,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>3,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
+            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
@@ -43,6 +45,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>1,
             'foto'=>"evento-4-1.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 8:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>5,
@@ -59,6 +62,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>1,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
+            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
@@ -68,6 +72,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>2,
             'foto'=>"evento-7-2.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 6:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>8,
@@ -84,6 +89,7 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>2,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
+            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([

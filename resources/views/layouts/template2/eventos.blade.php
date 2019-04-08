@@ -120,8 +120,13 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                                         <p>{{$evento->descricao}}</p>
                                         <!--<a href="#">Read More <i class="fa fa-angle-double-right"></i></a>-->
                                     </div>
+                                    <?php /* ?>
                                     <div class="find-out-more-btn">
                                         <a href="#" data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" class="btn crose-btn btn-2">Ver em detalhe</a>
+                                    </div>
+                                    <?php */ ?>
+                                    <div class="find-out-more-btn">
+                                        <a href="/{{$igreja->url}}/evento/{{$evento->id}}" class="btn crose-btn btn-2">Ver em detalhe</a>
                                     </div>
                                 </div>
                             </div>

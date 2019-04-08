@@ -69,11 +69,14 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
                                 <img src="/storage/no-news.jpg" alt=""> 
                             <?php } ?>
                             <div class="post-date">
+                                <?php /* ?>
                                 <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#"> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
+                                <?php */ ?>
+                                <a href="#">Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
                             </div>
                         </div>
                         <div class="blog-content">
-                            <a href="#" class="blog-title">{{$noticia->nome}}</a>
+                            <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}" class="blog-title">{{$noticia->nome}}</a>
                             <p>{{$noticia->descricao}}</p>
                             <?php
                             if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){

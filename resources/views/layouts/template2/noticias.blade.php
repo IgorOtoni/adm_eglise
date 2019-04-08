@@ -93,9 +93,12 @@ $('#modal-noticia').on('show.bs.modal', function (event) {
                             </a>
                         </div>
                         <div class="post-content">
+                            <?php /* ?>
                             <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#" class="post-title">
                                 <h4>{{$noticia->nome}}</h4>
                             </a>
+                            <?php */ ?>
+                            <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}"><h4>{{$noticia->nome}}</h4></a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
                                 <?php

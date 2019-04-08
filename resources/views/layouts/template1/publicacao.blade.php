@@ -11,7 +11,7 @@
     <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb">
-        <li><a href="/{{$igreja->url}}/noticia">Home</a></li>
+        <li><a href="/{{$igreja->url}}/">Home</a></li>
         <li class="active">Publicação</li>
         </ol>
     </div>

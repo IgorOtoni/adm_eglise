@@ -90,17 +90,20 @@ $('#modal-evento').on('show.bs.modal', function (event) {
     <div class="hero-slides owl-carousel">
         <?php
         $x = 1;
-        foreach($eventos_fixos as $evento){
+        foreach($banners as $banner){
+            if($banner->link != null){
+                ?> <a href="{{$banner->link}}"> <?php
+            }
             ?>
             <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img bg-overlay" style="background-image: url(storage/{{(($evento->foto != null) ? "eventos/".$evento->foto : "no-event.jpg")}});">
+            <div class="single-hero-slide bg-img bg-overlay" style="background-image: url(storage/{{(($banner->foto != null) ? "banners/".$banner->foto : "no-event.jpg")}});">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center justify-content-end">
                         <div class="col-12 col-lg-7">
                             <!-- Slides Content -->
                             <div class="hero-slides-content">
-                                <h2 data-animation="fadeInUp" data-delay="100ms">{{$evento->nome}}</h2>
-                                <h3 data-animation="fadeInUp" data-delay="300ms">{{$evento->dados_horario_local}}</h3>
+                                <h2 data-animation="fadeInUp" data-delay="100ms">{{$banner->nome}}</h2>
+                                <h3 data-animation="fadeInUp" data-delay="300ms">{{$banner->descricao}}</h3>
                             </div>
                         </div>
                     </div>
@@ -117,6 +120,9 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                 </div>-->
             </div>
             <?php
+            if($banner->link != null){
+                ?> </a> <?php
+            }
         }
         ?>
     </div>
@@ -155,9 +161,12 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                             </div>
                             <!-- Events Content -->
                             <div class="events-content">
+                                <?php /* ?>
                                 <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" href="#">
                                     <h6>{{$evento->nome}}</h6>
                                 </a>
+                                <?php */ ?>
+                                <a href="/{{$igreja->url}}/evento/{{$evento->id}}"><h6>{{$evento->nome}}</h6></a>
                                 <p>Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}} @ {{$evento->dados_local}}</p>
                             </div>
                         </div>
@@ -228,11 +237,14 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                                 <img src="/storage/no-news.jpg" alt=""> 
                             <?php } ?>
                             <div class="post-date">
+                                <?php /* ?>
                                 <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#"> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
+                                <?php */ ?>
+                                <a href="#">Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
                             </div>
                         </div>
                         <div class="blog-content">
-                            <a href="#" class="blog-title">{{$noticia->nome}}</a>
+                            <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}" class="blog-title">{{$noticia->nome}}</a>
                             <p>{{$noticia->descricao}}</p>
                             <?php
                             if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){

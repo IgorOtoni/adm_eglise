@@ -18,6 +18,7 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-1-3.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>2,
@@ -52,6 +53,7 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-5-1.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>6,
@@ -86,6 +88,7 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-9-2.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
+            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>10,

@@ -40,7 +40,7 @@
                 <header class="post-title">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                    <h3><a href="single-sermon.html">{{$sermao->nome}}</a></h3>
+                    <h3><a href="/{{$igreja->url}}/sermao/{{$sermao->id}}">{{$sermao->nome}}</a></h3>
                     <span class="meta-data"><i class="fa fa-calendar"></i> {{\Carbon\Carbon::parse($sermao->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}} </div>
                 </div>
                 </header>

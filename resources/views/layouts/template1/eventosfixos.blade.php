@@ -46,7 +46,7 @@
                         <img src="/storage/no-event.jpg" alt="">
                     <?php } ?>
                     <div class="grid-content">
-                    <h3>{{$evento->nome}}</h3>
+                    <h3><a href="/{{$igreja->url}}/eventofixo/{{$evento->id}}">{{$evento->nome}}</a></h3>
                     <?php if($evento->descricao != null){ ?> <p>{{$evento->descricao}}</p> <?php } ?>
                     </div>
                     <ul class="info-table">

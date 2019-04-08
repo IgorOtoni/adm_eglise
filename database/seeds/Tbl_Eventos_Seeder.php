@@ -28,6 +28,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>3,
             'descricao'=>"Comemoração da páscoa, viva a ressureição de Jesus Cristo.",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>3,
@@ -65,6 +66,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>1,
             'descricao'=>"Comemoração da páscoa, viva a ressureição de Jesus Cristo.",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>7,
@@ -102,6 +104,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>2,
             'descricao'=>"Comemoração da páscoa, viva a ressureição de Jesus Cristo.",
+            //'banner'=>true,
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>11,

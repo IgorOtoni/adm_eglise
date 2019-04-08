@@ -89,23 +89,29 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 <section class="hero-area hero-post-slides owl-carousel">
     <?php
     $x = 1;
-    foreach($eventos_fixos as $evento){
+    foreach($banners as $banner){
+        if($banner->link != null){
+            ?> <a href="{{$banner->link}}"> <?php
+        }
         ?>
         <!-- Single Hero Slide -->
-        <div class="single-hero-slide bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(storage/{{(($evento->foto != null) ? "eventos/".$evento->foto : "no-event.jpg")}});">
+        <div class="single-hero-slide bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(storage/{{(($banner->foto != null) ? "banners/".$banner->foto : "no-event.jpg")}});">
             <!-- Post Content -->
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="hero-slides-content">
-                            <h2 data-animation="fadeInUp" data-delay="100ms">{{$evento->nome}}</h2>
-                            <p data-animation="fadeInUp" data-delay="300ms">{{$evento->dados_horario_local}}</p>
+                            <h2 data-animation="fadeInUp" data-delay="100ms">{{$banner->nome}}</h2>
+                            <p data-animation="fadeInUp" data-delay="300ms">{{$banner->descricao}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <?php
+        if($banner->link != null){
+            ?> </a> <?php
+        }
     }
     ?>
 </section>
@@ -138,9 +144,12 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                             </a>
                         </div>
                         <div class="post-content">
+                            <?php /* ?>
                             <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#" class="post-title">
                                 <h4>{{$noticia->nome}}</h4>
                             </a>
+                            <?php */ ?>
+                            <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}"><h4>{{$noticia->nome}}</h4></a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
                                 <?php
@@ -219,7 +228,10 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                                         <!--<a href="#">Read More <i class="fa fa-angle-double-right"></i></a>-->
                                     </div>
                                     <div class="find-out-more-btn">
+                                        <?php /* ?>
                                         <a href="#" data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" class="btn crose-btn btn-2">Ver em detalhe</a>
+                                        <?php */ ?>
+                                        <a href="/{{$igreja->url}}/evento/{{$evento->id}}" class="btn crose-btn btn-2">Ver em detalhe</a>
                                     </div>
                                 </div>
                             </div>

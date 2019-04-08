@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblEventosTable extends Migration
+class CreateTblBannersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateTblEventosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_eventos', function (Blueprint $table) {
+        Schema::create('tbl_banners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->datetime('dados_horario_inicio');
-            $table->datetime('dados_horario_fim')->nullable();
-            $table->string('dados_local');
+            $table->text('descricao');
+            $table->string('foto');
+            $table->string('link')->nullable();
             $table->bigInteger('id_igreja')->unsigned();
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
-            $table->string('foto')->nullable();
-            $table->text('descricao')->nullable();
-            //$table->boolean('banner')->default(false);
+            $table->bigInteger('ordem');
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ class CreateTblEventosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_eventos');
+        Schema::dropIfExists('tbl_banners');
     }
 }

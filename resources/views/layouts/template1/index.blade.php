@@ -170,18 +170,19 @@ $('#modal-evento').on('show.bs.modal', function (event) {
         <ul style="display:none;">
             <?php
             $x = 1;
-            foreach($eventos_fixos as $evento){
+            foreach($banners as $banner){
                 ?>
                 <!-- SLIDE  -->
                 <li data-transition="fade" data-slotamount="1" data-masterspeed="1000"  data-saveperformance="off" data-title="{{$x++}}">
                     <!-- MAIN IMAGE -->
-                    <?php if($evento->foto != null){ ?>
-                    <img src="/storage/eventos/{{$evento->foto}}"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                    <?php }else{ ?>
-                    <img src="/storage/no-event.jpg"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                    <?php } ?>
+                    <img src="/storage/banners/{{$banner->foto}}"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
                     <!-- LAYERS -->
         
+                    <?php
+                    if($banner->link != null){
+                        ?> <a href="{{$banner->link}}"> <?php
+                    }
+                    ?>
                     <!-- LAYER NR. 1 --><!--data-end="3000"-->
                     <div class="tp-caption large_text randomrotate tp-resizeme" 
                             data-x="100" 
@@ -196,9 +197,17 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                             
                 data-endspeed="300" 
             
-                        style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->nome}} 
+                        style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->nome}} 
                     </div>
             
+                    <?php
+                    if($banner->link != null){
+                        ?> </a> <?php
+                    }
+                    if($banner->link != null){
+                        ?> <a href="{{$banner->link}}"> <?php
+                    }
+                    ?>
                     <!-- LAYER NR. 2 --><!--data-end="4000"-->
                     <div class="tp-caption large_text randomrotate tp-resizeme" 
                             data-x="100" 
@@ -213,8 +222,13 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                         
                 data-endspeed="300" 
             
-                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$evento->dados_horario_local}} 
+                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->descricao}} 
                     </div>
+                    <?php
+                    if($banner->link != null){
+                        ?> </a> <?php
+                    }
+                    ?>
                 </li>
                 <?php
             }
@@ -252,7 +266,10 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                         <img src="/storage/no-news.jpg" alt=""> 
                     <?php } ?>
                     <div class="grid-content">
+                    <?php /* ?>
                     <h3><a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="">{{$noticia->nome}}</a></h3>
+                    <?php */ ?>
+                    <h3><a href="/{{$igreja->url}}/noticia/{{$noticia->id}}">{{$noticia->nome}}</a></h3>
                     <span class="meta-data"><span><i class="fa fa-calendar"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</span><!--<span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span>--></span>
                     <?php
                     if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){

@@ -34,8 +34,8 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" id="html-append">
-            <?php echo $publicacao->html; ?>
+        <div class="row justify-content-center">
+            <div class="blog-posts-area"><?php echo $publicacao->html; ?></div>
         </div>
     </div>
 </section>

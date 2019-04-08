@@ -49,10 +49,14 @@ Route::get('/logout', function () {
 Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
 Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
 Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');
+Route::get('/{url}/evento/{id}', 'IgrejaController@evento')->name('igreja.evento');
 Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja.eventosfixos');
+Route::get('/{url}/eventofixo/{id}', 'IgrejaController@eventofixo')->name('igreja.eventofixo');
 Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');
+Route::get('/{url}/noticia/{id}', 'IgrejaController@noticia')->name('igreja.noticia');
 Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
 Route::get('/{url}/sermoes', 'IgrejaController@sermoes')->name('igreja.sermoes');
+Route::get('/{url}/sermao/{id}', 'IgrejaController@sermao')->name('igreja.sermao');
 Route::get('/{url}/galeria','IgrejaController@galeria')->name('igreja.galeria');
 Route::get('/{url}/publicacao/{id}','IgrejaController@publicacao')->name('igreja.publicacao');
 Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');

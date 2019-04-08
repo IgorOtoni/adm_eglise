@@ -71,6 +71,9 @@
                                         <p>{{$evento->descricao}}</p>
                                         <!--<a href="#">Read More <i class="fa fa-angle-double-right"></i></a>-->
                                     </div>
+                                    <div class="find-out-more-btn">
+                                        <a href="/{{$igreja->url}}/eventofixo/{{$evento->id}}" class="btn crose-btn btn-2">Ver em detalhe</a>
+                                    </div>
                                 </div>
                             </div>
 

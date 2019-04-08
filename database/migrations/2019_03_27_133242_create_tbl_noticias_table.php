@@ -20,6 +20,7 @@ class CreateTblNoticiasTable extends Migration
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->text('descricao')->nullable();
             $table->string('foto')->nullable();
+            //$table->boolean('banner')->default(false);
             $table->timestamps();
         });
     }
