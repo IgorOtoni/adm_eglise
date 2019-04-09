@@ -1,7 +1,7 @@
 @extends('layouts.template1')
 @push('script')
 <script>
-
+<script src="{{asset('template_igreja/template-padrao/plugins/flexslider/js/jquery.flexslider.js')}}"></script> <!-- FlexSlider --> 
 </script>
 @endpush
 @section('content')
@@ -38,6 +38,15 @@
         <div class="col-md-12 sermon-archive" id="html-append">
             <?php echo $publicacao->html; ?>
         </div>
+    </div>
+    <div class="row">
+        <ul class="isotope-grid" data-sort-id="gallery">
+        <?php foreach($galeria_publicacao as $foto){ ?>
+            <li class="col-md-3 col-sm-3 grid-item post format-image">
+                <div class="grid-item-inner"> <a href="/storage/galerias-publicacoes/{{$foto->foto}}" data-rel="prettyPhoto" class="media-box"> <img src="/carrega_imagem/480,320,galerias-publicacoes,{{$foto->foto}}" alt=""> <!--<img src="/storage/galerias/{{$foto->foto}}" alt="">--> </a> </div>
+            </li>
+        <?php } ?>
+        </ul>
     </div>
     </div>
 </div>

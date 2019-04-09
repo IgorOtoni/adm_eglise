@@ -259,10 +259,14 @@ class IgrejaController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
         $publicacao = $publicacao[0];
+        $galeria_publicacao = \DB::table('tbl_publicacao_fotos')
+            ->where('id_publicacao', '=', $publicacao->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
         $publicacao->html = str_replace("\\r","",$publicacao->html);
         $publicacao->html = str_replace("\\t","",$publicacao->html);
         $publicacao->html = str_replace("\\n","",$publicacao->html);
-        return view('layouts.template' . $igreja->id_template . '.publicacao', compact('igreja', 'modulos', 'publicacao', 'menus', 'submenus', 'subsubmenus'));
+        return view('layouts.template' . $igreja->id_template . '.publicacao', compact('igreja', 'modulos', 'publicacao', 'galeria_publicacao', 'menus', 'submenus', 'subsubmenus'));
     }
     public function carrega_imagem($largura,$altura,$pasta,$arquivo){
         return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));

@@ -19,6 +19,7 @@ class CreateTblPublicacoesTable extends Migration
             $table->text('html');
             $table->bigInteger('id_igreja')->unsigned();
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
+            $table->boolean('galeria')->default(false);
             $table->timestamps();
         });
     }

@@ -46,7 +46,7 @@
                         <?php
                         if($sermao->updated_at != null && $sermao->updated_at != $sermao->created_at){
                             ?>
-                            <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> Editado {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</li>
+                            <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> Editado {{\Carbon\Carbon::parse($sermao->updated_at)->diffForHumans()}}</li>
                             <?php
                         }
                         ?>

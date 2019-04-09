@@ -37,6 +37,17 @@
         <div class="row justify-content-center">
             <div class="blog-posts-area"><?php echo $publicacao->html; ?></div>
         </div>
+
+        <div class="row justify-content-center">
+            <?php foreach($galeria_publicacao as $foto){ ?>
+                <!-- Single Gallery Area -->
+                <div class="single-gallery-area">
+                    <a href="/storage/galerias-publicacoes/{{$foto->foto}}" class="gallery-img" title="{{$foto->foto}}">
+                        <img src="/carrega_imagem/480,320,galerias-publicacoes,{{$foto->foto}}" alt="">
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 </section>
 <!-- ##### Blog Area End ##### -->

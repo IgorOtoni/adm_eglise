@@ -199,11 +199,11 @@ $('#modal-evento').on('show.bs.modal', function (event) {
             
                         style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->nome}} 
                     </div>
-            
                     <?php
                     if($banner->link != null){
                         ?> </a> <?php
                     }
+                    
                     if($banner->link != null){
                         ?> <a href="{{$banner->link}}"> <?php
                     }

@@ -1,13 +1,39 @@
 @extends('layouts.admin_site.index')
 @push('script')
-<!-- Bootstrap WYSIHTML5 -->
+<!-- InputFilePTBR -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
+
+<!-- CKEditor -->
 <script src="{{asset('template_adm/bower_components/ckeditor/ckeditor.js')}}"></script>
+<!-- CKFinder -->
+<script src="{{asset('template_adm/bower_components/ckeditor/ckfinder/ckfinder.js')}}"></script>
+<!-- InputFilePTBR -->
+<script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
+<script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
+<!-- InputFilePTBR -->
+<script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
+<script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
 
 <script>
 $(function () {
+    $('#galeria').fileinput({
+        language: "pt-BR",
+        //minImageCount: 1,
+        maxImageCount: 15,
+        //uploadUrl: "/file-upload-batch/2",
+        allowedFileExtensions: ["jpg", "png", "gif"]
+    });
+
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace('editor')
+    var editor = CKEDITOR.replace('editor', {
+        language: 'pt-br',
+        //filebrowserBrowseUrl: '/template_adm/bower_components/ckeditor/ckfinder/ckfinder.html',
+        filebrowserUploadUrl: '/template_adm/bower_components/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+        //filebrowserWindowWidth: '1000',
+        //filebrowserWindowHeight: '700'
+    });
+    //CKFinder.setupCKEditor( editor );
 })
 </script>
 @endpush
@@ -88,6 +114,15 @@ $(function () {
                         <textarea name="html" id="editor" class="form-control"></textarea>
                     </div>
                 </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                          <label >Galeria</label>
+                          <input name="galeria[]" multiple type="file" id="galeria" required>
+                          <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
