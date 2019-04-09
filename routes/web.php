@@ -25,7 +25,7 @@ Route::get('admin', function () {
  // Authentication Routes...
  Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
  Route::post('login', 'Auth\LoginController@login');
- Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+ Route::post('logout', 'Auth\HomeController@logout')->name('logout');
 
  // Registration Routes...
  Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -37,7 +37,7 @@ Route::get('admin', function () {
  Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
  Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/', 'PlataformaController@eglise');
+Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
 Route::get('/logout', function () {
@@ -45,6 +45,8 @@ Route::get('/logout', function () {
     auth()->logout();
     return redirect('login');
 });
+
+Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.congregacoes');
 
 Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
 Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
