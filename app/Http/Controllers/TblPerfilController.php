@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DataTables;
 use App\TblPerfil;
+use App\TblPerfisModulosPermissoes;
+use App\TblIgrejasModulos;
 use Illuminate\Http\Request;
 
 class TblPerfilController extends Controller
@@ -22,12 +24,15 @@ class TblPerfilController extends Controller
     {
         $perfis = TblPerfil::orderBy('nome', 'ASC');
         return DataTables::of($perfis)->addColumn('action',function($perfis){
-            return '<form class="form-inline" method="post" action="perfis/carregarPermissoes">'.
+            /*return '<form class="form-inline" method="post" action="perfis/carregarPermissoes">'.
             '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
             '<input type="hidden" name="id" value="'.$perfis->id.'">'.
             '<button type="submit" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button>'.'&nbsp'.
             '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>'.
-            '</form>';
+            '</form>';*/
+            return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            '<a href="perfis/carregarPermissoes/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>'.'&nbsp'.
+            '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
         ->make(true);
     }
@@ -93,7 +98,42 @@ class TblPerfilController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $perfil = new TblPerfil();
+        $perfil->nome = $request->nome;
+        $perfil->descricao = $request->descricao;
+        $perfil->id_igreja = $request->igreja;
+
+        $count = TblPerfil::where("nome", "=", $perfil->nome)->where("id_igreja", "=", $perfil->id_igreja)->count();
+        if($count == 0){
+            $perfil->save();
+            $perfil_modulo = new TblPerfisModulosPermissoes();
+
+            foreach ($request->modulos as $key => $value) {
+                $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
+                $modulo_igreja = $modulo_igreja[0];
+
+                $data = [
+                    'id_perfil' => $perfil->id,
+                    'id_modulo_igreja' => $modulo_igreja->id,
+                    'id_permissao' => null,
+                ];
+                $perfil_modulo->create($data);
+            }
+
+            $notification = array(
+                'message' => $perfil->nome . ' foi incluído(a) com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('perfis')->with($notification);
+        }else{
+            $notification = array(
+                'message' => 'O nome informado já está na base de dados!', 
+                'alert-type' => 'error'
+            );
+
+            return back()->with($notification);
+        }
     }
 
     /**

@@ -27,7 +27,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label >{{$modulo->nome}}</label>
-                                
+                                <br>
                                 @foreach ($permissoes[$modulo->id]['todas'] as $permissao)
                                   <?php
                                   $marcacao = '';
@@ -38,7 +38,7 @@
                                     }
                                   }
                                   ?>
-                                  <input type="checkbox" {{$marcacao}}> {{$permissao->nome}}
+                                  <input name="" type="checkbox" {{$marcacao}}> {{$permissao->nome}}
                                 @endforeach
 
                             </div>
@@ -48,7 +48,7 @@
       
                 </div>
                 <div class="box-footer">
-                  <a href="{{route('igrejas')}}" class="btn btn-warning pull-left">Cancelar</a>
+                  <a href="{{route('perfis')}}" class="btn btn-warning pull-left">Cancelar</a>
                   <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
                 </div>
               </div>

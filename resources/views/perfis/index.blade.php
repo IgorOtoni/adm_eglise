@@ -29,7 +29,7 @@ $("#igreja").on("change", function(){
 
   $("#list-area").html("");
 
-  $("#list-area").append("<div class='form-group has-feedback'><label>Selecione quais módulos da igreja o perfil irá acessar:</label><select class='form-control' id='modulos' multiple='multiple' required></select><div class='help-block with-errors'></div></div>");
+  $("#list-area").append("<div class='form-group has-feedback'><label>Selecione quais módulos da igreja o perfil irá acessar:</label><select id='select_2_modulos' name='modulos[]' data-placeholder='Selecione os módulos' class='form-control select2' style='width: 100%;' multiple='multiple' required></select><div class='help-block with-errors'></div></div>");
 
   if(id_igreja > 0){
     $.ajax({
@@ -51,7 +51,7 @@ $("#igreja").on("change", function(){
               var nome = response['data'][i].nome;
 
               var result = "<option value="+id+">"+nome+"</option>"; 
-              $("#modulos").append(result);
+              $("#select_2_modulos").append(result);
             }
           }
 
@@ -59,13 +59,27 @@ $("#igreja").on("change", function(){
     });
   }
 
-  $('#modulos').select2();
+  $('#incluirPerfilFormulario').validator('update');
+  $('#incluirPerfilFormulario').validator('validate');
+
+  $('#incluirPerfilFormulario').validator({
+    update: true,
+    ignore: [],       
+    rules: {
+      //Rules
+    },
+    messages: {
+      //messages
+    }
+  });
+
+  $('#select_2_modulos').select2();
 });
 
 $(function () {
 
     //$('#modulos').multiSelect();
-    $('#modulos').select2();
+    $('#select_2_modulos').select2();
 
     $('#tbl_perfis').DataTable({
     'paging'      : true,
@@ -212,7 +226,7 @@ $(function () {
                   <div class="col-md-12" id="list-area">
                     <div class="form-group has-feedback">
                       <label>Selecione quais módulos da igreja o perfil irá acessar:</label>
-                      <select name="modulos[]" data-placeholder="Selecione os módulos" class="form-control select2" id='modulos' style="width: 100%;" multiple='multiple' required></select>
+                      <select id="select_2_modulos" name="modulos[]" data-placeholder="Selecione os módulos" class="form-control select2" style="width: 100%;" multiple="multiple" required></select>
                       <div class="help-block with-errors"></div>
                     </div>
                   </div>

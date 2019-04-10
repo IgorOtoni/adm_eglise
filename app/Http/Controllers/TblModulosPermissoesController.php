@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tbl_Modulos_Permissoes;
+use App\TblPerfisModulosPermissoes;
 use Illuminate\Http\Request;
 
 class TblModulosPermissoesController extends Controller
@@ -41,10 +41,10 @@ class TblModulosPermissoesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tbl_Modulos_Permissoes  $tbl_Modulos_Permissoes
+     * @param  \App\TblPerfisModulosPermissoes  $tbl_Modulos_Permissoes
      * @return \Illuminate\Http\Response
      */
-    public function show(Tbl_Modulos_Permissoes $tbl_Modulos_Permissoes)
+    public function show(TblPerfisModulosPermissoes $tbl_Modulos_Permissoes)
     {
         //
     }
@@ -52,10 +52,10 @@ class TblModulosPermissoesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tbl_Modulos_Permissoes  $tbl_Modulos_Permissoes
+     * @param  \App\TblPerfisModulosPermissoes  $tbl_Modulos_Permissoes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tbl_Modulos_Permissoes $tbl_Modulos_Permissoes)
+    public function edit(TblPerfisModulosPermissoes $tbl_Modulos_Permissoes)
     {
         //
     }
@@ -64,10 +64,10 @@ class TblModulosPermissoesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tbl_Modulos_Permissoes  $tbl_Modulos_Permissoes
+     * @param  \App\TblPerfisModulosPermissoes  $tbl_Modulos_Permissoes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tbl_Modulos_Permissoes $tbl_Modulos_Permissoes)
+    public function update(Request $request, TblPerfisModulosPermissoes $tbl_Modulos_Permissoes)
     {
         //
     }
@@ -75,10 +75,10 @@ class TblModulosPermissoesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tbl_Modulos_Permissoes  $tbl_Modulos_Permissoes
+     * @param  \App\TblPerfisModulosPermissoes  $tbl_Modulos_Permissoes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tbl_Modulos_Permissoes $tbl_Modulos_Permissoes)
+    public function destroy(TblPerfisModulosPermissoes $tbl_Modulos_Permissoes)
     {
         //
     }

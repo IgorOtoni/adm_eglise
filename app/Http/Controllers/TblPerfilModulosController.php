@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\PerfilModulos;
+use App\TblPerfilModulosPermissoes;
 use Illuminate\Http\Request;
 
 class TblPerfilModulosController extends Controller

@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('igrejas/carregarModulos/{id}', 'TbligrejaController@modulos_igreja')->name('igrejas.carregarModulos');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
-        Route::get('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
+        Route::post('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
         Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
 		Route::get('perfis/switchStatus/{id}', 'TblperfilController@switchStatus')->name('perfis.switchStatus');
         Route::get('perfis/carregarPermissoes/{id}', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
