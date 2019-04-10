@@ -65,7 +65,8 @@ $(function(){
         <div class="row">
             <div class="col-12">
                 <div class="cta-text d-flex justify-content-between align-items-center">
-                    <form id="subscribeForm" name="subscribeForm" method="post" action="/{{$igreja->url}}/inscreveEnvento" class="contact-form-area">
+                    <form id="subscribeForm" name="subscribeForm" method="get" action="/{{$igreja->url}}/inscreveEnvento" class="contact-form-area">
+                        <input type="hidden" name="id_evento" value="{{$evento->id}}">
                         @csrf
                         <h5>Me inscrever</h5>
                         <input class="form-control" type="text" data-inputmask='"mask": "(99) 99999-9999"' data-mask name="telefone" placeholder="Telefone" required> 

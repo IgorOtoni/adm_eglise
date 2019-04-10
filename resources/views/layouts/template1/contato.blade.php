@@ -63,7 +63,7 @@ $(function(){
                     <iframe src="https://maps.google.com/?ie=UTF8&amp;q={{muda_cep($igreja->cep)}}&amp;t=m&amp;z=14&amp;output=embed"></iframe>
                     </div>
                     <div class="row">
-                    <form method="post" data-toggle="validator" id="contactform" name="contactform" class="contact-form" action="/{{$igreja->url}}/enviaContato">
+                    <form method="get" data-toggle="validator" id="contactform" name="contactform" class="contact-form" action="/{{$igreja->url}}/enviaContato">
                         @csrf
                         <div class="col-md-6 margin-15">
                         <div class="form-group has-feedback">
@@ -92,9 +92,6 @@ $(function(){
                         </div>
                     </form>
                     <div class="clearfix"></div>
-                    <div class="col-md-12">
-                        <div id="message"></div>
-                    </div>
                     </div>
                 </div>
             </div>

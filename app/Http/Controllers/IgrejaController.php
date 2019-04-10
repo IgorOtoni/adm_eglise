@@ -278,8 +278,6 @@ class IgrejaController extends Controller
         return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));
     }
     public function inscreveEnvento($url, Request $request){
-        dd($request->all());
-
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
@@ -290,14 +288,12 @@ class IgrejaController extends Controller
         $inscricao = new TblInscricoes();
         $inscricao->email = $request->email;
         $inscricao->telefone = $request->telefone;
-        $inscricao->id_igreja = $igreja->id;
+        $inscricao->id_evento = $request->id_evento;
         $inscricao->save();
 
         return view('layouts.template' . $igreja->id_template . '.confirmacaoDados', compact('igreja', 'modulos', 'menus', 'submenus', 'subsubmenus'));
     }
     public function enviaContato($url, Request $request){
-        dd($request->all());
-
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);

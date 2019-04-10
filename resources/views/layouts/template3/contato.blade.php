@@ -64,7 +64,7 @@ $(function(){
                         <div class="col-12 col-lg-6">
                             <div class="contact-form-area">
                                 <h5>Envie uma mensagem</h5>
-                                <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="post">
+                                <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="get">
                                     @csrf
                                     <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome" required>
                                     <input name="email" type="email" class="form-control" id="email" placeholder="Email" required>

@@ -77,7 +77,8 @@ $(function(){
             <!-- Subscribe Form -->
             <div class="col-12 col-lg-6">
                 <div class="subscribe-form text-right">
-                    <form action="/{{$igreja->url}}/inscreveEnvento" method="post" id="subscribeForm" name="subscribeForm">
+                    <form action="/{{$igreja->url}}/inscreveEnvento" method="get" id="subscribeForm" name="subscribeForm">
+                        <input type="hidden" name="id_evento" value="{{$evento->id}}">
                         @csrf
                         <input type="text" data-inputmask='"mask": "(99) 99999-9999"' data-mask name="telefone" id="subscribeTel" placeholder="Telefone" required>
                         <input type="email" name="email" id="subscribeEmail" placeholder="Email" required>

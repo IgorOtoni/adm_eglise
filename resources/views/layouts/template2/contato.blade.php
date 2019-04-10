@@ -82,7 +82,7 @@ $(function(){
             <div class="col-12">
                 <!-- Contact Form Area -->
                 <div class="contact-form-area">
-                    <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="post">
+                    <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="get">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-lg-4">

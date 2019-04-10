@@ -69,21 +69,20 @@ $(function(){
             </div>
             <section class="post-comment-form">
             <h3><i class="fa fa-share"></i> Inscrever me</h3>
-            <form action="/{{$igreja->url}}/inscreveEnvento" method="POST" data-toggle="validator" id="subscribeForm">
+            <form action="/{{$igreja->url}}/inscreveEnvento" method="get" data-toggle="validator" id="subscribeForm">
+                <input type="hidden" name="id_evento" value="{{$evento->id}}">
                 @csrf
                 <div class="row">
-                <div class="form-group has-feedback">
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
                     <input type="text" data-inputmask='"mask": "(99) 99999-9999"' data-mask name="telefone" class="form-control input-lg" placeholder="Telefone" required>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div class="help-block with-errors"></div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
                     <input type="email" name="email" class="form-control input-lg" placeholder="Email" required>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div class="help-block with-errors"></div>
                     </div>
-                </div>
                 </div>
                 <div class="row">
                 <div class="form-group">

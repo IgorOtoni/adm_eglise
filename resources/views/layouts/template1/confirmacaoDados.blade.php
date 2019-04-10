@@ -3,12 +3,25 @@
 
 @endpush
 @section('content')
+<!-- Start Nav Backed Header -->
+<div class="nav-backed-header parallax">
+<div class="container">
+    <div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            
+        </ol>
+    </div>
+    </div>
+</div>
+</div>
+<!-- End Nav Backed Header --> 
 <!-- Start Page Header -->
 <div class="page-header">
 <div class="container">
     <div class="row">
     <div class="col-md-12">
-        <h1>Linha do tempo</h1>
+        <h1>Confirmação</h1>
     </div>
     </div>
 </div>

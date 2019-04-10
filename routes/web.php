@@ -50,10 +50,10 @@ Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.con
 
 Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
 Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
-Route::post('/{url}/enviaContato', 'IgrejaController@enviaContato')->name('igreja.enviaContato');
+Route::get('/{url}/enviaContato', 'IgrejaController@enviaContato')->name('igreja.enviaContato');
 Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');
 Route::get('/{url}/evento/{id}', 'IgrejaController@evento')->name('igreja.evento');
-Route::post('/{url}/inscreveEnvento', 'IgrejaController@inscreveEnvento')->name('igreja.inscreveEnvento');
+Route::get('/{url}/inscreveEnvento', 'IgrejaController@inscreveEnvento')->name('igreja.inscreveEnvento');
 Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja.eventosfixos');
 Route::get('/{url}/eventofixo/{id}', 'IgrejaController@eventofixo')->name('igreja.eventofixo');
 Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');

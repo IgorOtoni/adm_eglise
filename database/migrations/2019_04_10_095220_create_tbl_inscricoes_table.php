@@ -17,8 +17,8 @@ class CreateTblInscricoesTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('telefone');
-            $table->bigInteger('id_igreja')->unsigned();
-            $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
+            $table->bigInteger('id_evento')->unsigned();
+            $table->foreign('id_evento')->references('id')->on('tbl_eventos');
             $table->timestamps();
         });
     }
