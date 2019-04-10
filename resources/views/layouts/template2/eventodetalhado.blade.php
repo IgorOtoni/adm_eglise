@@ -1,4 +1,17 @@
 @extends('layouts.template2')
+@push('script')
+<!-- InputMask -->
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+
+<script>
+$(function(){
+    $('[data-mask]').inputmask();
+});
+</script>
+
+@endpush
 @section('content')
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
@@ -49,4 +62,31 @@
     </div>
 </section>
 <!-- ##### Blog Content Area End ##### -->
+
+<!-- ##### Subscribe Area Start ##### -->
+<section class="subscribe-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Subscribe Text -->
+            <div class="col-12 col-lg-6">
+                <div class="subscribe-text">
+                    <h3>Me inscrever no evento</h3>
+                    <!--<h6>Subcribe Us And Tell Us About Your Story</h6>-->
+                </div>
+            </div>
+            <!-- Subscribe Form -->
+            <div class="col-12 col-lg-6">
+                <div class="subscribe-form text-right">
+                    <form action="/{{$igreja->url}}/inscreveEnvento" method="post" id="subscribeForm" name="subscribeForm">
+                        @csrf
+                        <input type="text" data-inputmask='"mask": "(99) 99999-9999"' data-mask name="telefone" id="subscribeTel" placeholder="Telefone" required>
+                        <input type="email" name="email" id="subscribeEmail" placeholder="Email" required>
+                        <button type="submit" class="btn crose-btn">Increver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Subscribe Area End ##### -->
 @endsection

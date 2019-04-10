@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class Tbl_Eventos_Fixos_Seeder extends Seeder
 {

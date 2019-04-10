@@ -1,8 +1,18 @@
 @extends('layouts.template1')
 @push('script')
-<script>
+<!-- InputMask -->
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 
+<script>
+$(function(){
+    $('[data-mask]').inputmask();
+
+    $('#subscribeForm').validator('update');
+});
 </script>
+
 @endpush
 @section('content')
 <!-- End Site Header --> 
@@ -57,6 +67,33 @@
                     </div>
                 </div>
             </div>
+            <section class="post-comment-form">
+            <h3><i class="fa fa-share"></i> Inscrever me</h3>
+            <form action="/{{$igreja->url}}/inscreveEnvento" method="POST" data-toggle="validator" id="subscribeForm">
+                @csrf
+                <div class="row">
+                <div class="form-group has-feedback">
+                    <div class="col-md-6 col-sm-6">
+                    <input type="text" data-inputmask='"mask": "(99) 99999-9999"' data-mask name="telefone" class="form-control input-lg" placeholder="Telefone" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                    <input type="email" name="email" class="form-control input-lg" placeholder="Email" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-lg">Inscrever</button>
+                    </div>
+                </div>
+                </div>
+            </form>
+            </section>
         </div>
     </div>
 </div>

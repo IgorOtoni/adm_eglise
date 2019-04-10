@@ -1,4 +1,17 @@
 @extends('layouts.template2')
+@push('script')
+<!-- InputMask -->
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+
+<script>
+$(function(){
+    $('[data-mask]').inputmask();
+});
+</script>
+
+@endpush
 @section('content')
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
@@ -69,24 +82,25 @@
             <div class="col-12">
                 <!-- Contact Form Area -->
                 <div class="contact-form-area">
-                    <form action="#" method="post">
+                    <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label for="contact-name">Nome completo:</label>
-                                    <input type="text" class="form-control" id="contact-name" placeholder="Nome completo" required>
+                                    <input name="nome" type="text" class="form-control" id="contact-name" placeholder="Nome completo" required>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label for="contact-email">Email:</label>
-                                    <input type="email" class="form-control" name="email" id="contact-email" placeholder="exemplo@gmail.com">
+                                    <input type="email" class="form-control" name="email" id="contact-email" placeholder="exemplo@gmail.com" required>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label for="contact-number">Telefone:</label>
-                                    <input type="text" class="form-control" name="telefone" id="contact-number" placeholder="(99) 99999-9999" required>
+                                    <input type="text" class="form-control" name="telefone" id="contact-number" placeholder="(99) 99999-9999" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
                                 </div>
                             </div>
                             <div class="col-12">

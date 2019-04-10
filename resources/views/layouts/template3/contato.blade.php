@@ -1,5 +1,15 @@
 @extends('layouts.template3')
 @push('script')
+<!-- InputMask -->
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('template_adm/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+
+<script>
+$(function(){
+    $('[data-mask]').inputmask();
+});
+</script>
 
 @endpush
 @section('content')
@@ -54,11 +64,12 @@
                         <div class="col-12 col-lg-6">
                             <div class="contact-form-area">
                                 <h5>Envie uma mensagem</h5>
-                                <form action="#" method="post">
-                                    <input type="text" class="form-control" id="nome" placeholder="Nome" required>
-                                    <input type="email" class="form-control" id="email" placeholder="Email" required>
-                                    <input type="text" class="form-control" id="telefone" placeholder="Telefone" required>
-                                    <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message" required></textarea>
+                                <form action="/{{$igreja->url}}/enviaContato" id="contactForm" name="contactForm" method="post">
+                                    @csrf
+                                    <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome" required>
+                                    <input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
+                                    <input name="telefone" type="text" class="form-control" id="telefone" placeholder="Telefone" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                    <textarea name="mensagem" class="form-control" id="message" cols="30" rows="10" placeholder="Message" required></textarea>
                                     <button class="btn faith-btn" type="submit">Contact Us</button>
                                 </form>
                             </div>

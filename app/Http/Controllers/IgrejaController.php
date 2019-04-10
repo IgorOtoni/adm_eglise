@@ -1,7 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
+use App\TblIgreja;
+use App\TblConfiguracoes;
+use App\TblIgrejasModulos;
+use App\TblContatos;
+use App\TblInscricoes;
+use Symfony\Component\HttpFoundation\Response;
 class IgrejaController extends Controller
 {
     public function index($url)
@@ -270,5 +276,43 @@ class IgrejaController extends Controller
     }
     public function carrega_imagem($largura,$altura,$pasta,$arquivo){
         return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));
+    }
+    public function inscreveEnvento($url, Request $request){
+        dd($request->all());
+
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $retorno = obter_menus_configuracao($igreja->id_configuracao);
+        $menus = $retorno[0];
+        $submenus = $retorno[1];
+        $subsubmenus = $retorno[2];
+
+        $inscricao = new TblInscricoes();
+        $inscricao->email = $request->email;
+        $inscricao->telefone = $request->telefone;
+        $inscricao->id_igreja = $igreja->id;
+        $inscricao->save();
+
+        return view('layouts.template' . $igreja->id_template . '.confirmacaoDados', compact('igreja', 'modulos', 'menus', 'submenus', 'subsubmenus'));
+    }
+    public function enviaContato($url, Request $request){
+        dd($request->all());
+
+        $igreja = obter_dados_igreja($url);
+        $modulos = obter_modulos_igreja($igreja);
+        $retorno = obter_menus_configuracao($igreja->id_configuracao);
+        $menus = $retorno[0];
+        $submenus = $retorno[1];
+        $subsubmenus = $retorno[2];
+
+        $contato = new TblContatos();
+        $contato->nome = $request->nome;
+        $contato->email = $request->email;
+        $contato->telefone = $request->telefone;
+        $contato->mensagem = $request->mensagem;
+        $contato->id_igreja = $igreja->id;
+        $contato->save();
+
+        return view('layouts.template' . $igreja->id_template . '.confirmacaoDados', compact('igreja', 'modulos', 'menus', 'submenus', 'subsubmenus'));
     }
 }

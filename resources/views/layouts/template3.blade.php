@@ -212,6 +212,8 @@
     <script src="{{asset('template_igreja/template-escuro/js/active.js')}}"></script>
     <!-- Rocket Loader -->
     <script src="{{asset('template_igreja/template-escuro/js/plugins/rocket-loader.min.js')}}" data-cf-settings="dd394fb7c37d66307a7e0305-|49" defer=""></script></body>
+    <!-- Bootstrap Validator -->
+    <script src="{{asset('template_adm/plugins/bootstrap-validator/validator.js')}}"></script>
 
     @stack('script')
 </html>

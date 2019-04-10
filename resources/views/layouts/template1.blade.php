@@ -191,14 +191,24 @@
         <a id="back-to-top"><i class="fa fa-angle-double-up"></i></a>
     </div>
     
-    <script src="{{asset('template_igreja/template-padrao/js/jquery-2.0.0.min.js')}}"></script> <!-- Jquery Library Call --> 
-    <script src="{{asset('template_igreja/template-padrao/plugins/prettyphoto/js/prettyphoto.js')}}"></script> <!-- PrettyPhoto Plugin --> 
-    <script src="{{asset('template_igreja/template-padrao/js/helper-plugins.js')}}"></script> <!-- Plugins --> 
-    <script src="{{asset('template_igreja/template-padrao/js/bootstrap.js')}}"></script> <!-- UI --> 
-    <script src="{{asset('template_igreja/template-padrao/js/waypoints.js')}}"></script> <!-- Waypoints --> 
-    <script src="{{asset('template_igreja/template-padrao/plugins/mediaelement/mediaelement-and-player.min.js')}}"></script> <!-- MediaElements --> 
-    <script src="{{asset('template_igreja/template-padrao/js/init.js')}}"></script> <!-- All Scripts --> 
-    <script src="{{asset('template_igreja/template-padrao/plugins/countdown/js/jquery.countdown.min.js')}}"></script> <!-- Jquery Timer -->
+    <!-- Jquery Library Call -->
+    <script src="{{asset('template_igreja/template-padrao/js/jquery-2.0.0.min.js')}}"></script> 
+    <!-- PrettyPhoto Plugin --> 
+    <script src="{{asset('template_igreja/template-padrao/plugins/prettyphoto/js/prettyphoto.js')}}"></script> 
+    <!-- Plugins -->
+    <script src="{{asset('template_igreja/template-padrao/js/helper-plugins.js')}}"></script> 
+    <!-- UI -->
+    <script src="{{asset('template_igreja/template-padrao/js/bootstrap.js')}}"></script> 
+    <!-- Waypoints -->
+    <script src="{{asset('template_igreja/template-padrao/js/waypoints.js')}}"></script> 
+    <!-- MediaElements -->
+    <script src="{{asset('template_igreja/template-padrao/plugins/mediaelement/mediaelement-and-player.min.js')}}"></script> 
+    <!-- All Scripts -->
+    <script src="{{asset('template_igreja/template-padrao/js/init.js')}}"></script>  
+    <!-- Jquery Timer -->
+    <script src="{{asset('template_igreja/template-padrao/plugins/countdown/js/jquery.countdown.min.js')}}"></script> 
+    <!-- Bootstrap Validator -->
+    <script src="{{asset('template_adm/plugins/bootstrap-validator/validator.js')}}"></script>
     @stack('script')
 </body>
 </html>
