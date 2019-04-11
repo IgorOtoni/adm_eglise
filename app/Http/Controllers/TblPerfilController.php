@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DataTables;
 use App\TblPerfil;
-use App\TblPerfisModulosPermissoes;
+use App\TblPerfisPermissoes;
 use App\TblIgrejasModulos;
 use Illuminate\Http\Request;
 
@@ -44,10 +44,10 @@ class TblPerfilController extends Controller
             ->get();
         $perfil = $perfil[0];
         $modulos = \DB::table('tbl_modulos')
-            ->select(\DB::raw('distinct tbl_modulos.*'))
+            ->select('tbl_modulos.*', 'tbl_perfis_igrejas_modulos.id as id_perfis_igrejas_modulos')
             ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
-            ->leftJoin('tbl_perfis_modulos_permissoes', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_modulos_permissoes.id_modulo_igreja')
-            ->leftJoin('tbl_perfis', 'tbl_perfis_modulos_permissoes.id_perfil', '=', 'tbl_perfis.id')
+            ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
+            ->leftJoin('tbl_perfis', 'tbl_perfis_igrejas_modulos.id_perfil', '=', 'tbl_perfis.id')
             ->where('tbl_perfis.id','=',$id)
             //->groupBy('tbl_modulos.id')
             ->orderBy('nome', 'ASC')
@@ -56,10 +56,11 @@ class TblPerfilController extends Controller
         foreach($modulos as $modulo){
             $permissoes_ativas = \DB::table('tbl_permissoes')
                 ->select('tbl_permissoes.*')
-                ->leftJoin('tbl_perfis_modulos_permissoes', 'tbl_permissoes.id', '=', 'tbl_perfis_modulos_permissoes.id_permissao')
-                ->leftJoin('tbl_igrejas_modulos', 'tbl_perfis_modulos_permissoes.id_modulo_igreja', '=', 'tbl_igrejas_modulos.id')
+                ->leftJoin('tbl_perfis_permissoes', 'tbl_permissoes.id', '=', 'tbl_perfis_permissoes.id_permissao')
+                ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_perfis_permissoes.id_perfil_igreja_modulo', '=', 'tbl_perfis_igrejas_modulos.id')
+                ->leftJoin('tbl_igrejas_modulos', 'tbl_perfis_igrejas_modulos.id_modulo_igreja', '=', 'tbl_igrejas_modulos.id')
                 ->where('tbl_igrejas_modulos.id_modulo','=',$modulo->id)
-                ->where('tbl_perfis_modulos_permissoes.id_perfil','=',$id)
+                ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id)
                 ->get();
             $permissoes[$modulo->id]['ativas'] = $permissoes_ativas;
             $permissoes_todas = \DB::table('tbl_permissoes')
@@ -72,6 +73,38 @@ class TblPerfilController extends Controller
             $permissoes[$modulo->id]['todas'] = $permissoes_todas;
         }
         return view('perfis.permissoes', compact('perfil','modulos', 'permissoes'));
+    }
+
+    public function atualizarPermissoes(Request $request){
+        unset($request["_token"]);
+        $id_perfil = $request["id_perfil"];
+        unset($request["id_perfil"]);
+        foreach ($request->all() as $id_perfil_modulo_igreja => $permissao) {
+            TblPerfisPermissoes::where('id_perfil_igreja_modulo', '=', $id_perfil_modulo_igreja)->delete();
+            foreach($permissao as $posicao => $id_permissao){
+                $perfil_permissao = new TblPerfisPermissoes();
+
+                $data = [
+                    'id_perfil_igreja_modulo' => $id_perfil_modulo_igreja,
+                    'id_permissao' => $id_permissao,
+                ];
+
+                $perfil_permissao->create($data);
+            }
+        }
+
+        $perfil = \DB::table('tbl_perfis')
+            ->select('tbl_perfis.*')
+            ->where('tbl_perfis.id','=',$id_perfil)
+            ->get();
+        $perfil = $perfil[0];
+
+        $notification = array(
+            'message' => $perfil->nome . ' teve suas permissões alteradas!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('perfis')->with($notification);
     }
 
     public function switchStatus(Request $request){
@@ -115,7 +148,6 @@ class TblPerfilController extends Controller
                 $data = [
                     'id_perfil' => $perfil->id,
                     'id_modulo_igreja' => $modulo_igreja->id,
-                    'id_permissao' => null,
                 ];
                 $perfil_modulo->create($data);
             }

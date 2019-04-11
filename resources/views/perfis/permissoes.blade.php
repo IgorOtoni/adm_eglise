@@ -18,7 +18,7 @@
 
             <form id="permissoesPerfilFormulario" data-toggle="validator" method="POST" role="form" action="{{route('perfis.atualizarPermissoes')}}" enctype="multipart/form-data">
               @csrf
-              <input type="hidden" name="id" value="{{$perfil->id}}">
+              <input type="hidden" name="id_perfil" value="{{$perfil->id}}">
               <div class="box">
                 <div class="box-body">
                 
@@ -38,7 +38,7 @@
                                     }
                                   }
                                   ?>
-                                  <input name="" type="checkbox" {{$marcacao}}> {{$permissao->nome}}
+                                  <input name="{{$modulo->id_perfis_igrejas_modulos}}[]" value="{{$permissao->id}}" type="checkbox" {{$marcacao}}> {{$permissao->nome}}
                                 @endforeach
 
                             </div>

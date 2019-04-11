@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(\Auth::user()->id_perfil == 1){
+            return view('home');
+        }else{
+            return view('usuario.index');
+        }
     }
 }

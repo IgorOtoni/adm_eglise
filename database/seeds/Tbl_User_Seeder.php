@@ -30,5 +30,12 @@ class Tbl_User_Seeder extends Seeder
             'id_perfil'=> 1,
             'password'=>bcrypt('123456'),
         ]);
+
+        DB::table('users')->insert([
+            'nome'=>'Pastor',
+            'email'=>'pastor@hotsystems.com.br',
+            'id_perfil'=> 4,
+            'password'=>bcrypt('123456'),
+        ]);
     }
 }

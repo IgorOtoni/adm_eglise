@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\TblPerfilModulosPermissoes;
+use App\TblPerfisIgrejasModulos;
 use Illuminate\Http\Request;
 
-class TblPerfilModulosController extends Controller
+class TblPerfisIgrejasModulosController extends Controller
 {
     /**
      * Display a listing of the resource.
