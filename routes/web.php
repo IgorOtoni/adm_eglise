@@ -67,12 +67,12 @@ Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
 Route::get('/carrega_imagem/{largura},{altura},{pasta},{arquivo}','IgrejaController@carrega_imagem')->name('igreja.carrega_imagem');
 
 Route::group(['middleware' => 'auth'], function () {
-    /*Route::get('/', function () {
+    Route::get('/', function () {
         if (Auth::user()->id_perfil == 1)
-            return redirect('admin/home');
-        else
-            return redirect('eglise');
-    });*/
+            return redirect()->route('home');
+        else if (Auth::user()->id_perfil != 1)
+            return redirect()->route('home');
+    });
     Route::get('error', function () {
         return "Sorry, you are unauthorized to access this page.";
     });
@@ -103,7 +103,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/home', 'HomeController@index')->name('home');
     });
-    Route::group(['middleware' => 'usuario'], function () {
+    Route::group(['prefix' => 'usuario', 'middleware' => 'usuario'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
+
+        Route::get('/usuarios', 'HomeController@index')->name('usuarios');
+        Route::get('/perfis', 'HomeController@index')->name('perfis');
     });
 });

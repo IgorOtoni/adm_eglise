@@ -97,11 +97,24 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">BARRA DE NAVEGAÇÃO</li>
-        <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="{{route('igrejas')}}"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
-        <li><a href="{{route('perfis')}}"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
-        <li><a href="{{route('publicacoes')}}"><i class="fa fa-sticky-note"></i> <span>Publicacoes</span></a></li>
-        <li><a href="/usuarios"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
+        <?php
+        $id_perfil = \Auth::user()->id_perfil;
+
+        $modulos = \DB::table('tbl_modulos')
+            ->select('tbl_modulos.*', 'tbl_igrejas_modulos.icone')
+            ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
+            ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
+            ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id_perfil)
+            ->get();
+
+        foreach($modulos as $modulo){
+          ?> <li><a href="{{route($modulo->rota)}}">
+            <?php if($modulo->icone != null){ ?> 
+              <i class="{{$modulo->icone}}"></i>
+            <?php } ?>
+            <span>{{$modulo->nome}}</span></a></li> <?php
+        }
+        ?>
       </ul>
     </section>
     <!-- /.sidebar -->

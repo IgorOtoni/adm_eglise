@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 use App\TblIgreja;
 class PlataformaController extends Controller
 {
-    public function __construct()
-    {
-        
-    }
-
     public function index(){
         return view('eglise.index');
     }

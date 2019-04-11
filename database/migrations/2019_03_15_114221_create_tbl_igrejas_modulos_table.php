@@ -17,6 +17,7 @@ class CreateTblIgrejasModulosTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_igreja');
             $table->bigInteger('id_modulo');
+            $table->string('icone')->nullable();
             $table->timestamps();
         });
     }

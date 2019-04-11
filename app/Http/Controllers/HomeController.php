@@ -26,7 +26,7 @@ class HomeController extends Controller
         if(\Auth::user()->id_perfil == 1){
             return view('home');
         }else{
-            return view('usuario.index');
+            return view('usuario.home');
         }
     }
 }
