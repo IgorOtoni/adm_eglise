@@ -41,7 +41,16 @@
   <!-- Google Font URL: https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic -->
   <link rel="stylesheet" href="{{asset('css/fontes/font.css')}}">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php
+$id_perfil = Auth::user()->id_perfil;
+$perfil = \DB::table('tbl_perfis')
+  ->select('tbl_perfis.*')
+  ->where('id','=',$id_perfil)
+  ->get();
+$perfil = $perfil[0];
+$igreja = obter_dados_igreja_id($perfil->id_igreja);
+?>
+<body class="hold-transition skin-{{($igreja->cor != null) ? $igreja->cor : 'blue'}} sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 

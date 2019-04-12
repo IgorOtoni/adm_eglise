@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('igrejas/excluirLogo', 'TbligrejaController@excluirLogo')->name('igrejas.excluirLogo');
         Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
         Route::get('igrejas/carregarModulos/{id}', 'TbligrejaController@modulos_igreja')->name('igrejas.carregarModulos');
+        Route::get('igrejas/configuracoes/{id}', 'TbligrejaController@configuracoes')->name('igrejas.configuracoes');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::post('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');

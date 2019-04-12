@@ -18,6 +18,7 @@ class CreateTblConfiguracoesTable extends Migration
             $table->bigInteger('id_igreja')->unsigned();
             $table->foreign('id_igreja')->references('id')->on('tbl_igrejas');
             $table->bigInteger('id_template')->default(1)->unsigned();
+            $table->string('cor')->nullable();
             $table->foreign('id_template')->references('id')->on('tbl_templates');
             $table->string('url')->nullable();
             $table->text('texto_apresentativo')->nullable();

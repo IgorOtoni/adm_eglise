@@ -224,6 +224,16 @@ class TblIgrejaController extends Controller
         return \Response::json(['message' => 'File successfully delete'], 200);
     }
 
+    public function configuracoes($id){
+        $igreja = obter_dados_igreja_id($id);
+        $modulos_igreja = obter_modulos_igreja($igreja);
+        $retorno = obter_menus_configuracao($igreja->id_configuracao);
+        $menus = $retorno[0];
+        $submenus = $retorno[1];
+        $subsubmenus = $retorno[2];
+        return view('igrejas.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
