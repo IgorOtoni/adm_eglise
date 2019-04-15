@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Usuario
+class LoginRules
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,9 @@ class Usuario
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->id_perfil != 1)
+        if (Auth::user()->id_perfil == null || Auth::user()->id_perfil != 1)
+            return $next($request);
+        else if(Auth::user()->id_perfil != null && Auth::user()->id_perfil == 1)
             return $next($request);
         return redirect('error');
     }

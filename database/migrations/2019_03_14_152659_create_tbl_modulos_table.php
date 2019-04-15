@@ -18,6 +18,8 @@ class CreateTblModulosTable extends Migration
             $table->string('nome');
             $table->text('descricao');
             $table->string('rota')->nullable();
+            $table->string('sistema')->default('web');
+            $table->boolean('gerencial')->default(0);
             $table->timestamps();
         });
     }

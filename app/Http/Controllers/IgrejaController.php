@@ -13,7 +13,7 @@ class IgrejaController extends Controller
     public function index($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $banners = \DB::table('tbl_banners')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('ordem', 'ASC')
@@ -32,7 +32,7 @@ class IgrejaController extends Controller
             ->limit(3)
             ->get();
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $galerias = \DB::table('tbl_galerias')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('data', 'DESC')
@@ -56,7 +56,7 @@ class IgrejaController extends Controller
     public function ministros($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -66,7 +66,7 @@ class IgrejaController extends Controller
     public function noticias($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $noticias = \DB::table('tbl_noticias')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('created_at', 'DESC')
@@ -80,7 +80,7 @@ class IgrejaController extends Controller
     public function noticia($url,$id)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -96,7 +96,7 @@ class IgrejaController extends Controller
     public function sermoes($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -110,7 +110,7 @@ class IgrejaController extends Controller
     public function sermao($url,$id)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -125,7 +125,7 @@ class IgrejaController extends Controller
     public function contato($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -135,7 +135,7 @@ class IgrejaController extends Controller
     public function apresentacao($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -145,7 +145,7 @@ class IgrejaController extends Controller
     public function eventosfixos($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -168,7 +168,7 @@ class IgrejaController extends Controller
     public function eventofixo($url,$id)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -183,7 +183,7 @@ class IgrejaController extends Controller
     public function eventos($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -212,7 +212,7 @@ class IgrejaController extends Controller
     public function evento($url,$id)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -232,7 +232,7 @@ class IgrejaController extends Controller
     public function galeria($url)
     {
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -254,7 +254,7 @@ class IgrejaController extends Controller
     }
     public function publicacao($url,$id){
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -279,7 +279,7 @@ class IgrejaController extends Controller
     }
     public function inscreveEnvento($url, Request $request){
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
@@ -295,7 +295,7 @@ class IgrejaController extends Controller
     }
     public function enviaContato($url, Request $request){
         $igreja = obter_dados_igreja($url);
-        $modulos = obter_modulos_igreja($igreja);
+        $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];

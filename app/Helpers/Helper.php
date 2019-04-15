@@ -37,6 +37,27 @@ function obter_modulos_igreja($igreja){
         ->leftJoin('tbl_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
         ->select('tbl_igrejas_modulos.id_modulo', 'tbl_modulos.*')
         ->where('id_igreja','=',$igreja->id)
+        ->where('tbl_modulos.sistema','=','web')
+        ->get();
+    return $modulos;
+}
+function obter_modulos_apresentativos_igreja($igreja){
+    $modulos = \DB::table('tbl_igrejas_modulos')
+        ->leftJoin('tbl_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
+        ->select('tbl_igrejas_modulos.id_modulo', 'tbl_modulos.*')
+        ->where('id_igreja','=',$igreja->id)
+        ->where('tbl_modulos.sistema','=','web')
+        ->where('tbl_modulos.gerencial','=',false)
+        ->get();
+    return $modulos;
+}
+function obter_modulos_gerenciais_igreja($igreja){
+    $modulos = \DB::table('tbl_igrejas_modulos')
+        ->leftJoin('tbl_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
+        ->select('tbl_igrejas_modulos.id_modulo', 'tbl_modulos.*')
+        ->where('id_igreja','=',$igreja->id)
+        ->where('tbl_modulos.sistema','=','web')
+        ->where('tbl_modulos.gerencial','=',true)
         ->get();
     return $modulos;
 }

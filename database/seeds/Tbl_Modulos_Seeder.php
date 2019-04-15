@@ -16,12 +16,14 @@ class Tbl_Modulos_Seeder extends Seeder
             'nome'=>'Usuários',
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'usuarios',
+            'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>14,
             'nome'=>'Perfis',
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'perfis',
+            'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>1,
@@ -75,7 +77,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'id'=>9,
             'nome'=>'Notícias',
             'descricao'=>'Funcionalidade do site apresentativo.',
-            'rota'=>'noticais',
+            'rota'=>'noticias',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>10,

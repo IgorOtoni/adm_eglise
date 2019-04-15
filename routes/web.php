@@ -22,23 +22,33 @@ Route::get('admin', function () {
 
 //Auth::routes();
 
- // Authentication Routes...
- Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
- Route::post('login', 'Auth\LoginController@login');
- Route::post('logout', 'Auth\HomeController@logout')->name('logout');
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\HomeController@logout')->name('logout');
 
- // Registration Routes...
- Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
- Route::post('register', 'Auth\RegisterController@register');
+// Registration Routes...
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
 
- // Password Reset Routes...
- Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
- Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
- Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
- Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
+
+Route::get('/autenticar', function () {
+    if (Auth::user()->id_perfil == 1)
+        return redirect()->route('home');
+    else if (Auth::user()->id_perfil != 1)
+        return redirect()->route('home');
+});
+Route::get('error', function () {
+    return "Um erro ocorreu que não pode ser tratado pelo sistema. Contate o suporte do sistema e relate essa mensagem.";
+});
 
 Route::get('/logout', function () {
     //Session::flush();
@@ -67,15 +77,15 @@ Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
 Route::get('/carrega_imagem/{largura},{altura},{pasta},{arquivo}','IgrejaController@carrega_imagem')->name('igreja.carrega_imagem');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
+    /*Route::get('/autenticar', function () {
         if (Auth::user()->id_perfil == 1)
             return redirect()->route('home');
         else if (Auth::user()->id_perfil != 1)
             return redirect()->route('home');
-    });
-    Route::get('error', function () {
+    });*/
+    /*Route::get('error', function () {
         return "Sorry, you are unauthorized to access this page.";
-    });
+    });*/
     //     ROTAS DE ADMINISTRAÇÃO DO SISTEMA
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
@@ -88,6 +98,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
         Route::get('igrejas/carregarModulos/{id}', 'TbligrejaController@modulos_igreja')->name('igrejas.carregarModulos');
         Route::get('igrejas/configuracoes/{id}', 'TbligrejaController@configuracoes')->name('igrejas.configuracoes');
+        Route::post('igrejas/adicionarMenu', 'TbligrejaController@adicionarMenu')->name('igrejas.adicionarMenu');
+        Route::post('igrejas/editarMenu', 'TbligrejaController@editarMenu')->name('igrejas.editarMenu');
+        Route::get('igrejas/excluirMenu/{id}', 'TbligrejaController@excluirMenu')->name('igrejas.excluirMenu');
+        Route::post('igrejas/adicionarSubMenu', 'TbligrejaController@adicionarSubMenu')->name('igrejas.adicionarSubMenu');
+        Route::post('igrejas/editarSubMenu', 'TbligrejaController@editarSubMenu')->name('igrejas.editarSubMenu');
+        Route::get('igrejas/excluirSubMenu/{id}', 'TbligrejaController@excluirSubMenu')->name('igrejas.excluirSubMenu');
+        Route::post('igrejas/adicionarSubSubMenu', 'TbligrejaController@adicionarSubSubMenu')->name('igrejas.adicionarSubSubMenu');
+        Route::post('igrejas/editarSubSubMenu', 'TbligrejaController@editarSubSubMenu')->name('igrejas.editarSubSubMenu');
+        Route::get('igrejas/excluirSubSubMenu/{id}', 'TbligrejaController@excluirSubSubMenu')->name('igrejas.excluirSubSubMenu');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::post('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');

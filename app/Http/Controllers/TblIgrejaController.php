@@ -6,6 +6,10 @@ use DataTables;
 use App\TblIgreja;
 use App\TblConfiguracoes;
 use App\TblIgrejasModulos;
+use App\TblModulo;
+use App\TblMenu;
+use App\TblSubMenu;
+use App\TblSubSubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +44,8 @@ class TblIgrejaController extends Controller
             ->get();
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
             return '<a href="igrejas/editarIgreja/'.$igrejas->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a data-id="'.$igrejas->id_configuracao.'" data-url="'.$igrejas->url.'" data-template="'.$igrejas->id_template.'" class="btn btn-xs btn-warning bt-configuracoes" data-toggle="modal" data-target="#modal-configuracoes"><i class="fa fa-cog"></i></a>'.'&nbsp'.
+            //'<a data-id="'.$igrejas->id_configuracao.'" data-url="'.$igrejas->url.'" data-template="'.$igrejas->id_template.'" class="btn btn-xs btn-warning bt-configuracoes" data-toggle="modal" data-target="#modal-configuracoes"><i class="fa fa-cog"></i></a>'.'&nbsp'.
+            '<a href="igrejas/configuracoes/'.$igrejas->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></a>'.'&nbsp'.
             //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
             '<label title="Status da Igreja" class="switch"><input onClick="switch_status(this)" name="'.$igrejas->nome.'" class="status" id="'.$igrejas->id.'" type="checkbox" '.(($igrejas->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
@@ -226,12 +231,245 @@ class TblIgrejaController extends Controller
 
     public function configuracoes($id){
         $igreja = obter_dados_igreja_id($id);
-        $modulos_igreja = obter_modulos_igreja($igreja);
+        $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
         $menus = $retorno[0];
         $submenus = $retorno[1];
         $subsubmenus = $retorno[2];
         return view('igrejas.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus'));
+    }
+
+    public function adicionarMenu(Request $request){
+        $menu = new TblMenu();
+        $menu->id_configuracao = $request->id_configuracao;
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $menu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $menu->link = $request->link;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarMenu(Request $request){
+        $menu = TblMenu::find($request->id);
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 0){
+            $menu->link = null;
+        }else if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $menu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $menu->link = $request->link;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirMenu($id){
+        $sub_menus = \DB::table('tbl_sub_menus')
+            ->select('tbl_sub_menus.id')
+            ->where('tbl_sub_menus.id_menu','=',$id)
+            ->get();
+
+        foreach($sub_menus as $sub_menu){
+            $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
+                ->select('tbl_sub_sub_menus.id')
+                ->where('tbl_sub_sub_menus.id_submenu','=',$id)
+                ->get();
+
+            foreach($sub_sub_menus as $sub_sub_menu){
+                TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
+            }
+
+            TblSubMenu::where('id', $sub_menu->id)->delete();
+        }
+
+        $menu = TblMenu::find($id);
+        TblMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function adicionarSubMenu(Request $request){
+        $submenu = new TblSubMenu();
+        $submenu->id_menu = $request->id_menu;
+        $submenu->nome = $request->nome;
+        $submenu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $submenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $submenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $submenu->link = $request->url;
+        }
+        $submenu->save();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarSubMenu(Request $request){
+        $submenu = TblSubMenu::find($request->id);
+        $submenu->id_menu = $request->id_menu;
+        $submenu->nome = $request->nome;
+        $submenu->ordem = $request->ordem;
+        if($request->link == 0){
+            $submenu->link = null;
+        }else if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $submenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $submenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $submenu->link = $request->url;
+        }
+        $submenu->save();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirSubMenu($id){
+        $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
+            ->select('tbl_sub_sub_menus.id')
+            ->where('tbl_sub_sub_menus.id_submenu','=',$id)
+            ->get();
+
+        foreach($sub_sub_menus as $sub_sub_menu){
+            TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
+        }
+
+        $submenu = TblSubMenu::find($id);
+        TblSubMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function adicionarSubSubMenu(Request $request){
+        $subsubmenu = new TblSubSubMenu();
+        $subsubmenu->id_submenu = $request->id_submenu;
+        $subsubmenu->nome = $request->nome;
+        $subsubmenu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $subsubmenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $subsubmenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $subsubmenu->link = $request->url;
+        }
+        $subsubmenu->save();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarSubSubMenu(Request $request){
+        $subsubmenu = new TblSubSubMenu();
+        $subsubmenu->id_submenu = $request->id_submenu;
+        $subsubmenu->nome = $request->nome;
+        $subsubmenu->ordem = $request->ordem;
+        if($request->link == 0){
+            $submenu->link = null;
+        }if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $subsubmenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $subsubmenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $subsubmenu->link = $request->url;
+        }
+        $subsubmenu->save();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirSubSubMenu($id){
+        $subsubmenu = TblSubSubMenu::find($id);
+        TblSubSubMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function salvarConfiguracoes(Request $request){
+        $configuracao = TblConfiguracoes::find($request->id);
+        $configuracao->id_template = $request->id_template;
+        $configuracao->cor = $request->cor;
+
+        $count = TblConfiguracoes::where('url','=',$request->url)->where('id','<>',$configuracao->id)->count();
+        if($count == 0){
+            $configuracao->url = $request->url;
+
+            $configuracao->save();
+
+            $notification = array(
+                'message' => 'Configurações da congregação alteradas com sucesso!', 
+                'alert-type' => 'success'
+            );
+    
+            return back()->with($notification);
+        }else{
+            $notification = array(
+                'message' => 'Essa URL já está em suo por outra congregação!', 
+                'alert-type' => 'error'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
     /**
