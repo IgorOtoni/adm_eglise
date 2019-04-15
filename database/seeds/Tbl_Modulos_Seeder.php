@@ -26,6 +26,62 @@ class Tbl_Modulos_Seeder extends Seeder
             'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
+            'id'=>15,
+            'nome'=>'Galerias',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'usuarios',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>16,
+            'nome'=>'Eventos fixos',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'eventosfixos',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>17,
+            'nome'=>'Linha do tempo',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'eventos',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>18,
+            'nome'=>'Notícias',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'noticias',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>19,
+            'nome'=>'Banners',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'banners',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>20,
+            'nome'=>'Sermões',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'sermoes',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>21,
+            'nome'=>'Publicações',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'publicacoes',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>22,
+            'nome'=>'Configurações',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'configuracoes',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>'',

@@ -47,5 +47,131 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
             'id_permissao'=>3,
         ]);
         //////////////////////////////////////
+
+        // Permissões do módulo de galerias
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>7,
+            'id_modulo'=>15,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>8,
+            'id_modulo'=>15,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>9,
+            'id_modulo'=>15,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de eventos fixos
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>10,
+            'id_modulo'=>16,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>11,
+            'id_modulo'=>16,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>12,
+            'id_modulo'=>16,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de linha do tempo
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>13,
+            'id_modulo'=>17,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>14,
+            'id_modulo'=>17,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>15,
+            'id_modulo'=>17,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de notícias
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>16,
+            'id_modulo'=>18,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>17,
+            'id_modulo'=>18,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>18,
+            'id_modulo'=>18,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de banners
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>19,
+            'id_modulo'=>19,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>20,
+            'id_modulo'=>19,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>21,
+            'id_modulo'=>19,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de sermões
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>22,
+            'id_modulo'=>20,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>23,
+            'id_modulo'=>20,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>24,
+            'id_modulo'=>20,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de publicações
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>25,
+            'id_modulo'=>21,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>26,
+            'id_modulo'=>21,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>27,
+            'id_modulo'=>21,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
     }
 }

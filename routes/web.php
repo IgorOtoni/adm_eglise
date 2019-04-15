@@ -128,5 +128,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/usuarios', 'HomeController@index')->name('usuarios');
         Route::get('/perfis', 'HomeController@index')->name('perfis');
+        Route::get('/sermoes', 'HomeController@index')->name('sermoes');
+        Route::get('/doacoes', 'HomeController@index')->name('doacoes');
+        Route::get('/eventos', 'HomeController@index')->name('eventos');
+        Route::get('/eventosfixos', 'HomeController@index')->name('eventosfixos');
+        Route::get('/publicacoes', 'HomeController@index')->name('publicacoes');
+        Route::get('/noticias', 'HomeController@index')->name('noticias');
+        Route::get('/banners', 'HomeController@index')->name('banners');
     });
 });
