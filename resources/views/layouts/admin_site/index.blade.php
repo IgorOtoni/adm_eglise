@@ -97,11 +97,11 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">BARRA DE NAVEGAÇÃO</li>
-        <li><a href="home"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="igrejas"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
-        <li><a href="perfis"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
-        <li><a href="publicacoes"><i class="fa fa-sticky-note"></i> <span>Publicacoes</span></a></li>
-        <li><a href="usuarios"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
+        <li><a href="/admin/home"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="/admin/igrejas"><i class="fa fa-institution "></i> <span>Igrejas</span></a></li>
+        <li><a href="/admin/perfis"><i class="fa fa-users"></i> <span>Perfis</span></a></li>
+        <li><a href="/admin/publicacoes"><i class="fa fa-sticky-note"></i> <span>Publicacoes</span></a></li>
+        <li><a href="/admin/usuarios"><i class="fa fa-user"></i> <span>Usuários</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -89,3 +89,13 @@ function obter_menus_configuracao($id){
 function muda_cep($cep){
     return str_replace(".", "", str_replace("-", "", $cep));
 }
+function muda_data($data){
+    $retorno = str_replace("/", "-", $data);
+    $split = explode('-', $retorno);
+    return $split[2] . '-' . $split[0] . '-' . $split[1];
+}
+function muda_data_($data){
+    $retorno = str_replace("-", "/", $data);
+    $split = explode('/', $retorno);
+    return $split[2] . '/' . $split[1] . '/' . $split[0];
+}

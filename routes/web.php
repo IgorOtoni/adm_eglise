@@ -42,9 +42,9 @@ Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 
 Route::get('/autenticar', function () {
     if (Auth::user()->id_perfil == 1)
-        return redirect()->route('home');
+        return redirect()->route('admin.home');
     else if (Auth::user()->id_perfil != 1)
-        return redirect()->route('home');
+        return redirect()->route('usuario.home');
 });
 Route::get('error', function () {
     return "Um erro ocorreu que não pode ser tratado pelo sistema. Contate o suporte do sistema e relate essa mensagem.";
@@ -57,24 +57,6 @@ Route::get('/logout', function () {
 });
 
 Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.congregacoes');
-
-Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
-Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
-Route::get('/{url}/enviaContato', 'IgrejaController@enviaContato')->name('igreja.enviaContato');
-Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');
-Route::get('/{url}/evento/{id}', 'IgrejaController@evento')->name('igreja.evento');
-Route::get('/{url}/inscreveEnvento', 'IgrejaController@inscreveEnvento')->name('igreja.inscreveEnvento');
-Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja.eventosfixos');
-Route::get('/{url}/eventofixo/{id}', 'IgrejaController@eventofixo')->name('igreja.eventofixo');
-Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');
-Route::get('/{url}/noticia/{id}', 'IgrejaController@noticia')->name('igreja.noticia');
-Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
-Route::get('/{url}/sermoes', 'IgrejaController@sermoes')->name('igreja.sermoes');
-Route::get('/{url}/sermao/{id}', 'IgrejaController@sermao')->name('igreja.sermao');
-Route::get('/{url}/galeria','IgrejaController@galeria')->name('igreja.galeria');
-Route::get('/{url}/publicacao/{id}','IgrejaController@publicacao')->name('igreja.publicacao');
-Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
-Route::get('/carrega_imagem/{largura},{altura},{pasta},{arquivo}','IgrejaController@carrega_imagem')->name('igreja.carrega_imagem');
 
 Route::group(['middleware' => 'auth'], function () {
     /*Route::get('/autenticar', function () {
@@ -121,19 +103,54 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 
+        Route::get('/', 'HomeController@index')->name('admin.index');
         Route::get('/home', 'HomeController@index')->name('home');
     });
     Route::group(['prefix' => 'usuario', 'middleware' => 'usuario'], function () {
-        Route::get('/home', 'HomeController@index')->name('home');
+        //Route::get('/', 'HomeController@index')->name('usuario.index');
+        Route::get('/home', 'HomeController@index')->name('usuario.home');
 
-        Route::get('/usuarios', 'HomeController@index')->name('usuarios');
-        Route::get('/perfis', 'HomeController@index')->name('perfis');
-        Route::get('/sermoes', 'HomeController@index')->name('sermoes');
-        Route::get('/doacoes', 'HomeController@index')->name('doacoes');
-        Route::get('/eventos', 'HomeController@index')->name('eventos');
-        Route::get('/eventosfixos', 'HomeController@index')->name('eventosfixos');
-        Route::get('/publicacoes', 'HomeController@index')->name('publicacoes');
-        Route::get('/noticias', 'HomeController@index')->name('noticias');
-        Route::get('/banners', 'HomeController@index')->name('banners');
+        Route::get('/usuarios', 'HomeController@index')->name('usuario.usuarios');
+        Route::get('/perfis', 'HomeController@index')->name('usuario.perfis');
+        Route::get('/sermoes', 'HomeController@index')->name('usuario.sermoes');
+        Route::get('/doacoes', 'HomeController@index')->name('usuario.doacoes');
+        Route::get('/eventos', 'HomeController@index')->name('usuario.eventos');
+        Route::get('/eventosfixos', 'HomeController@index')->name('usuario.eventosfixos');
+        Route::get('/publicacoes', 'HomeController@index')->name('usuario.publicacoes');
+        Route::get('/noticias', 'HomeController@index')->name('usuario.noticias');
+
+        Route::get('/banners', 'HomeController@banners')->name('usuario.banners');
+        Route::get('/tbl_banners', 'HomeController@tbl_banners')->name('usuario.tbl_banners');
+        Route::post('/incluirBanner', 'HomeController@incluirBanner')->name('usuario.incluirBanner');
+        Route::get('/editarBanner/{id}', 'HomeController@editarBanner')->name('usuario.editarBanner');
+        Route::post('/atualizarBanner', 'HomeController@atualizarBanner')->name('usuario.atualizarBanner');
+        Route::post('/excluirFotoBanner', 'HomeController@excluirFotoBanner')->name('usuario.excluirFotoBanner');
+        Route::get('/excluirBanner/{id}', 'HomeController@excluirBanner')->name('usuario.excluirBanner');
+
+        Route::get('/galerias', 'HomeController@galerias')->name('usuario.galerias');
+        Route::get('/tbl_galerias', 'HomeController@tbl_galerias')->name('usuario.tbl_galerias');
+        Route::post('/incluirGaleria', 'HomeController@incluirGaleria')->name('usuario.incluirGaleria');
+        Route::get('/editarGaleria/{id}', 'HomeController@editarGaleria')->name('usuario.editarGaleria');
+        Route::post('/atualizarGaleria', 'HomeController@atualizarGaleria')->name('usuario.atualizarGaleria');
+        Route::post('/excluirFotoGaleria', 'HomeController@excluirFotoGaleria')->name('usuario.excluirFotoGaleria');
+        Route::get('/excluirGaleria/{id}', 'HomeController@excluirGaleria')->name('usuario.excluirGaleria');
     });
 });
+
+Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
+Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
+Route::get('/{url}/enviaContato', 'IgrejaController@enviaContato')->name('igreja.enviaContato');
+Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');
+Route::get('/{url}/evento/{id}', 'IgrejaController@evento')->name('igreja.evento');
+Route::get('/{url}/inscreveEnvento', 'IgrejaController@inscreveEnvento')->name('igreja.inscreveEnvento');
+Route::get('/{url}/eventosfixos', 'IgrejaController@eventosfixos')->name('igreja.eventosfixos');
+Route::get('/{url}/eventofixo/{id}', 'IgrejaController@eventofixo')->name('igreja.eventofixo');
+Route::get('/{url}/noticias', 'IgrejaController@noticias')->name('igreja.noticias');
+Route::get('/{url}/noticia/{id}', 'IgrejaController@noticia')->name('igreja.noticia');
+Route::get('/{url}/apresentacao', 'IgrejaController@apresentacao')->name('igreja.apresentacao');
+Route::get('/{url}/sermoes', 'IgrejaController@sermoes')->name('igreja.sermoes');
+Route::get('/{url}/sermao/{id}', 'IgrejaController@sermao')->name('igreja.sermao');
+Route::get('/{url}/galeria','IgrejaController@galeria')->name('igreja.galeria');
+Route::get('/{url}/publicacao/{id}','IgrejaController@publicacao')->name('igreja.publicacao');
+Route::get('/{url}/login','IgrejaController@login')->name('igreja.login');
+Route::get('/carrega_imagem/{largura},{altura},{pasta},{arquivo}','IgrejaController@carrega_imagem')->name('igreja.carrega_imagem');

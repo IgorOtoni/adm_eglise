@@ -29,7 +29,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'id'=>15,
             'nome'=>'Galerias',
             'descricao'=>'Funcionalidade do site gerencial.',
-            'rota'=>'usuarios',
+            'rota'=>'galerias',
             'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([

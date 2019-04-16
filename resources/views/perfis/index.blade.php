@@ -207,7 +207,7 @@ $(function () {
                   <div class="col-md-12">
                       <div class="form-group">
                         <label >Descrição</label>
-                        <textarea class="form-control" rows="3" placeholder="Descrição"></textarea>
+                        <textarea name="descricao" class="form-control" rows="3" placeholder="Descrição"></textarea>
                       </div>
                   </div>
                   <div class="col-md-12">

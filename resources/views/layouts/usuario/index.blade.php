@@ -119,7 +119,7 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
             ->get();
 
         foreach($modulos as $modulo){
-          ?> <li><a href="{{route($modulo->rota)}}">
+          ?> <li><a href="{{route('usuario.'.$modulo->rota)}}">
             <?php if($modulo->icone != null){ ?> 
               <i class="{{$modulo->icone}}"></i>
             <?php } ?>
