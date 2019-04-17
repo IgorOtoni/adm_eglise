@@ -92,7 +92,7 @@ function muda_cep($cep){
 function muda_data($data){
     $retorno = str_replace("/", "-", $data);
     $split = explode('-', $retorno);
-    return $split[2] . '-' . $split[0] . '-' . $split[1];
+    return $split[2] . '-' . $split[1] . '-' . $split[0];
 }
 function muda_data_($data){
     $retorno = str_replace("-", "/", $data);

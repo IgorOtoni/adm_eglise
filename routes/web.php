@@ -117,7 +117,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/eventos', 'HomeController@index')->name('usuario.eventos');
         Route::get('/eventosfixos', 'HomeController@index')->name('usuario.eventosfixos');
         Route::get('/publicacoes', 'HomeController@index')->name('usuario.publicacoes');
-        Route::get('/noticias', 'HomeController@index')->name('usuario.noticias');
 
         Route::get('/banners', 'HomeController@banners')->name('usuario.banners');
         Route::get('/tbl_banners', 'HomeController@tbl_banners')->name('usuario.tbl_banners');
@@ -134,6 +133,22 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarGaleria', 'HomeController@atualizarGaleria')->name('usuario.atualizarGaleria');
         Route::post('/excluirFotoGaleria', 'HomeController@excluirFotoGaleria')->name('usuario.excluirFotoGaleria');
         Route::get('/excluirGaleria/{id}', 'HomeController@excluirGaleria')->name('usuario.excluirGaleria');
+
+        Route::get('/eventosfixos', 'HomeController@eventosfixos')->name('usuario.eventosfixos');
+        Route::get('/tbl_eventosfixos', 'HomeController@tbl_eventosfixos')->name('usuario.tbl_eventosfixos');
+        Route::post('/incluirEventoFixo', 'HomeController@incluirEventoFixo')->name('usuario.incluirEventoFixo');
+        Route::get('/editarEventoFixo/{id}', 'HomeController@editarEventoFixo')->name('usuario.editarEventoFixo');
+        Route::post('/atualizarEventoFixo', 'HomeController@atualizarEventoFixo')->name('usuario.atualizarEventoFixo');
+        Route::post('/excluirFotoEventoFixo', 'HomeController@excluirFotoEventoFixo')->name('usuario.excluirFotoEventoFixo');
+        Route::get('/excluirEventoFixo/{id}', 'HomeController@excluirEventoFixo')->name('usuario.excluirEventoFixo');
+
+        Route::get('/noticias', 'HomeController@noticias')->name('usuario.noticias');
+        Route::get('/tbl_noticias', 'HomeController@tbl_noticias')->name('usuario.tbl_noticias');
+        Route::post('/incluirNoticia', 'HomeController@incluirNoticia')->name('usuario.incluirNoticia');
+        Route::get('/editarNoticia/{id}', 'HomeController@editarNoticia')->name('usuario.editarNoticia');
+        Route::post('/atualizarNoticia', 'HomeController@atualizarNoticia')->name('usuario.atualizarNoticia');
+        Route::post('/excluirFotoNoticia', 'HomeController@excluirFotoNoticia')->name('usuario.excluirFotoNoticia');
+        Route::get('/excluirNoticia/{id}', 'HomeController@excluirNoticia')->name('usuario.excluirNoticia');
     });
 });
 

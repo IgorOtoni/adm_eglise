@@ -1,7 +1,5 @@
 @extends('layouts.usuario.index')
 @push('script')
-<!-- bootstrap datepicker -->
-<link rel="stylesheet" href="{{asset('template_adm/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
 
@@ -11,19 +9,19 @@
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<!-- bootstrap datepicker -->
-<script src="{{asset('template_adm/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 <script>
+
 $(function(){
-    $('#tbl_galerias').DataTable({
+
+    $('#tbl_eventosfixos').DataTable({
         'paging'      : true,
         'lengthChange': true,
         'searching'   : true,
         'ordering'    : true,
         'info'        : true,
         'autoWidth'   : true,
-    
+
         /*"language": {            
             "sEmptyTable":   "Nenhum registro encontrado",
             "sProcessing":   "Carregando,aguarde...",
@@ -46,11 +44,11 @@ $(function(){
                 "sSortDescending": ": Ordenar colunas de forma descendente"
             }
             },*/
-    
+
         'processing': true,
         'autoWidth': false,
         //'serverSide': false,
-        'ajax': '{{route('usuario.tbl_galerias')}}',
+        'ajax': '{{route('usuario.tbl_eventosfixos')}}',
         'columns': [
                 { data: 'id', name: 'id' },
                 { data: 'nome', name: 'nome' },
@@ -66,12 +64,8 @@ $(function(){
         allowedFileExtensions: ["jpg", "png", "gif"]
     });
 
-    //Date picker
-    $('#datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
-})
+});
+
 </script>
 
 @endpush
@@ -81,8 +75,8 @@ $(function(){
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-    Galerias
-    <small>Lista de todas as galerias da congregação</small>
+    Eventos Fixos
+    <small>Lista de todos os eventos fixos da congregação</small>
     </h1>
 </section>
 
@@ -94,11 +88,11 @@ $(function(){
     <div class="box-header with-border">
         <h3 class="box-title"></h3>
         <div class="pull-right">
-        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluir galeria</a>
+        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluir evento fixo</a>
         </div>
     </div>
     <div class="box-body">
-        <table id="tbl_galerias" class="table table-bordered table-striped">
+        <table id="tbl_eventosfixos" class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>#</th>
@@ -126,7 +120,7 @@ $(function(){
 
 <!-- Modals -->
 <div class="modal fade" id="modal-incluir">
-<form id="incluirGaleriaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.incluirGaleria')}}" enctype="multipart/form-data">
+<form id="incluirEventoFixoFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.incluirEventoFixo')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="igreja" id="igreja" value="{{$igreja->id}}">
     <div class="modal-dialog modal-lg">
@@ -134,7 +128,7 @@ $(function(){
         <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Incluir galeria</h4>
+        <h4 class="modal-title">Incluir Evento Fixos</h4>
         </div>
         <div class="modal-body">
         <!-- form start -->
@@ -150,21 +144,19 @@ $(function(){
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                    <label >Data:</label>
-                    <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                    <input name="data" type="text" class="form-control pull-right" id="datepicker">
-                    </div>
-                    <!--<input id="data" name="data" type="date" class="form-control" placeholder="Ordem">-->
+                    <div class="form-group has-feedback">
+                    <label >Data e local</label>
+                    <input id="dados_horario_local" name="dados_horario_local" type="text" class="form-control" placeholder="Data e local" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label >Descrição</label>
                         <textarea name="descricao" class="form-control" rows="3" placeholder="Descrição"></textarea>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 </div>
@@ -172,8 +164,8 @@ $(function(){
                 <div class="row">
                 <div class="col-md-12">
                     <div class="form-group has-feedback">
-                        <label >Fotos</label>
-                        <input name="fotos[]" type="file" id="input_img" multiple required>
+                        <label >Foto</label>
+                        <input name="foto" type="file" id="input_img">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>

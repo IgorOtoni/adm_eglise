@@ -37,7 +37,7 @@ $(function(){
             return new Promise(function(resolve, reject) {
                 $.confirm({
                     title: 'Confirmação!',
-                    content: 'A logo será excluída e <b>não poderá ser recuperada</b>, deseja realmente excluír a logo?',
+                    content: 'A foto será excluída e <b>não poderá ser recuperada</b>, deseja realmente excluír a foto?',
                     type: 'red',
                     buttons: {   
                         ok: {
@@ -100,8 +100,9 @@ $(function(){
     <!-- Main content -->
     <section class="content">
 
-        <form id="editarBannerFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.incluirBanner')}}" enctype="multipart/form-data">
+        <form id="editarBannerFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.atualizarBanner')}}" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="id" id="id" value="{{$banner->id}}">
         <div class="box">
             <div class="box-body">
                 <div class="row">
