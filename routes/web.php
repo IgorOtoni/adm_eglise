@@ -90,18 +90,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('igrejas/editarSubSubMenu', 'TblIgrejaController@editarSubSubMenu')->name('igrejas.editarSubSubMenu');
         Route::get('igrejas/excluirSubSubMenu/{id}', 'TblIgrejaController@excluirSubSubMenu')->name('igrejas.excluirSubSubMenu');
 
-        Route::get('perfis', 'TblperfilController@index')->name('perfis');
-        Route::post('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
-        Route::get('perfis/tbl_perfis', 'TblperfilController@tbl_perfis')->name('perfis.tbl_perfis');
-		Route::get('perfis/switchStatus/{id}', 'TblperfilController@switchStatus')->name('perfis.switchStatus');
-        Route::get('perfis/carregarPermissoes/{id}', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
-        Route::post('perfis/carregarPermissoes', 'TblperfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
-        Route::post('perfis/atualizarPermissoes/', 'TblperfilController@atualizarPermissoes')->name('perfis.atualizarPermissoes');
+        Route::get('perfis', 'TblPerfilController@index')->name('perfis');
+        Route::post('perfis/incluir', 'TblPerfilController@store')->name('perfis.incluir');
+        Route::get('perfis/tbl_perfis', 'TblPerfilController@tbl_perfis')->name('perfis.tbl_perfis');
+		Route::get('perfis/switchStatus/{id}', 'TblPerfilController@switchStatus')->name('perfis.switchStatus');
+        Route::get('perfis/carregarPermissoes/{id}', 'TblPerfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
+        Route::post('perfis/carregarPermissoes', 'TblPerfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
+        Route::post('perfis/atualizarPermissoes/', 'TblPerfilController@atualizarPermissoes')->name('perfis.atualizarPermissoes');
 
-        Route::get('publicacoes', 'TblpublicacoesController@index')->name('publicacoes');
-        Route::post('publicacoes/incluir', 'TblpublicacoesController@store')->name('publicacoes.incluir');
+        Route::get('publicacoes', 'TblPublicacoesController@index')->name('publicacoes');
+        Route::post('publicacoes/incluir', 'TblPublicacoesController@store')->name('publicacoes.incluir');
 
-        Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
+        Route::get('permissoes/json_permissoes', 'TblPermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 
         //Route::get('/', 'HomeController@index')->name('admin.index');
         Route::get('/home', 'HomeController@index')->name('admin.home');
