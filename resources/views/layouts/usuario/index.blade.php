@@ -116,6 +116,7 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
             ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id_perfil)
             ->where('tbl_modulos.sistema','=','web')
             ->where('tbl_modulos.gerencial','=',true)
+            ->orderBy('tbl_modulos.nome', 'ASC')
             ->get();
 
         foreach($modulos as $modulo){

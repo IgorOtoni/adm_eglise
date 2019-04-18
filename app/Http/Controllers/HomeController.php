@@ -13,6 +13,11 @@ use App\TblGalerias;
 use App\TblFotos;
 use App\TblEventosFixos;
 use App\TblNoticias;
+use App\TblMenu;
+use App\TblSubMenu;
+use App\TblSubSubMenu;
+use App\TblConfiguracoes;
+use App\TblSermoes;
 
 class HomeController extends Controller
 {
@@ -48,7 +53,7 @@ class HomeController extends Controller
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
-            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
             return view('usuario.banners', compact('igreja','modulos_igreja'));
         }
     }
@@ -67,7 +72,7 @@ class HomeController extends Controller
         $banner = TblBanner::find($id);
         $perfil = TblPerfil::find(\Auth::user()->id_perfil);
         $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
         return view('usuario.editarbanner', compact('banner','igreja','modulos_igreja'));
     }
 
@@ -159,7 +164,7 @@ class HomeController extends Controller
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
-            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
             return view('usuario.galerias', compact('igreja','modulos_igreja'));
         }
     }
@@ -223,7 +228,7 @@ class HomeController extends Controller
         $fotos = TblFotos::where('id_galeria','=',$galeria->id)->get();
         $perfil = TblPerfil::find(\Auth::user()->id_perfil);
         $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
         return view('usuario.editargaleria', compact('galeria','fotos','igreja','modulos_igreja'));
     }
 
@@ -310,7 +315,7 @@ class HomeController extends Controller
         $eventofixo = TblEventosFixos::find($id);
         $perfil = TblPerfil::find(\Auth::user()->id_perfil);
         $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
         return view('usuario.editareventofixo', compact('eventofixo','igreja','modulos_igreja'));
     }
 
@@ -366,7 +371,7 @@ class HomeController extends Controller
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
-            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
             return view('usuario.noticias', compact('igreja','modulos_igreja'));
         }
     }
@@ -406,7 +411,7 @@ class HomeController extends Controller
         $noticia = TblNoticias::find($id);
         $perfil = TblPerfil::find(\Auth::user()->id_perfil);
         $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
         return view('usuario.editarnoticia', compact('noticia','igreja','modulos_igreja'));
     }
 
@@ -452,4 +457,303 @@ class HomeController extends Controller
         return redirect()->route('usuario.noticias')->with($notification);
     }
     ////////////////////////////////////////////////////////////////////////////////////////
+    
+    // CONFIGURACOES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function sermoes(){
+        if(\Auth::user()->id_perfil == 1){
+            return view('home');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.sermoes', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_sermoes(){
+        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+        $sermao = TblSermoes::where('id_igreja','=',$perfil->id_igreja)->get();
+        return DataTables::of($sermao)->addColumn('action',function($sermao){
+            return '<a href="editarSermao/'.$sermao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            '<a href="excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+        })
+        ->make(true);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // CONFIGURACOES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function configuracoes(){
+        if(\Auth::user()->id_perfil == 1){
+            return view('home');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            $retorno = obter_menus_configuracao($igreja->id_configuracao);
+            $menus = $retorno[0];
+            $submenus = $retorno[1];
+            $subsubmenus = $retorno[2];
+            return view('usuario.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus'));
+        }
+    }
+
+    public function adicionarMenu(Request $request){
+        $menu = new TblMenu();
+        $menu->id_configuracao = $request->id_configuracao;
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $menu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $menu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $menu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $menu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $menu->link = $request->url;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarMenu(Request $request){
+        $menu = TblMenu::find($request->id);
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 0){
+            $menu->link = null;
+        }else if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $menu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $menu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $menu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $menu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $menu->link = $request->url;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirMenu($id){
+        $sub_menus = \DB::table('tbl_sub_menus')
+            ->select('tbl_sub_menus.id')
+            ->where('tbl_sub_menus.id_menu','=',$id)
+            ->get();
+
+        foreach($sub_menus as $sub_menu){
+            $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
+                ->select('tbl_sub_sub_menus.id')
+                ->where('tbl_sub_sub_menus.id_submenu','=',$id)
+                ->get();
+
+            foreach($sub_sub_menus as $sub_sub_menu){
+                TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
+            }
+
+            TblSubMenu::where('id', $sub_menu->id)->delete();
+        }
+
+        $menu = TblMenu::find($id);
+        TblMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function adicionarSubMenu(Request $request){
+        $submenu = new TblSubMenu();
+        $submenu->id_menu = $request->id_menu;
+        $submenu->nome = $request->nome;
+        $submenu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $submenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $submenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $submenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $submenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $submenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $submenu->link = $request->url;
+        }
+        $submenu->save();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarSubMenu(Request $request){
+        $submenu = TblSubMenu::find($request->id);
+        $submenu->id_menu = $request->id_menu;
+        $submenu->nome = $request->nome;
+        $submenu->ordem = $request->ordem;
+        if($request->link == 0){
+            $submenu->link = null;
+        }else if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $submenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $submenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $submenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $submenu->link = 'evento/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $submenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $submenu->link = $request->url;
+        }
+        $submenu->save();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirSubMenu($id){
+        $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
+            ->select('tbl_sub_sub_menus.id')
+            ->where('tbl_sub_sub_menus.id_submenu','=',$id)
+            ->get();
+
+        foreach($sub_sub_menus as $sub_sub_menu){
+            TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
+        }
+
+        $submenu = TblSubMenu::find($id);
+        TblSubMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Submenu ' . $submenu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function adicionarSubSubMenu(Request $request){
+        //dd($request->all());
+        $subsubmenu = new TblSubSubMenu();
+        $subsubmenu->id_submenu = $request->id_submenu;
+        $subsubmenu->nome = $request->nome;
+        $subsubmenu->ordem = $request->ordem;
+        if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $subsubmenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $subsubmenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $subsubmenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $subsubmenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $subsubmenu->link = $request->url;
+        }
+        $subsubmenu->save();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarSubSubMenu(Request $request){
+        $subsubmenu = new TblSubSubMenu();
+        $subsubmenu->id_submenu = $request->id_submenu;
+        $subsubmenu->nome = $request->nome;
+        $subsubmenu->ordem = $request->ordem;
+        if($request->link == 0){
+            $submenu->link = null;
+        }if($request->link == 1){
+            $modulo = TblModulo::find($request->modulo);
+            $subsubmenu->link = $modulo->rota;
+        }else if($request->link == 2){
+            $subsubmenu->link = 'publicacao/'.$request->publicacao;
+        }else if($request->link == 3){
+            $subsubmenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $subsubmenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $subsubmenu->link = $request->url;
+        }
+        $subsubmenu->save();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirSubSubMenu($id){
+        $subsubmenu = TblSubSubMenu::find($id);
+        TblSubSubMenu::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi excluído com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function salvarConfiguracoes(Request $request){
+        $configuracao = TblConfiguracoes::find($request->id);
+        $configuracao->id_template = $request->id_template;
+        $configuracao->cor = $request->cor;
+
+        $configuracao->save();
+
+        $notification = array(
+            'message' => 'Configurações da congregação alteradas com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
 }

@@ -250,7 +250,13 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $menu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
-            $menu->link = $request->link;
+            $menu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $menu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $menu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $menu->link = $request->url;
         }
         $menu->save();
 
@@ -274,7 +280,13 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $menu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
-            $menu->link = $request->link;
+            $menu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $menu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $menu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $menu->link = $request->url;
         }
         $menu->save();
 
@@ -327,6 +339,12 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $submenu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
+            $submenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $submenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $submenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
             $submenu->link = $request->url;
         }
         $submenu->save();
@@ -352,6 +370,12 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $submenu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
+            $submenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $submenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $submenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
             $submenu->link = $request->url;
         }
         $submenu->save();
@@ -396,7 +420,13 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $subsubmenu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
-            $subsubmenu->link = $request->url;
+            $menu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $menu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $menu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
+            $menu->link = $request->url;
         }
         $subsubmenu->save();
 
@@ -421,6 +451,12 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $subsubmenu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
+            $subsubmenu->link = 'evento/'.$request->evento;
+        }else if($request->link == 4){
+            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+        }else if($request->link == 5){
+            $subsubmenu->link = 'noticia/'.$request->noticia;
+        }else if($request->link == 6){
             $subsubmenu->link = $request->url;
         }
         $subsubmenu->save();
@@ -464,7 +500,7 @@ class TblIgrejaController extends Controller
             return back()->with($notification);
         }else{
             $notification = array(
-                'message' => 'Essa URL já está em suo por outra congregação!', 
+                'message' => 'Essa URL já está em uso por outra congregação!', 
                 'alert-type' => 'error'
             );
     

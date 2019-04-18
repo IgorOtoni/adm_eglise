@@ -56,5 +56,10 @@ class Tbl_Perfis_Igrejas_Modulos_Seeder extends Seeder
             'id_perfil'=>4, // pastor
             'id_modulo_igreja'=>45, // Igreja 3 - Galerias
         ]);
+        DB::table('tbl_perfis_igrejas_modulos')->insert([
+            'id'=>10,
+            'id_perfil'=>4, // pastor
+            'id_modulo_igreja'=>66, // Igreja 3 - Configurações
+        ]);
     }
 }

@@ -112,12 +112,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/usuarios', 'HomeController@index')->name('usuario.usuarios');
         Route::get('/perfis', 'HomeController@index')->name('usuario.perfis');
-        Route::get('/sermoes', 'HomeController@index')->name('usuario.sermoes');
         Route::get('/doacoes', 'HomeController@index')->name('usuario.doacoes');
         Route::get('/eventos', 'HomeController@index')->name('usuario.eventos');
         Route::get('/eventosfixos', 'HomeController@index')->name('usuario.eventosfixos');
         Route::get('/publicacoes', 'HomeController@index')->name('usuario.publicacoes');
 
+        // CRUD BANNERS ==========================================================================
         Route::get('/banners', 'HomeController@banners')->name('usuario.banners');
         Route::get('/tbl_banners', 'HomeController@tbl_banners')->name('usuario.tbl_banners');
         Route::post('/incluirBanner', 'HomeController@incluirBanner')->name('usuario.incluirBanner');
@@ -125,7 +125,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarBanner', 'HomeController@atualizarBanner')->name('usuario.atualizarBanner');
         Route::post('/excluirFotoBanner', 'HomeController@excluirFotoBanner')->name('usuario.excluirFotoBanner');
         Route::get('/excluirBanner/{id}', 'HomeController@excluirBanner')->name('usuario.excluirBanner');
+        //////////////////////////////////////////////////////////////////////////////////////////
 
+        // CRUD GALERIAS ==========================================================================
         Route::get('/galerias', 'HomeController@galerias')->name('usuario.galerias');
         Route::get('/tbl_galerias', 'HomeController@tbl_galerias')->name('usuario.tbl_galerias');
         Route::post('/incluirGaleria', 'HomeController@incluirGaleria')->name('usuario.incluirGaleria');
@@ -133,7 +135,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarGaleria', 'HomeController@atualizarGaleria')->name('usuario.atualizarGaleria');
         Route::post('/excluirFotoGaleria', 'HomeController@excluirFotoGaleria')->name('usuario.excluirFotoGaleria');
         Route::get('/excluirGaleria/{id}', 'HomeController@excluirGaleria')->name('usuario.excluirGaleria');
+        //////////////////////////////////////////////////////////////////////////////////////////
 
+        // CRUD EVENTOS FIXOS ==========================================================================
         Route::get('/eventosfixos', 'HomeController@eventosfixos')->name('usuario.eventosfixos');
         Route::get('/tbl_eventosfixos', 'HomeController@tbl_eventosfixos')->name('usuario.tbl_eventosfixos');
         Route::post('/incluirEventoFixo', 'HomeController@incluirEventoFixo')->name('usuario.incluirEventoFixo');
@@ -141,7 +145,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarEventoFixo', 'HomeController@atualizarEventoFixo')->name('usuario.atualizarEventoFixo');
         Route::post('/excluirFotoEventoFixo', 'HomeController@excluirFotoEventoFixo')->name('usuario.excluirFotoEventoFixo');
         Route::get('/excluirEventoFixo/{id}', 'HomeController@excluirEventoFixo')->name('usuario.excluirEventoFixo');
+        //////////////////////////////////////////////////////////////////////////////////////////
 
+        // CRUD NOTICIAS ==========================================================================
         Route::get('/noticias', 'HomeController@noticias')->name('usuario.noticias');
         Route::get('/tbl_noticias', 'HomeController@tbl_noticias')->name('usuario.tbl_noticias');
         Route::post('/incluirNoticia', 'HomeController@incluirNoticia')->name('usuario.incluirNoticia');
@@ -149,6 +155,31 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarNoticia', 'HomeController@atualizarNoticia')->name('usuario.atualizarNoticia');
         Route::post('/excluirFotoNoticia', 'HomeController@excluirFotoNoticia')->name('usuario.excluirFotoNoticia');
         Route::get('/excluirNoticia/{id}', 'HomeController@excluirNoticia')->name('usuario.excluirNoticia');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CONFIGURACOES SITE ==========================================================================
+        Route::get('/configuracoes', 'HomeController@configuracoes')->name('usuario.configuracoes');
+        Route::post('/salvarConfiguracoes', 'HomeController@salvarConfiguracoes')->name('usuario.salvarConfiguracoes');        
+        Route::post('/adicionarMenu', 'HomeController@adicionarMenu')->name('usuario.adicionarMenu');
+        Route::post('/editarMenu', 'HomeController@editarMenu')->name('usuario.editarMenu');
+        Route::get('/excluirMenu/{id}', 'HomeController@excluirMenu')->name('usuario.excluirMenu');
+        Route::post('/adicionarSubMenu', 'HomeController@adicionarSubMenu')->name('usuario.adicionarSubMenu');
+        Route::post('/editarSubMenu', 'HomeController@editarSubMenu')->name('usuario.editarSubMenu');
+        Route::get('/excluirSubMenu/{id}', 'HomeController@excluirSubMenu')->name('usuario.excluirSubMenu');
+        Route::post('/adicionarSubSubMenu', 'HomeController@adicionarSubSubMenu')->name('usuario.adicionarSubSubMenu');
+        Route::post('/editarSubSubMenu', 'HomeController@editarSubSubMenu')->name('usuario.editarSubSubMenu');
+        Route::get('/excluirSubSubMenu/{id}', 'HomeController@excluirSubSubMenu')->name('usuario.excluirSubSubMenu');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CRUD SERMOES ==========================================================================
+        Route::get('/sermoes', 'HomeController@sermoes')->name('usuario.sermoes');
+        Route::get('/tbl_sermoes', 'HomeController@tbl_sermoes')->name('usuario.tbl_sermoes');
+        Route::post('/incluirSermao', 'HomeController@incluirSermao')->name('usuario.incluirSermao');
+        Route::get('/editarSermao/{id}', 'HomeController@editarSermao')->name('usuario.editarSermao');
+        Route::post('/atualizarSermao', 'HomeController@atualizarSermao')->name('usuario.atualizarSermao');
+        Route::get('/excluirSermao/{id}', 'HomeController@excluirSermao')->name('usuario.excluirSermao');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
     });
 });
 

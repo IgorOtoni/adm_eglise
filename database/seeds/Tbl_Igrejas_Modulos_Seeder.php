@@ -330,5 +330,20 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_igreja'=>3,
             'id_modulo'=>21,
         ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Configurações
+            'id'=>64,
+            'id_igreja'=>1,
+            'id_modulo'=>22,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Configurações
+            'id'=>65,
+            'id_igreja'=>2,
+            'id_modulo'=>22,
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Configurações
+            'id'=>66,
+            'id_igreja'=>3,
+            'id_modulo'=>22,
+        ]);
     }
 }
