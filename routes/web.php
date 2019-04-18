@@ -70,25 +70,25 @@ Route::group(['middleware' => 'auth'], function () {
     });*/
     //     ROTAS DE ADMINISTRAÇÃO DO SISTEMA
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-        Route::get('igrejas', 'TbligrejaController@index')->name('igrejas');
-        Route::get('igrejas/tbl_igrejas', 'TbligrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
-        Route::get('igrejas/switchStatus/{id}', 'TbligrejaController@switchStatus')->name('igrejas.switchStatus');
-        Route::get('igrejas/editarIgreja/{id}', 'TbligrejaController@edit')->name('igrejas.editar');
-        Route::post('igrejas/incluir', 'TbligrejaController@store')->name('igrejas.incluir');
-        Route::post('igrejas/atualizar', 'TbligrejaController@update')->name('igrejas.atualizar');
-        Route::post('igrejas/excluirLogo', 'TbligrejaController@excluirLogo')->name('igrejas.excluirLogo');
-        Route::post('igrejas/salvarConfiguracoes', 'TbligrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
-        Route::get('igrejas/carregarModulos/{id}', 'TbligrejaController@modulos_igreja')->name('igrejas.carregarModulos');
-        Route::get('igrejas/configuracoes/{id}', 'TbligrejaController@configuracoes')->name('igrejas.configuracoes');
-        Route::post('igrejas/adicionarMenu', 'TbligrejaController@adicionarMenu')->name('igrejas.adicionarMenu');
-        Route::post('igrejas/editarMenu', 'TbligrejaController@editarMenu')->name('igrejas.editarMenu');
-        Route::get('igrejas/excluirMenu/{id}', 'TbligrejaController@excluirMenu')->name('igrejas.excluirMenu');
-        Route::post('igrejas/adicionarSubMenu', 'TbligrejaController@adicionarSubMenu')->name('igrejas.adicionarSubMenu');
-        Route::post('igrejas/editarSubMenu', 'TbligrejaController@editarSubMenu')->name('igrejas.editarSubMenu');
-        Route::get('igrejas/excluirSubMenu/{id}', 'TbligrejaController@excluirSubMenu')->name('igrejas.excluirSubMenu');
-        Route::post('igrejas/adicionarSubSubMenu', 'TbligrejaController@adicionarSubSubMenu')->name('igrejas.adicionarSubSubMenu');
-        Route::post('igrejas/editarSubSubMenu', 'TbligrejaController@editarSubSubMenu')->name('igrejas.editarSubSubMenu');
-        Route::get('igrejas/excluirSubSubMenu/{id}', 'TbligrejaController@excluirSubSubMenu')->name('igrejas.excluirSubSubMenu');
+        Route::get('igrejas', 'TblIgrejaController@index')->name('igrejas');
+        Route::get('igrejas/tbl_igrejas', 'TblIgrejaController@tbl_igrejas')->name('igrejas.tbl_igrejas');
+        Route::get('igrejas/switchStatus/{id}', 'TblIgrejaController@switchStatus')->name('igrejas.switchStatus');
+        Route::get('igrejas/editarIgreja/{id}', 'TblIgrejaController@edit')->name('igrejas.editar');
+        Route::post('igrejas/incluir', 'TblIgrejaController@store')->name('igrejas.incluir');
+        Route::post('igrejas/atualizar', 'TblIgrejaController@update')->name('igrejas.atualizar');
+        Route::post('igrejas/excluirLogo', 'TblIgrejaController@excluirLogo')->name('igrejas.excluirLogo');
+        Route::post('igrejas/salvarConfiguracoes', 'TblIgrejaController@salvarConfiguracoes')->name('igrejas.salvarConfiguracoes');
+        Route::get('igrejas/carregarModulos/{id}', 'TblIgrejaController@modulos_igreja')->name('igrejas.carregarModulos');
+        Route::get('igrejas/configuracoes/{id}', 'TblIgrejaController@configuracoes')->name('igrejas.configuracoes');
+        Route::post('igrejas/adicionarMenu', 'TblIgrejaController@adicionarMenu')->name('igrejas.adicionarMenu');
+        Route::post('igrejas/editarMenu', 'TblIgrejaController@editarMenu')->name('igrejas.editarMenu');
+        Route::get('igrejas/excluirMenu/{id}', 'TblIgrejaController@excluirMenu')->name('igrejas.excluirMenu');
+        Route::post('igrejas/adicionarSubMenu', 'TblIgrejaController@adicionarSubMenu')->name('igrejas.adicionarSubMenu');
+        Route::post('igrejas/editarSubMenu', 'TblIgrejaController@editarSubMenu')->name('igrejas.editarSubMenu');
+        Route::get('igrejas/excluirSubMenu/{id}', 'TblIgrejaController@excluirSubMenu')->name('igrejas.excluirSubMenu');
+        Route::post('igrejas/adicionarSubSubMenu', 'TblIgrejaController@adicionarSubSubMenu')->name('igrejas.adicionarSubSubMenu');
+        Route::post('igrejas/editarSubSubMenu', 'TblIgrejaController@editarSubSubMenu')->name('igrejas.editarSubSubMenu');
+        Route::get('igrejas/excluirSubSubMenu/{id}', 'TblIgrejaController@excluirSubSubMenu')->name('igrejas.excluirSubSubMenu');
 
         Route::get('perfis', 'TblperfilController@index')->name('perfis');
         Route::post('perfis/incluir', 'TblperfilController@store')->name('perfis.incluir');
