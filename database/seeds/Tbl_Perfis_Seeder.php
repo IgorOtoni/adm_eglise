@@ -32,6 +32,7 @@ class Tbl_Perfis_Seeder extends Seeder
         DB::table('tbl_perfis')->insert([
             'id'=>4,
             'nome'=>'Pastor',
+            'id_igreja'=>3,
             'descricao'=>'Agenda reuniões, temas, consulta a frequência dos membros, novos membros e aniversariantes.'
         ]);
 

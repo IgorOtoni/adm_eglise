@@ -8,9 +8,6 @@
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
-<!-- DataTables -->
-<script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- InputFilePTBR Confirm Dialog -->
 <script src="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.js')}}"></script>
 

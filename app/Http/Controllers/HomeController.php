@@ -458,7 +458,7 @@ class HomeController extends Controller
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     
-    // CONFIGURACOES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // SERMÕES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function sermoes(){
         if(\Auth::user()->id_perfil == 1){
             return view('home');
@@ -490,6 +490,41 @@ class HomeController extends Controller
 
         $notification = array(
             'message' => 'Sermão "' . $sermao->nome . '" foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.sermoes')->with($notification);
+    }
+
+    public function editarSermao($id){
+        $sermao = TblSermoes::find($id);
+        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+        $igreja = obter_dados_igreja_id($perfil->id_igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+        return view('usuario.editarsermao', compact('sermao','igreja','modulos_igreja'));
+    }
+
+    public function atualizarSermao(Request $request){
+        $sermao = TblSermoes::find($request->id);
+        $sermao->nome = $request->nome;
+        $sermao->link = $request->link;
+        $sermao->descricao = $request->descricao;
+        $sermao->save();
+
+        $notification = array(
+            'message' => 'Sermão "' . $sermao->nome . '" foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.sermoes')->with($notification);
+    }
+
+    public function excluirSermao($id){
+        $sermao = TblSermoes::find($id);
+        $sermao->delete();
+
+        $notification = array(
+            'message' => 'Sermão "' . $sermao->nome . '" foi excluído com sucesso!', 
             'alert-type' => 'success'
         );
 
