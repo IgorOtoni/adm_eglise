@@ -21,10 +21,10 @@ $(function(){
         allowedFileExtensions: ["jpg", "png", "gif"],
         initialPreview: [
             <?php if($noticia->foto != null){ ?>
-                "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage/noticias/'.$noticia->foto}}",
+                "{{'/storage/noticias/'.$noticia->foto}}",
             <?php } ?>
         ],
-        deleteUrl: "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage'}}",
+        deleteUrl: "{{'/storage'}}",
         uploadExtraData:{'_token':$("#csrf_token").val()},
         initialPreviewAsData: true,
         //initialPreviewFileType: "image",

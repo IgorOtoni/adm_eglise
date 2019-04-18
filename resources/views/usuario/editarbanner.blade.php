@@ -19,9 +19,9 @@ $(function(){
         //maxImageCount: 1,
         allowedFileExtensions: ["jpg", "png", "gif"],
         initialPreview: [
-            "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage/banners/'.$banner->foto}}",
+            "{{'/storage/banners/'.$banner->foto}}",
         ],
-        deleteUrl: "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage'}}",
+        deleteUrl: "{{'/storage'}}",
         uploadExtraData:{'_token':$("#csrf_token").val()},
         initialPreviewAsData: true,
         //initialPreviewFileType: "image",

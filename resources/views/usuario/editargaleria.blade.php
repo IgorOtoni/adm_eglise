@@ -32,10 +32,10 @@ $(function(){
         allowedFileExtensions: ["jpg", "png", "gif"],
         initialPreview: [
             <?php foreach($fotos as $foto){ ?>
-                "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage/galerias/'.$foto->foto}}",
+                "{{'/storage/galerias/'.$foto->foto}}",
             <?php } ?>
         ],
-        //deleteUrl: "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage'}}",
+        //deleteUrl: "{{'/storage'}}",
         //uploadExtraData:{'_token':$("#csrf_token").val()},
         initialPreviewAsData: true,
         //initialPreviewFileType: "image",
