@@ -113,6 +113,12 @@ class TblIgrejaController extends Controller
                 $modulo->create($data);
             }
 
+            $configuracao = new TblConfiguracoes();
+            $configuracao->id_igreja = $igreja->id;
+            $configuracao->cor = 'white';
+            $configuracao->id_template = 1;
+            $configuracao->save();
+
             $notification = array(
                 'message' => $igreja->nome . ' foi incluído(a) com sucesso!', 
                 'alert-type' => 'success'
@@ -483,7 +489,7 @@ class TblIgrejaController extends Controller
 
     public function salvarConfiguracoes(Request $request){
         $configuracao = TblConfiguracoes::find($request->id);
-        $configuracao->id_template = $request->template;
+        $configuracao->id_template = $request->id_template;
         $configuracao->cor = $request->cor;
 
         $count = TblConfiguracoes::where('url','=',$request->url)->where('id','<>',$configuracao->id)->count();
