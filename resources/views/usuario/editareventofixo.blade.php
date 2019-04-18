@@ -21,10 +21,10 @@ $(function(){
         allowedFileExtensions: ["jpg", "png", "gif"],
         initialPreview: [
             <?php if($eventofixo->foto != null){ ?>
-                "{{'http://localhost/adm_eglise/public/storage/eventos/'.$eventofixo->foto}}",
+                "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage/eventos/'.$eventofixo->foto}}",
             <?php } ?>
         ],
-        deleteUrl: "{{'http://localhost/adm_eglise/public/storage'}}",
+        deleteUrl: "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage'}}",
         uploadExtraData:{'_token':$("#csrf_token").val()},
         initialPreviewAsData: true,
         //initialPreviewFileType: "image",
