@@ -481,7 +481,7 @@ class HomeController extends Controller
     }
 
     public function incluirSermao(Request $request){
-        $sermao = new TblSermao();
+        $sermao = new TblSermoes();
         $sermao->id_igreja = $request->igreja;
         $sermao->nome = $request->nome;
         $sermao->link = $request->link;
