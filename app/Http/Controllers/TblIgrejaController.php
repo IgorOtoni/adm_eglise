@@ -483,7 +483,7 @@ class TblIgrejaController extends Controller
 
     public function salvarConfiguracoes(Request $request){
         $configuracao = TblConfiguracoes::find($request->id);
-        $configuracao->id_template = $request->id_template;
+        $configuracao->id_template = $request->template;
         $configuracao->cor = $request->cor;
 
         $count = TblConfiguracoes::where('url','=',$request->url)->where('id','<>',$configuracao->id)->count();
