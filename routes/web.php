@@ -103,8 +103,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('permissoes/json_permissoes', 'TblpermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
 
-        Route::get('/', 'HomeController@index')->name('admin.index');
-        Route::get('/home', 'HomeController@index')->name('home');
+        //Route::get('/', 'HomeController@index')->name('admin.index');
+        Route::get('/home', 'HomeController@index')->name('admin.home');
     });
     Route::group(['prefix' => 'usuario', 'middleware' => 'usuario'], function () {
         //Route::get('/', 'HomeController@index')->name('usuario.index');
