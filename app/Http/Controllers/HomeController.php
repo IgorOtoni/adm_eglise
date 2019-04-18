@@ -479,6 +479,22 @@ class HomeController extends Controller
         })
         ->make(true);
     }
+
+    public function incluirSermao(Request $request){
+        $sermao = new TblSermao();
+        $sermao->id_igreja = $request->igreja;
+        $sermao->nome = $request->nome;
+        $sermao->link = $request->link;
+        $sermao->descricao = $request->descricao;
+        $sermao->save();
+
+        $notification = array(
+            'message' => 'Sermão "' . $sermao->nome . '" foi adicionado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.sermoes')->with($notification);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // CONFIGURACOES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -150,8 +150,8 @@ $(function(){
                 </div>
                 <div class="col-md-12">
                     <div class="form-group has-feedback">
-                    <label >Url da pregação (embed):</label>
-                    <input id="url" name="url" type="url" class="form-control" placeholder="Url externa" required>
+                    <label >Link\Url da pregação (embed):</label>
+                    <input id="link" name="link" type="url" class="form-control" placeholder="Url externa" required>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div class="help-block with-errors"></div>
                     </div>
