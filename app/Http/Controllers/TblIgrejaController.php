@@ -87,9 +87,11 @@ class TblIgrejaController extends Controller
         $igreja->estado = $request->estado;
         $igreja->telefone = $request->telefone;
         $igreja->email = $request->email;
+        $igreja->logo = "vazio";
 
         $count = TblIgreja::where("nome", "=", $igreja->nome)->count();
         if($count == 0){
+            $igreja->save();
 
             //convertendo imagem base64
             $img = $request->logo;
@@ -503,7 +505,7 @@ class TblIgrejaController extends Controller
                 'alert-type' => 'success'
             );
     
-            return back()->with($notification);
+            return redirect()->route('igrejas')->with($notification);
         }else{
             $notification = array(
                 'message' => 'Essa URL já está em uso por outra congregação!', 
