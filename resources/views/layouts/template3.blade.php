@@ -38,7 +38,7 @@
                     <nav class="classy-navbar justify-content-between" id="faithNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img style="witdh: 120px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt=""></a><h3>{{$igreja->nome}}</h3></a>
+                        <a class="nav-brand" href="/{{$igreja->url}}"><img style="witdh: 120px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt=""></a><h3>{{$igreja->nome}}</h3></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">

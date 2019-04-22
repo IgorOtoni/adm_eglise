@@ -12,12 +12,16 @@ use App\TblModulo;
 use App\TblGalerias;
 use App\TblFotos;
 use App\TblEventosFixos;
+use App\TblEventos;
 use App\TblNoticias;
 use App\TblMenu;
 use App\TblSubMenu;
 use App\TblSubSubMenu;
 use App\TblConfiguracoes;
 use App\TblSermoes;
+use App\TblPublicacaoFotos;
+use App\TblPublicacoes;
+use Calendar;
 
 class HomeController extends Controller
 {
@@ -90,8 +94,8 @@ class HomeController extends Controller
         }else if($request->link == 3){
             $banner->link = $request->url;
         }
-        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
         $banner->save();
 
         $notification = array(
@@ -121,8 +125,8 @@ class HomeController extends Controller
         }
         $banner->save();
 
-        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
         $banner->save();
 
         $notification = array(
@@ -187,14 +191,14 @@ class HomeController extends Controller
         $galeria->data = muda_data($request->data);
         $galeria->save();
 
-        foreach($request->fotos as $f_){
+        foreach($request->fotos as $foto){
             $foto = new TblFotos();
             $foto->id_galeria = $galeria->id;
             $foto->foto = "vazio";
             $foto->save();
 
-            \Image::make($f_)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+            \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
+            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
             $foto->save();
         }
             
@@ -239,14 +243,14 @@ class HomeController extends Controller
         $galeria->data = muda_data($request->data);
         $galeria->save();
 
-        if($request->fotos) foreach($request->fotos as $f_){
+        if($request->fotos) foreach($request->fotos as $foto){
             $foto = new TblFotos();
             $foto->id_galeria = $galeria->id;
             $foto->foto = "vazio";
             $foto->save();
 
-            \Image::make($f_)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+            \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
+            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
             $foto->save();
         }
             
@@ -298,8 +302,8 @@ class HomeController extends Controller
         $eventofixo->save();
 
         if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
             $eventofixo->save();
         }
 
@@ -327,8 +331,8 @@ class HomeController extends Controller
         $eventofixo->save();
 
         if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
             $eventofixo->save();
         }
 
@@ -394,8 +398,8 @@ class HomeController extends Controller
         $noticia->save();
 
         if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
             $noticia->save();
         }
 
@@ -422,8 +426,8 @@ class HomeController extends Controller
         $noticia->save();
 
         if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension(),90);
-            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.$request->foto->getClientOriginalExtension();
+            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
             $noticia->save();
         }
 
@@ -807,4 +811,148 @@ class HomeController extends Controller
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
+    // EVENTOS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function eventos(){
+        if(\Auth::user()->id_perfil == 1){
+            return view('home');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+
+            $eventos = [];
+            $data = TblEventos::where('id_igreja','=',$igreja->id)->get();
+            if($data->count()) {
+                foreach ($data as $key => $value) {
+                    $eventos[] = Calendar::event(
+                        $value->nome,
+                        false,
+                        $value->dados_horario_inicio,
+                        $value->dados_horario_fim,
+                        null,
+                        // Add color and link on event
+                        [
+                            'color' => cor_aleatoria(),
+                            'url' => '/usuario/editarEvento/'.$value->id,
+                        ]
+                    );
+                }
+            }
+            $calendar = Calendar::addEvents($eventos);
+
+            return view('usuario.eventos', compact('igreja','modulos_igreja','calendar'));
+        }
+    }
+
+    public function incluirEvento(Request $request){
+        dd($request->all());
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
+    // PUBLICAÇÕES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function publicacoes(){
+        if(\Auth::user()->id_perfil == 1){
+            return view('home');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            return view('usuario.publicacoes', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_publicacoes(){
+        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+        $publicacoes = TblPublicacoes::where('id_igreja','=',$perfil->id_igreja)->get();
+        return DataTables::of($publicacoes)->addColumn('action',function($publicacoes){
+            return '<a href="editarPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            '<a href="excluirPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+        })
+        ->make(true);
+    }
+
+    public function incluirPublicacao(Request $request){
+        $publicacao = new TblPublicacoes();
+        $publicacao->id_igreja = $request->igreja;
+        $publicacao->nome = $request->nome;
+        $publicacao->html = $request->html;
+        $publicacao->save();
+
+        foreach($request->galeria as $f_){
+            $foto = new TblPublicacaoFotos();
+            $foto->id_publicacao = $publicacao->id;
+            $foto->foto = "vazio";
+            $foto->save();
+
+            \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+            $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+            $foto->save();
+        }
+            
+        $notification = array(
+            'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.publicacoes')->with($notification);
+    }
+
+    public function editarPublicacao($id){
+        $publicacao = TblPublicacoes::find($id);
+        $fotos = TblPublicacaoFotos::where('id_publicacao','=',$publicacao->id)->get();
+        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+        $igreja = obter_dados_igreja_id($perfil->id_igreja);
+        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+        return view('usuario.editarpublicacao', compact('publicacao','fotos','igreja','modulos_igreja'));
+    }
+
+    public function atualizarPublicacao(Request $request){
+        $publicacao = TblPublicacoes::find($request->id);
+        $publicacao->nome = $request->nome;
+        $publicacao->html = $request->html;
+        $publicacao->save();
+
+        if($request->galeria) foreach($request->galeria as $f_){
+            $foto = new TblPublicacaoFotos();
+            $foto->id_publicacao = $publicacao->id;
+            $foto->foto = "vazio";
+            $foto->save();
+
+            \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+            $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+            $foto->save();
+        }
+            
+        $notification = array(
+            'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.publicacoes')->with($notification);
+    }
+
+    public function excluirPublicacao($id){
+        $publicacao = TblPublicacoes::find($id);
+        $fotos = TblPublicacaoFotos::where("id_publicacao","=",$publicacao->id)->get();
+        foreach($fotos as $foto){
+            File::delete(public_path().'/storage/galerias-publicacoes/'.$foto->foto);
+            $foto->delete();
+        }
+        $publicacao->delete();
+
+        $notification = array(
+            'message' => 'Publicação "' . $publicacao->nome . '" foi excluída com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('usuario.publicacoes')->with($notification);
+    }
+
+    public function excluirFotoPublicacao(Request $request){
+        $foto = TblPublicacaoFotos::find($request->id);
+        $foto->delete();
+        File::delete(public_path().'/storage/galerias-publicacoes/'.$request['foto']);
+        return \Response::json(['message' => 'File successfully delete'], 200);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
 }

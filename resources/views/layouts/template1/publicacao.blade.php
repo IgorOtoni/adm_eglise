@@ -1,8 +1,6 @@
 @extends('layouts.template1')
 @push('script')
-<script>
 <script src="{{asset('template_igreja/template-padrao/plugins/flexslider/js/jquery.flexslider.js')}}"></script> <!-- FlexSlider --> 
-</script>
 @endpush
 @section('content')
 <!-- Start Nav Backed Header -->

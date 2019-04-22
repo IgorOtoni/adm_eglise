@@ -1,4 +1,4 @@
-@extends('layouts.admin_site.index')
+@extends('layouts.usuario.index')
 @push('script')
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
@@ -13,9 +13,54 @@
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 
 <script>
 $(function () {
+    $('#tbl_publicacoes').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+
+        /*"language": {            
+            "sEmptyTable":   "Nenhum registro encontrado",
+            "sProcessing":   "Carregando,aguarde...",
+            "sLengthMenu":   "Mostrar MENU registos",
+            "sZeroRecords":  "A busca não retornou nehum registro",
+            "sInfo":         "Mostrando de START à END de um total TOTAL registros",
+            "sInfoEmpty":    "Mostrando de 0 à 0 de um total 0 registros",
+            "sInfoFiltered": "(filtrado de MAX registros no total)",
+            "sInfoPostFix":  "",
+            "sSearch":       "Pesquisar:",
+            "sUrl":          "",
+            "oPaginate": {
+                "sFirst":    "Primeiro",
+                "sPrevious": "Anterior",
+                "sNext":     "Próximo",
+                "sLast":     "Último"
+            },
+            "oAria": {
+                "sSortAscending":  ": Ordenar colunas de forma ascendente",
+                "sSortDescending": ": Ordenar colunas de forma descendente"
+            }
+            },*/
+
+        'processing': true,
+        'autoWidth': false,
+        //'serverSide': false,
+        'ajax': '{{route('usuario.tbl_publicacoes')}}',
+        'columns': [
+                { data: 'id', name: 'id' },
+                { data: 'nome', name: 'nome' },
+                { data: 'action', name: 'action' },
+                ]
+    });
+
     $('#galeria').fileinput({
         language: "pt-BR",
         //minImageCount: 1,
@@ -44,7 +89,7 @@ $(function () {
 <section class="content-header">
     <h1>
     Publicações
-    <small>Lista de todas as publicações</small>
+    <small>Lista de todas as publicações da congregação</small>
     </h1>
 </section>
 
@@ -86,8 +131,9 @@ $(function () {
 </div>
 
 <div class="modal fade" id="modal-incluir">
-<form id="incluirPublicacoesFormulario" data-toggle="validator" method="POST" role="form" action="{{route('publicacoes.incluir')}}" enctype="multipart/form-data">
+<form id="incluirPublicacoesFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.incluirPublicacao')}}" enctype="multipart/form-data">
 @csrf
+    <input type="hidden" name="igreja" value="{{$igreja->id}}">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
@@ -118,9 +164,9 @@ $(function () {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group has-feedback">
-                          <label >Galeria</label>
-                          <input name="galeria[]" multiple type="file" id="galeria" required>
-                          <div class="help-block with-errors"></div>
+                            <label >Galeria</label>
+                            <input name="galeria[]" multiple type="file" id="galeria" required>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>

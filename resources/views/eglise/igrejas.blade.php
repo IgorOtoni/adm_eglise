@@ -15,7 +15,7 @@
     <!-- Main content -->
     <section class="content">
     @foreach ($igrejas_e_configuracoes as $igreja)
-        <div class="col-xs-6">
+        <div class="col-md-6 col-xs-12">
         <!-- Attachment -->
         <div class="attachment-block clearfix">
         @if ($igreja->logo != null)
@@ -24,7 +24,7 @@
             <img class="attachment-img" src="/storage/no-logo.jpg" alt="Attachment Image">
         @endif
         
-        <div class="attachment-pushed">
+        <div class="attachment-pushed" style="word-wrap: break-word; overflow-wrap: break-word;">
             <h4 class="attachment-heading">
                 <a href="/{{($igreja->url != null) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
             </h4>

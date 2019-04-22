@@ -102,3 +102,22 @@ function muda_data_($data){
     $split = explode('/', $retorno);
     return $split[2] . '/' . $split[1] . '/' . $split[0];
 }
+function cor_aleatoria() {
+    $letters = '0123456789ABCDEF';
+    $color = '#';
+    for($i = 0; $i < 6; $i++) {
+        $index = rand(0,15);
+        $color .= $letters[$index];
+    }
+    return $color;
+}
+function limpa_html($html){
+    $html = str_replace("\n", "", $html);
+    $html = str_replace("\\n", "", $html);
+    $html = str_replace("\r", "", $html);
+    $html = str_replace("\\r", "", $html);
+    $html = str_replace("\t", "", $html);
+    $html = str_replace("\\t", "", $html);
+    $html = trim($html);
+    return $html;
+}

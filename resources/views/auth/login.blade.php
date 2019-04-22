@@ -63,6 +63,12 @@
                                     {{ __('Login') }}
                                 </button>
 
+                                @isset ($igreja->nome)
+                                    <a class="btn btn-warning" href="/{{$igreja->url}}">
+                                        Voltar
+                                    </a>
+                                @endisset
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Esqueceu a senha?') }}
