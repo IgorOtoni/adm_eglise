@@ -1139,6 +1139,9 @@ textarea:focus {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       margin-right: 0; }
+	  .pagination .page-item.active .page-link {
+		  background-color: #ac8a74;
+		}
 
 .blog-widget-area {
   position: relative;
