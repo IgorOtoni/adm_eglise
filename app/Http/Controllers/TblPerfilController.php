@@ -6,6 +6,7 @@ use DataTables;
 use App\TblPerfil;
 use App\TblPerfisPermissoes;
 use App\TblIgrejasModulos;
+use App\TblPerfisIgrejasModulos;
 use Illuminate\Http\Request;
 
 class TblPerfilController extends Controller
@@ -24,13 +25,7 @@ class TblPerfilController extends Controller
     {
         $perfis = TblPerfil::orderBy('nome', 'ASC');
         return DataTables::of($perfis)->addColumn('action',function($perfis){
-            /*return '<form class="form-inline" method="post" action="perfis/carregarPermissoes">'.
-            '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<input type="hidden" name="id" value="'.$perfis->id.'">'.
-            '<button type="submit" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button>'.'&nbsp'.
-            '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>'.
-            '</form>';*/
-            return '<a class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+            return '<a href="perfis/editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
             '<a href="perfis/carregarPermissoes/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>'.'&nbsp'.
             '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })
@@ -139,7 +134,7 @@ class TblPerfilController extends Controller
         $count = TblPerfil::where("nome", "=", $perfil->nome)->where("id_igreja", "=", $perfil->id_igreja)->count();
         if($count == 0){
             $perfil->save();
-            $perfil_modulo = new TblPerfisModulosPermissoes();
+            $perfil_modulo = new TblPerfisIgrejasModulos();
 
             foreach ($request->modulos as $key => $value) {
                 $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
@@ -185,9 +180,11 @@ class TblPerfilController extends Controller
      * @param  \App\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function edit(Perfil $perfil)
+    public function edit($id)
     {
-        //
+        $perfil = TblPerfil::find($id);
+        $modulos = obter_modulos_perfil($perfil);
+        return view('perfis.edit', compact('perfil','modulos'));
     }
 
     /**
@@ -197,9 +194,51 @@ class TblPerfilController extends Controller
      * @param  \App\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perfil $perfil)
+    public function update(Request $request)
     {
-        //
+        $perfil = TblPerfil::find($request->id);
+        $perfil->nome = $request->nome;
+        $perfil->descricao = $request->descricao;
+        $igreja_backup = $perfil->id_igreja;
+        $perfil->id_igreja = $request->igreja;
+
+        $count = TblPerfil::where("nome", "=", $perfil->nome)->where("id_igreja", "=", $perfil->id_igreja)->where("id","<>",$perfil->id)->count();
+        if($count == 0){
+            $perfil->save();
+
+            $modulos_do_perfil = TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->get();
+            if(count($modulos_do_perfil) > 0) foreach($modulos_do_perfil as $modulo_perfil){
+                TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->delete();
+            }
+            TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->delete();
+
+            $perfil_modulo = new TblPerfisIgrejasModulos();
+
+            foreach ($request->modulos as $key => $value) {
+                $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
+                $modulo_igreja = $modulo_igreja[0];
+
+                $data = [
+                    'id_perfil' => $perfil->id,
+                    'id_modulo_igreja' => $modulo_igreja->id,
+                ];
+                $perfil_modulo->create($data);
+            }
+
+            $notification = array(
+                'message' => $perfil->nome . ' foi incluído(a) com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('perfis')->with($notification);
+        }else{
+            $notification = array(
+                'message' => 'O nome informado já está na base de dados!', 
+                'alert-type' => 'error'
+            );
+
+            return back()->with($notification);
+        }
     }
 
     /**

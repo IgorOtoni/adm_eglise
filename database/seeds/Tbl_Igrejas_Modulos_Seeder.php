@@ -199,151 +199,181 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id'=>37,
             'id_igreja'=>1,
             'id_modulo'=>13,
+            'icone'=>'fa fa-child',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Usuarios
             'id'=>38,
             'id_igreja'=>2,
             'id_modulo'=>13,
+            'icone'=>'fa fa-child',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Usuarios
             'id'=>39,
             'id_igreja'=>3,
             'id_modulo'=>13,
+            'icone'=>'fa fa-child',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Perfis
             'id'=>40,
             'id_igreja'=>1,
             'id_modulo'=>14,
+            'icone'=>'fa fa-users',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Perfis
             'id'=>41,
             'id_igreja'=>2,
             'id_modulo'=>14,
+            'icone'=>'fa fa-users',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Perfis
             'id'=>42,
             'id_igreja'=>3,
             'id_modulo'=>14,
+            'icone'=>'fa fa-users',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Galerias
             'id'=>43,
             'id_igreja'=>1,
             'id_modulo'=>15,
+            'icone'=>'fa fa-file-image-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Galerias
             'id'=>44,
             'id_igreja'=>2,
             'id_modulo'=>15,
+            'icone'=>'fa fa-file-image-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Galerias
             'id'=>45,
             'id_igreja'=>3,
             'id_modulo'=>15,
+            'icone'=>'fa fa-file-image-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Eventos Fixos
             'id'=>46,
             'id_igreja'=>1,
             'id_modulo'=>16,
+            'icone'=>'fa fa-calendar',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Eventos Fixos
             'id'=>47,
             'id_igreja'=>2,
             'id_modulo'=>16,
+            'icone'=>'fa fa-calendar',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Eventos Fixos
             'id'=>48,
             'id_igreja'=>3,
             'id_modulo'=>16,
+            'icone'=>'fa fa-calendar',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Eventos
             'id'=>49,
             'id_igreja'=>1,
             'id_modulo'=>17,
+            'icone'=>'fa fa-clock-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Eventos
             'id'=>50,
             'id_igreja'=>2,
             'id_modulo'=>17,
+            'icone'=>'fa fa-clock-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Eventos
             'id'=>51,
             'id_igreja'=>3,
             'id_modulo'=>17,
+            'icone'=>'fa fa-clock-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Noticias
             'id'=>52,
             'id_igreja'=>1,
             'id_modulo'=>18,
+            'icone'=>'fa fa-newspaper-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Noticias
             'id'=>53,
             'id_igreja'=>2,
             'id_modulo'=>18,
+            'icone'=>'fa fa-newspaper-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Noticias
             'id'=>54,
             'id_igreja'=>3,
             'id_modulo'=>18,
+            'icone'=>'fa fa-newspaper-o',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Banners
             'id'=>55,
             'id_igreja'=>1,
             'id_modulo'=>19,
+            'icone'=>'fa fa-play',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Banners
             'id'=>56,
             'id_igreja'=>2,
             'id_modulo'=>19,
+            'icone'=>'fa fa-play',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Banners
             'id'=>57,
             'id_igreja'=>3,
             'id_modulo'=>19,
+            'icone'=>'fa fa-play',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Sermoes
             'id'=>58,
             'id_igreja'=>1,
             'id_modulo'=>20,
+            'icone'=>'fa fa-microphone',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Sermoes
             'id'=>59,
             'id_igreja'=>2,
             'id_modulo'=>20,
+            'icone'=>'fa fa-microphone',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Sermoes
             'id'=>60,
             'id_igreja'=>3,
             'id_modulo'=>20,
+            'icone'=>'fa fa-microphone',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Publicacoes
             'id'=>61,
             'id_igreja'=>1,
             'id_modulo'=>21,
+            'icone'=>'fa fa-thumbs-o-up',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Publicacoes
             'id'=>62,
             'id_igreja'=>2,
             'id_modulo'=>21,
+            'icone'=>'fa fa-thumbs-o-up',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Publicacoes
             'id'=>63,
             'id_igreja'=>3,
             'id_modulo'=>21,
+            'icone'=>'fa fa-thumbs-o-up',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Configurações
             'id'=>64,
             'id_igreja'=>1,
             'id_modulo'=>22,
+            'icone'=>'fa fa-cogs',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Configurações
             'id'=>65,
             'id_igreja'=>2,
             'id_modulo'=>22,
+            'icone'=>'fa fa-cogs',
         ]);
         DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Configurações
             'id'=>66,
             'id_igreja'=>3,
             'id_modulo'=>22,
+            'icone'=>'fa fa-cogs',
         ]);
     }
 }

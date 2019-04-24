@@ -1,19 +1,15 @@
 @extends('layouts.admin_site.index')
 @push('script')
-<!-- Select2 -->
-<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
-
-<!-- Select2 -->
-<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
 <script>
 function switch_status(comp){
   var id = $(comp).prop('id');
   var nome = $(comp).prop('name');
   $.ajax({
-    url: '/admin/perfis/switchStatus/'+id,
+    url: '/admin/usuarios/switchStatus/'+id,
     type: 'GET'
   });
   if($(comp).prop('checked') == true){
@@ -23,82 +19,9 @@ function switch_status(comp){
   }
 }
 
-$("#igreja").on("change", function(){
-
-  var id_igreja = $("#igreja").val();
-
-  $("#list-area").html("");
-
-  $("#list-area").append("<div class='form-group has-feedback'><label>Selecione quais módulos da igreja o perfil irá acessar:</label><select id='select_2_modulos' name='modulos[]' data-placeholder='Selecione os módulos' class='form-control select2' style='width: 100%;' multiple='multiple' required></select><div class='help-block with-errors'></div></div>");
-
-  if(id_igreja > 0){
-    $.ajax({
-        url: '/admin/igrejas/carregarModulos/'+id_igreja,
-        type: 'get',
-        dataType: 'json',
-        success: function(response){
-
-          var len = 0;
-
-          if(response['data'] != null){
-            len = response['data'].length;
-          }
-
-          if(len > 0){
-            for(var i=0; i<len; i++){
-
-              var id = response['data'][i].id;
-              var nome = response['data'][i].nome;
-              var sistema = response['data'][i].sistema;
-              var gerencial = response['data'][i].gerencial;
-
-              if(gerencial == true){
-                var result = "<option value="+id+">"+nome+" - "+sistema+"</option>";
-                $("#select_2_modulos").append(result);
-              }
-            }
-          }
-
-        }
-    });
-  }
-
-  $('#incluirPerfilFormulario').validator('update');
-  $('#incluirPerfilFormulario').validator('validate');
-
-  $('#incluirPerfilFormulario').validator({
-    update: true,
-    ignore: [],       
-    rules: {
-      //Rules
-    },
-    messages: {
-      //messages
-    }
-  });
-
-  $('#select_2_modulos').select2();
-});
-
 $(function () {
-    
-    $('#incluirPerfilFormulario').validator('update');
-    $('#incluirPerfilFormulario').validator('validate');
 
-    $('#incluirPerfilFormulario').validator({
-      update: true,
-      ignore: [],       
-      rules: {
-        //Rules
-      },
-      messages: {
-        //messages
-      }
-    });
-
-    $('#select_2_modulos').select2();
-
-    $('#tbl_perfis').DataTable({
+    $('#tbl_usuarios').DataTable({
     'paging'      : true,
     'lengthChange': true,
     'searching'   : true,
@@ -132,11 +55,10 @@ $(function () {
     'processing': true,
     'autoWidth': false,
     //'serverSide': false,
-    'ajax': '/admin/perfis/tbl_perfis',
+    'ajax': '/admin/usuarios/tbl_usuarios',
     'columns': [
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },
-            { data: 'descricao', name: 'descricao' },
             { data: 'action', name: 'action' },
           ]
   })
@@ -150,8 +72,8 @@ $(function () {
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Perfis
-    <small>Lista de todos os perfis</small>
+    Usuários
+    <small>Lista de todos os usuários</small>
   </h1>
 </section>
 
@@ -163,18 +85,17 @@ $(function () {
     <div class="box-header with-border">
       <h3 class="box-title"></h3>
       <div class="pull-right">
-        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluír perfil</a>
+        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluír usuário</a>
       </div>
     </div>
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
-                <table id="tbl_perfis" class="table table-bordered table-striped">
+                <table id="tbl_usuarios" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>Descrição</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -199,14 +120,14 @@ $(function () {
 <!-- /.content-wrapper -->
 
 <div class="modal fade" id="modal-incluir">
-  <form id="incluirPerfilFormulario" data-toggle="validator" method="POST" role="form" action="{{route('perfis.incluir')}}" enctype="multipart/form-data">
+  <form id="incluirUsuarioFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuarios.incluir')}}" enctype="multipart/form-data">
   @csrf
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Incluir perfil</h4>
+          <h4 class="modal-title">Incluir usuário</h4>
         </div>
         <div class="modal-body">
           <!-- form start -->
@@ -222,28 +143,38 @@ $(function () {
                       </div>
                   </div>
                   <div class="col-md-12">
-                      <div class="form-group">
-                        <label >Descrição</label>
-                        <textarea name="descricao" class="form-control" rows="3" placeholder="Descrição"></textarea>
+                      <div class="form-group has-feedback">
+                        <label >Email</label>
+                        <input name="email" type="text" class="form-control" placeholder="Email" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                        <label >Senha</label>
+                        <input minlength="8" maxlength="32" name="senha" type="password" class="form-control" placeholder="Senha">
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                        <label >Confirmação da senha</label>
+                        <input minlength="8" maxlength="32" name="senhac" type="password" class="form-control" placeholder="Confirmação da senha">
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
                       </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group has-feedback">
-                      <label>Selecione a Igreja associada ao perfil:</label>
-                      <select id="igreja" name="igreja" class="form-control" required>
-                        <option value="-1" selected>Administrador da plataforma Église</option>
-                        <?php $igrejas = App\TblIgreja::orderBy('nome','ASC')->get(); ?>
-                        @foreach ($igrejas as $igreja)
-                        <option value="{{$igreja->id}}">{{$igreja->nome}}</option>
+                      <label>Selecione o perfil do usuário:</label>
+                      <select id="perfil" name="perfil" class="form-control" required>
+                        <?php $perfis = App\TblPerfil::orderBy('nome','ASC')->get(); ?>
+                        @foreach ($perfis as $perfil)
+                        <option value="{{$perfil->id}}">{{$perfil->nome}}</option>
                         @endforeach
                       </select>
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-12" id="list-area">
-                    <div class="form-group has-feedback">
-                      <label>Selecione quais módulos da igreja o perfil irá acessar:</label>
-                      <select id="select_2_modulos" name="modulos[]" data-placeholder="Selecione os módulos" class="form-control select2" style="width: 100%;" multiple="multiple" required></select>
                       <div class="help-block with-errors"></div>
                     </div>
                   </div>

@@ -87,9 +87,11 @@ $(function(){
     <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"></h3>
-        <div class="pull-right">
-        <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluir evento fixo</a>
-        </div>
+        <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.incluir'))[2] == true){ ?>
+            <div class="pull-right">
+            <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluir evento fixo</a>
+            </div>
+        <?php } ?>
     </div>
     <div class="box-body">
         <table id="tbl_eventosfixos" class="table table-bordered table-striped">

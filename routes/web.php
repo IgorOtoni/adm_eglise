@@ -47,7 +47,7 @@ Route::get('/autenticar', function () {
         return redirect()->route('usuario.home');
 });
 Route::get('error', function () {
-    return "Um erro ocorreu que não pode ser tratado pelo sistema. Contate o suporte do sistema e relate essa mensagem.";
+    return view('error');
 });
 
 Route::get('/logout', function () {
@@ -92,6 +92,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('perfis', 'TblPerfilController@index')->name('perfis');
         Route::post('perfis/incluir', 'TblPerfilController@store')->name('perfis.incluir');
+        Route::get('perfis/editarPerfil/{id}', 'TblPerfilController@edit')->name('perfis.editar');
+        Route::post('perfis/atualizar', 'TblPerfilController@update')->name('perfis.atualizar');
         Route::get('perfis/tbl_perfis', 'TblPerfilController@tbl_perfis')->name('perfis.tbl_perfis');
 		Route::get('perfis/switchStatus/{id}', 'TblPerfilController@switchStatus')->name('perfis.switchStatus');
         Route::get('perfis/carregarPermissoes/{id}', 'TblPerfilController@carregarPermissoes')->name('perfis.carregarPermissoes');
@@ -102,6 +104,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('publicacoes/incluir', 'TblPublicacoesController@store')->name('publicacoes.incluir');
 
         Route::get('permissoes/json_permissoes', 'TblPermissaoController@json_permissoes')->name('permissoes.json_permissoes');       
+
+        Route::get('usuarios', 'TblUsuariosController@index')->name('usuarios');
+        Route::post('usuarios/incluir', 'TblUsuariosController@store')->name('usuarios.incluir');
+        Route::get('usuarios/tbl_usuarios', 'TblUsuariosController@tbl_usuarios')->name('usuarios.tbl_usuarios');
+        Route::get('usuarios/switchStatus/{id}', 'TblUsuariosController@switchStatus')->name('usuarios.switchStatus');
+        Route::get('usuarios/editarUsuario/{id}', 'TblUsuariosController@edit')->name('usuarios.editar');
+        Route::post('usuarios/atualizar', 'TblUsuariosController@update')->name('usuarios.atualizar');
+
+        Route::get('usuarios/conta', 'TblUsuariosController@autoEdit')->name('account');
+        Route::post('usuarios/atualizarConta', 'TblUsuariosController@autoUpdate')->name('account.atualizar');
 
         //Route::get('/', 'HomeController@index')->name('admin.index');
         Route::get('/home', 'HomeController@index')->name('admin.home');
@@ -196,6 +208,30 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarPublicacao', 'HomeController@atualizarPublicacao')->name('usuario.atualizarPublicacao');
         Route::post('/excluirFotoPublicacao', 'HomeController@excluirFotoPublicacao')->name('usuario.excluirFotoPublicacao');
         Route::get('/excluirPublicacao/{id}', 'HomeController@excluirPublicacao')->name('usuario.excluirPublicacao');
+        //////////////////////////////////////////////////////////////////////////////////////////
+    
+        // ALTERAR CONTA =========================================================================
+        Route::get('usuarios/conta', 'HomeController@conta')->name('account');
+        Route::post('usuarios/atualizarConta', 'HomeController@atualizarConta')->name('account.atualizar');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CRUD USUARIOS ==========================================================================
+        Route::get('/usuarios', 'HomeController@usuarios')->name('usuario.usuarios');
+        Route::get('/tbl_usuarios', 'HomeController@tbl_usuarios')->name('usuario.tbl_usuarios');
+        Route::post('/incluirUsuario', 'HomeController@incluirUsuario')->name('usuario.incluirUsuario');
+        Route::get('/editarUsuario/{id}', 'HomeController@editarUsuario')->name('usuario.editarUsuario');
+        Route::post('/atualizarUsuario', 'HomeController@atualizarUsuario')->name('usuario.atualizarUsuario');
+        //Route::get('/excluirUsuario/{id}', 'HomeController@excluirUsuario')->name('usuario.excluirUsuario');
+        Route::get('/switchStatusUsuario/{id}', 'HomeController@switchStatusUsuario')->name('usuario.switchStatusUsuario');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CRUD PERFIS ==========================================================================
+        Route::get('/perfis', 'HomeController@perfis')->name('usuario.perfis');
+        Route::get('/tbl_perfis', 'HomeController@tbl_perfis')->name('usuario.tbl_perfis');
+        Route::post('/incluirPerfil', 'HomeController@incluirPerfil')->name('usuario.incluirPerfil');
+        Route::get('/editarPerfil/{id}', 'HomeController@editarPerfil')->name('usuario.editarPerfil');
+        Route::post('/atualizarPerfil', 'HomeController@atualizarPerfil')->name('usuario.atualizarPerfil');
+        Route::get('/excluirPerfil/{id}', 'HomeController@excluirPerfil')->name('usuario.excluirPerfil');
         //////////////////////////////////////////////////////////////////////////////////////////
     });
 });

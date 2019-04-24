@@ -26,7 +26,7 @@
         
         <div class="attachment-pushed" style="word-wrap: break-word; overflow-wrap: break-word;">
             <h4 class="attachment-heading">
-                <a href="/{{($igreja->url != null) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
+                <a href="/{{($igreja->url != null && $igreja->status == true) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
             </h4>
 
             <div class="attachment-text">

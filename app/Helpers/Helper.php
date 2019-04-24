@@ -5,6 +5,11 @@
 * @param $string
 */
 
+use App\TblPerfil;
+use App\TblIgrejas;
+use App\TblModulos;
+use App\TblPermissoes;
+
 function fistCharFromWord_toUpper($string)
 {
     $st = '';
@@ -121,3 +126,83 @@ function limpa_html($html){
     $html = trim($html);
     return $html;
 }
+
+// ÁREA DE AUTENTICAÇÃO E VALIDAÇÃO DE MÓDULOS E PERMISSÕES !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function valida_modulo($id_perfil, $id_modulo){
+    $retorno = null;
+    $perfil = TblPerfil::find($id_perfil);
+    $modulos = \DB::table('tbl_igrejas_modulos')
+        ->select('tbl_igrejas_modulos.*', 'tbl_perfis_igrejas_modulos.id as id_perfis_igrejas_modulos')
+        ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
+        ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id_perfil)
+        ->where('tbl_igrejas_modulos.id_modulo','=',$id_modulo)
+        ->where('tbl_igrejas_modulos.id_igreja','=',$perfil->id_igreja)
+        ->get();
+    // PRIMEIRO IF: VERIFIFICA SE O PERFIL TEM ACESSOS AO MÓDULO
+    if($modulos == null || count($modulos) == 0){
+        $retorno = false;
+    }else{
+        $modulo_do_perfil = $modulos[0];
+        $retorno = true;
+    }
+    return $retorno;
+}
+function obter_modulos_perfil($perfil){
+    $modulos = \DB::table('tbl_perfis_igrejas_modulos')
+        ->leftJoin('tbl_igrejas_modulos', 'tbl_perfis_igrejas_modulos.id_modulo_igreja', '=', 'tbl_igrejas_modulos.id')
+        ->leftJoin('tbl_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
+        ->select('tbl_igrejas_modulos.id_modulo', 'tbl_modulos.*')
+        ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$perfil->id)
+        ->where('tbl_modulos.sistema','=','web')
+        ->orderBy('tbl_modulos.nome', 'ASC')
+        ->get();
+    return $modulos;
+}
+function valida_permissao($id_perfil, $id_modulo, $id_permissao){
+    $retorno = null;
+    $modulos = \DB::table('tbl_igrejas_modulos')
+        ->select('tbl_igrejas_modulos.*', 'tbl_perfis_igrejas_modulos.id as id_perfis_igrejas_modulos')
+        ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
+        ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id_perfil)
+        ->where('tbl_igrejas_modulos.id_modulo','=',$id_modulo)
+        ->get();
+    // PRIMEIRO IF: VERIFIFICA SE O PERFIL TEM ACESSOS AO MÓDULO
+    if($modulos == null || count($modulos) == 0){
+        $retorno[0] = false;
+        $retorno[1] = false;
+        $retorno[2] = false;
+    }else{
+        $modulo_do_perfil = $modulos[0];
+        $permissoes = \DB::table('tbl_permissoes')
+            ->select('tbl_permissoes.*')
+            ->leftJoin('tbl_modulos_permissoes', 'tbl_permissoes.id', '=', 'tbl_modulos_permissoes.id_permissao')
+            ->where('tbl_permissoes.id','=',$id_permissao)
+            ->where('tbl_modulos_permissoes.id_modulo','=',$modulo_do_perfil->id_modulo)
+            ->get();
+        // SEGUNDO IF: VERIFICA SE O MÓDULO TÊM A PERMISSÃO SOLICITADA
+        if($permissoes == null || count($permissoes) == 0){
+            $retorno[0] = true;
+            $retorno[1] = false;
+            $retorno[2] = false;
+        }else{
+            $permissao_do_modulo = $permissoes[0];
+            $permissoes_ = \DB::table('tbl_perfis_permissoes')
+                ->select('tbl_perfis_permissoes.*')
+                ->where('id_permissao','=',$id_permissao)
+                ->where('id_perfil_igreja_modulo','=',$modulo_do_perfil->id_perfis_igrejas_modulos)
+                ->get();
+            // TERCEIRO IF: VERIFICA SE O PERFIL TÊM A PERMISSÃO NO MÓDULO SOLICITADO
+            if($permissoes_ == null || count($permissoes_) == 0){
+                $retorno[0] = true;
+                $retorno[1] = true;
+                $retorno[2] = false;
+            }else{
+                $retorno[0] = true;
+                $retorno[1] = true;
+                $retorno[2] = true;
+            }
+        }
+    }
+    return $retorno;
+}
+////////////////////////////////////////////////////////////////////////////////////////

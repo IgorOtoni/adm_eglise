@@ -83,7 +83,7 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Conta</a>
+                  <a href="{{route('account')}}" class="btn btn-default btn-flat">Conta</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sair</a>

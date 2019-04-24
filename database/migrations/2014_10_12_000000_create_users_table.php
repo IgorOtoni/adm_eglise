@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->bigInteger('id_perfil')->unsigned();
             $table->foreign('id_perfil')->references('id')->on('tbl_perfis');
+            $table->boolean('status')->default(false);
             //$table->bigInteger('id_membro');
             //$table->foreign('id_membro')->references('id')->on('tbl_membros');
             $table->rememberToken();

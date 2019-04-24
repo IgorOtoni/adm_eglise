@@ -467,8 +467,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
 
         </div>
         <div class="box-footer">
-        <a href="{{route('igrejas')}}" class="btn btn-warning pull-left">Cancelar</a>
-        <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
+        <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){ ?>
+            <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
+        <?php } ?>
         </div>
     </div>
 
@@ -484,9 +485,11 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <ul>
                         <li>
                             <div><span><i class="icon-folder-open"></i> Raíz</span>
-                                <div class="pull-right">
-                                    <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-menu"><i class="fa fa-plus"></i> Menu</a> 
-                                </div>
+                                <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){ ?>
+                                    <div class="pull-right">
+                                        <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-menu"><i class="fa fa-plus"></i> Menu</a> 
+                                    </div>
+                                <?php } ?>
                             </div>
                             <ul>
                                 <?php foreach($menus as $menu){ ?>
@@ -494,9 +497,15 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                                         <div><span><i class="icon-folder-open"></i> {{$menu->ordem}} - {{$menu->nome}}</span> 
                                             <?php echo ($menu->link != null) ? '<a target="_blank" href="/'.$igreja->url.'/'.$menu->link.'"><span class="bg-blue">Possui link</span></a>' : '<span class="bg-gray">Não possui link</span>' ?>
                                             <div class="pull-right">
-                                                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-submenu" data-idmenu="{{$menu->id}}"><i class="fa fa-plus"></i> Submenu</a> 
-                                                <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-menu" data-id="{{$menu->id}}" data-nome="{{$menu->nome}}" data-link="{{$menu->link}}" data-ordem="{{$menu->ordem}}"><i class="fa fa-edit"></i> Menu</a> 
-                                                <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirMenu/{{$menu->id}}"><i class="fa fa-trash"></i> Menu</a>
+                                                <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){ ?>
+                                                    <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-submenu" data-idmenu="{{$menu->id}}"><i class="fa fa-plus"></i> Submenu</a>
+                                                <?php } ?>
+                                                <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){ ?>
+                                                    <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-menu" data-id="{{$menu->id}}" data-nome="{{$menu->nome}}" data-link="{{$menu->link}}" data-ordem="{{$menu->ordem}}"><i class="fa fa-edit"></i> Menu</a>
+                                                <?php } ?>
+                                                <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){ ?>
+                                                    <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirMenu/{{$menu->id}}"><i class="fa fa-trash"></i> Menu</a>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <ul>
@@ -505,9 +514,15 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                                                     <div><span><i class="icon-minus-sign"></i> {{$submenu->ordem}} - {{$submenu->nome}}</span>
                                                         <?php echo ($submenu->link != null) ? '<a target="_blank" href="/'.$igreja->url.'/'.$submenu->link.'"><span class="bg-blue">Possui link</span></a>' : '<span class="bg-gray">Não possui link</span>' ?>
                                                         <div class="pull-right">
-                                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-subsubmenu" data-idsubmenu="{{$submenu->id}}"><i class="fa fa-plus"></i> Sub-Submenu</a> 
-                                                            <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-submenu" data-id="{{$submenu->id}}" data-nome="{{$submenu->nome}}" data-link="{{$submenu->link}}" data-ordem="{{$submenu->ordem}}" data-idmenu="{{$submenu->id_menu}}"><i class="fa fa-edit"></i> Submenu</a> 
-                                                            <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirSubMenu/{{$submenu->id}}"><i class="fa fa-trash"></i> Submenu</a>
+                                                            <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){ ?>
+                                                                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-incluir-subsubmenu" data-idsubmenu="{{$submenu->id}}"><i class="fa fa-plus"></i> Sub-Submenu</a>
+                                                            <?php } ?>
+                                                            <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){ ?>
+                                                                <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-submenu" data-id="{{$submenu->id}}" data-nome="{{$submenu->nome}}" data-link="{{$submenu->link}}" data-ordem="{{$submenu->ordem}}" data-idmenu="{{$submenu->id_menu}}"><i class="fa fa-edit"></i> Submenu</a>
+                                                            <?php } ?>
+                                                            <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){ ?>
+                                                                <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirSubMenu/{{$submenu->id}}"><i class="fa fa-trash"></i> Submenu</a>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                     <ul>
@@ -516,8 +531,12 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                                                                 <div><span><i class="icon-leaf"></i> {{$subsubmenu->ordem}} - {{$subsubmenu->nome}}</span> 
                                                                     <?php echo ($subsubmenu->link != null) ? '<a target="_blank" href="/'.$igreja->url.'/'.$subsubmenu->link.'"><span class="bg-blue">Possui link</span></a>' : '<span class="bg-gray">Não possui link</span>' ?>
                                                                     <div class="pull-right">
-                                                                        <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-subsubmenu" data-id="{{$subsubmenu->id}}" data-nome="{{$subsubmenu->nome}}" data-link="{{$subsubmenu->link}}" data-ordem="{{$subsubmenu->ordem}}" data-idsubmenu="{{$subsubmenu->id_submenu}}"><i class="fa fa-edit"></i> Sub-Submenu</a> 
-                                                                        <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirSubSubMenu/{{$subsubmenu->id}}"><i class="fa fa-trash"></i> Sub-Submenu</a>
+                                                                        <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){ ?>
+                                                                            <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-editar-subsubmenu" data-id="{{$subsubmenu->id}}" data-nome="{{$subsubmenu->nome}}" data-link="{{$subsubmenu->link}}" data-ordem="{{$subsubmenu->ordem}}" data-idsubmenu="{{$subsubmenu->id_submenu}}"><i class="fa fa-edit"></i> Sub-Submenu</a> 
+                                                                        <?php } ?>
+                                                                        <?php if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){ ?>
+                                                                            <a class="btn btn-danger btn-sm" href="/admin/igrejas/excluirSubSubMenu/{{$subsubmenu->id}}"><i class="fa fa-trash"></i> Sub-Submenu</a>
+                                                                        <?php } ?>
                                                                     </div>
                                                                 </div>
                                                             </li>

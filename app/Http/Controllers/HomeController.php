@@ -21,6 +21,7 @@ use App\TblConfiguracoes;
 use App\TblSermoes;
 use App\TblPublicacaoFotos;
 use App\TblPublicacoes;
+use App\User;
 use Calendar;
 
 class HomeController extends Controller
@@ -52,8 +53,8 @@ class HomeController extends Controller
     // BANNER AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function banners()
     {
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -63,108 +64,129 @@ class HomeController extends Controller
     }
 
     public function tbl_banners(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $banners = TblBanner::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($banners)->addColumn('action',function($banners){
-            return '<a href="editarBanner/'.$banners->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirBanner/'.$banners->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $banners = TblBanner::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($banners)->addColumn('action',function($banners){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarBanner/'.$banners->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirBanner/'.$banners->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function editarBanner($id){
-        $banner = TblBanner::find($id);
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editarbanner', compact('banner','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $banner = TblBanner::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarbanner', compact('banner','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarBanner(Request $request){
-        $banner = TblBanner::find($request->id);
-        $banner->nome = $request->nome;
-        $banner->ordem = $request->ordem;
-        $banner->descricao = $request->descricao;if($request->link == 0){
-            $banner->link = null;
-        }if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $banner->link = $modulo->rota;
-        }else if($request->link == 2){
-            $banner->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $banner->link = $request->url;
-        }
-        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
-        $banner->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $banner = TblBanner::find($request->id);
+            $banner->nome = $request->nome;
+            $banner->ordem = $request->ordem;
+            $banner->descricao = $request->descricao;if($request->link == 0){
+                $banner->link = null;
+            }if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $banner->link = $modulo->rota;
+            }else if($request->link == 2){
+                $banner->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $banner->link = $request->url;
+            }
+            \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+            $banner->save();
 
-        $notification = array(
-            'message' => 'Banner ' . $banner->nome . ' foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Banner ' . $banner->nome . ' foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.banners')->with($notification);
+            return redirect()->route('usuario.banners')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function incluirBanner(Request $request){
-        $banner = new TblBanner();
-        $banner->id_igreja = $request->igreja;
-        $banner->nome = $request->nome;
-        $banner->ordem = $request->ordem;
-        $banner->descricao = $request->descricao;
-        $banner->foto = "null";
-        if($request->link == 0){
-            $banner->link = null;
-        }if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $banner->link = $modulo->rota;
-        }else if($request->link == 2){
-            $banner->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $banner->link = $request->url;
-        }
-        $banner->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $banner = new TblBanner();
+            $banner->id_igreja = $request->igreja;
+            $banner->nome = $request->nome;
+            $banner->ordem = $request->ordem;
+            $banner->descricao = $request->descricao;
+            $banner->foto = "null";
+            if($request->link == 0){
+                $banner->link = null;
+            }if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $banner->link = $modulo->rota;
+            }else if($request->link == 2){
+                $banner->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $banner->link = $request->url;
+            }
+            $banner->save();
 
-        \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-        $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
-        $banner->save();
+            \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+            $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+            $banner->save();
 
-        $notification = array(
-            'message' => 'Banner ' . $banner->nome . ' foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Banner ' . $banner->nome . ' foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.banners')->with($notification);
+            return redirect()->route('usuario.banners')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirFotoBanner(Request $request){
-        $foto = $request['foto'];
-        $banner = TblBanner::find($request->id);
-        $banner->foto = "vazio";
-        $banner->save();
-        File::delete(public_path().'/storage/banners/'.$foto);
-        return \Response::json(['message' => 'File successfully delete'], 200);
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $foto = $request['foto'];
+            $banner = TblBanner::find($request->id);
+            $banner->foto = "vazio";
+            $banner->save();
+            File::delete(public_path().'/storage/banners/'.$foto);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }else{ return view('error'); }
     }
 
     public function excluirBanner($id){
-        $banner = TblBanner::find($id);
-        File::delete(public_path().'/storage/banners/'.$banner->foto);
-        $banner->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $banner = TblBanner::find($id);
+            File::delete(public_path().'/storage/banners/'.$banner->foto);
+            $banner->delete();
 
-        $notification = array(
-            'message' => 'Banner ' . $banner->nome . ' foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Banner ' . $banner->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.banners')->with($notification);
+            return redirect()->route('usuario.banners')->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // GALERIA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function galerias()
     {
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -174,107 +196,128 @@ class HomeController extends Controller
     }
 
     public function tbl_galerias(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $galeria = TblGalerias::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($galeria)->addColumn('action',function($galeria){
-            return '<a href="editarGaleria/'.$galeria->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirGaleria/'.$galeria->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $galeria = TblGalerias::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($galeria)->addColumn('action',function($galeria){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarGaleria/'.$galeria->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirGaleria/'.$galeria->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function incluirGaleria(Request $request){
-        $galeria = new TblGalerias();
-        $galeria->id_igreja = $request->igreja;
-        $galeria->nome = $request->nome;
-        $galeria->descricao = $request->descricao;
-        $galeria->data = muda_data($request->data);
-        $galeria->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $galeria = new TblGalerias();
+            $galeria->id_igreja = $request->igreja;
+            $galeria->nome = $request->nome;
+            $galeria->descricao = $request->descricao;
+            $galeria->data = muda_data($request->data);
+            $galeria->save();
 
-        foreach($request->fotos as $foto){
-            $foto = new TblFotos();
-            $foto->id_galeria = $galeria->id;
-            $foto->foto = "vazio";
-            $foto->save();
+            foreach($request->fotos as $foto){
+                $foto = new TblFotos();
+                $foto->id_galeria = $galeria->id;
+                $foto->foto = "vazio";
+                $foto->save();
 
-            \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
-            $foto->save();
-        }
-            
-        $notification = array(
-            'message' => 'Álbum ' . $galeria->nome . ' foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+                \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
+                $foto->save();
+            }
+                
+            $notification = array(
+                'message' => 'Álbum ' . $galeria->nome . ' foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.galerias')->with($notification);
+            return redirect()->route('usuario.galerias')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirGaleria($id){
-        $galeria = TblGalerias::find($id);
-        $fotos = TblFotos::where("id_galeria","=",$galeria->id)->get();
-        foreach($fotos as $foto){
-            File::delete(public_path().'/storage/galerias/'.$foto->foto);
-            $foto->delete();
-        }
-        $galeria->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $galeria = TblGalerias::find($id);
+            $fotos = TblFotos::where("id_galeria","=",$galeria->id)->get();
+            foreach($fotos as $foto){
+                File::delete(public_path().'/storage/galerias/'.$foto->foto);
+                $foto->delete();
+            }
+            $galeria->delete();
 
-        $notification = array(
-            'message' => 'Álbum ' . $galeria->nome . ' foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Álbum ' . $galeria->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.galerias')->with($notification);
+            return redirect()->route('usuario.galerias')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarGaleria($id){
-        $galeria = TblGalerias::find($id);
-        $fotos = TblFotos::where('id_galeria','=',$galeria->id)->get();
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editargaleria', compact('galeria','fotos','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $galeria = TblGalerias::find($id);
+            $fotos = TblFotos::where('id_galeria','=',$galeria->id)->get();
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editargaleria', compact('galeria','fotos','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarGaleria(Request $request){
-        $galeria = TblGalerias::find($request->id);
-        $galeria->nome = $request->nome;
-        $galeria->descricao = $request->descricao;
-        $galeria->data = muda_data($request->data);
-        $galeria->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $galeria = TblGalerias::find($request->id);
+            $galeria->nome = $request->nome;
+            $galeria->descricao = $request->descricao;
+            $galeria->data = muda_data($request->data);
+            $galeria->save();
 
-        if($request->fotos) foreach($request->fotos as $foto){
-            $foto = new TblFotos();
-            $foto->id_galeria = $galeria->id;
-            $foto->foto = "vazio";
-            $foto->save();
+            if($request->fotos) foreach($request->fotos as $foto){
+                $foto = new TblFotos();
+                $foto->id_galeria = $galeria->id;
+                $foto->foto = "vazio";
+                $foto->save();
 
-            \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
-            $foto->save();
-        }
-            
-        $notification = array(
-            'message' => 'Álbum ' . $galeria->nome . ' foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+                \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
+                $foto->save();
+            }
+                
+            $notification = array(
+                'message' => 'Álbum ' . $galeria->nome . ' foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.galerias')->with($notification);
+            return redirect()->route('usuario.galerias')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirFotoGaleria(Request $request){
-        $foto = TblFotos::find($request->id);
-        $foto->delete();
-        File::delete(public_path().'/storage/galerias/'.$request['foto']);
-        return \Response::json(['message' => 'File successfully delete'], 200);
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $foto = TblFotos::find($request->id);
+            $foto->delete();
+            File::delete(public_path().'/storage/galerias/'.$request['foto']);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // EVENTOS FIXO AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function eventosfixos()
     {
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -284,94 +327,115 @@ class HomeController extends Controller
     }
 
     public function tbl_eventosfixos(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $eventofixo = TblEventosFixos::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($eventofixo)->addColumn('action',function($eventofixo){
-            return '<a href="editarEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $eventofixo = TblEventosFixos::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($eventofixo)->addColumn('action',function($eventofixo){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function incluirEventoFixo(Request $request){
-        $eventofixo = new TblEventosFixos();
-        $eventofixo->id_igreja = $request->igreja;
-        $eventofixo->nome = $request->nome;
-        $eventofixo->dados_horario_local = $request->dados_horario_local;
-        $eventofixo->descricao = $request->descricao;
-        $eventofixo->save();
-
-        if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $eventofixo = new TblEventosFixos();
+            $eventofixo->id_igreja = $request->igreja;
+            $eventofixo->nome = $request->nome;
+            $eventofixo->dados_horario_local = $request->dados_horario_local;
+            $eventofixo->descricao = $request->descricao;
             $eventofixo->save();
-        }
 
-        $notification = array(
-            'message' => 'Evento fixo "' . $eventofixo->nome . '" foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $eventofixo->save();
+            }
 
-        return redirect()->route('usuario.eventosfixos')->with($notification);
+            $notification = array(
+                'message' => 'Evento fixo "' . $eventofixo->nome . '" foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventosfixos')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarEventoFixo($id){
-        $eventofixo = TblEventosFixos::find($id);
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editareventofixo', compact('eventofixo','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $eventofixo = TblEventosFixos::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editareventofixo', compact('eventofixo','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarEventoFixo(Request $request){
-        $eventofixo = TblEventosFixos::find($request->id);
-        $eventofixo->nome = $request->nome;
-        $eventofixo->dados_horario_local = $request->dados_horario_local;
-        $eventofixo->descricao = $request->descricao;
-        $eventofixo->save();
-
-        if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-            $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $eventofixo = TblEventosFixos::find($request->id);
+            $eventofixo->nome = $request->nome;
+            $eventofixo->dados_horario_local = $request->dados_horario_local;
+            $eventofixo->descricao = $request->descricao;
             $eventofixo->save();
-        }
 
-        $notification = array(
-            'message' => 'Evento fixo "' . $eventofixo->nome . '" foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/eventos/').'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $eventofixo->foto = 'evento-'.$eventofixo->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $eventofixo->save();
+            }
 
-        return redirect()->route('usuario.eventosfixos')->with($notification);
+            $notification = array(
+                'message' => 'Evento fixo "' . $eventofixo->nome . '" foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventosfixos')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirFotoEventoFixo(Request $request){
-        $foto = $request['foto'];
-        $eventofixo = TblEventosFixos::find($request->id);
-        $eventofixo->foto = null;
-        $eventofixo->save();
-        File::delete(public_path().'/storage/eventos/'.$foto);
-        return \Response::json(['message' => 'File successfully delete'], 200);
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $foto = $request['foto'];
+            $eventofixo = TblEventosFixos::find($request->id);
+            $eventofixo->foto = null;
+            $eventofixo->save();
+            File::delete(public_path().'/storage/eventos/'.$foto);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }else{ return view('error'); }
     }
 
     public function excluirEventoFixo($id){
-        $eventofixo = TblEventosFixos::find($id);
-        if($eventofixo->foto != null) File::delete(public_path().'/storage/eventos/'.$eventofixo->foto);
-        $eventofixo->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $eventofixo = TblEventosFixos::find($id);
+            if($eventofixo->foto != null) File::delete(public_path().'/storage/eventos/'.$eventofixo->foto);
+            $eventofixo->delete();
 
-        $notification = array(
-            'message' => 'Evento fixo "' . $eventofixo->nome . '" foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Evento fixo "' . $eventofixo->nome . '" foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.eventosfixos')->with($notification);
+            return redirect()->route('usuario.eventosfixos')->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // NOTÍCIA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function noticias()
     {
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -381,91 +445,112 @@ class HomeController extends Controller
     }
 
     public function tbl_noticias(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $noticia = TblNoticias::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($noticia)->addColumn('action',function($noticia){
-            return '<a href="editarNoticia/'.$noticia->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirNoticia/'.$noticia->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $noticia = TblNoticias::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($noticia)->addColumn('action',function($noticia){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarNoticia/'.$noticia->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirNoticia/'.$noticia->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function incluirNoticia(Request $request){
-        $noticia = new TblNoticias();
-        $noticia->id_igreja = $request->igreja;
-        $noticia->nome = $request->nome;
-        $noticia->descricao = $request->descricao;
-        $noticia->save();
-
-        if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $noticia = new TblNoticias();
+            $noticia->id_igreja = $request->igreja;
+            $noticia->nome = $request->nome;
+            $noticia->descricao = $request->descricao;
             $noticia->save();
-        }
 
-        $notification = array(
-            'message' => 'Notícia "' . $noticia->nome . '" foi publicada com sucesso!', 
-            'alert-type' => 'success'
-        );
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $noticia->save();
+            }
 
-        return redirect()->route('usuario.noticias')->with($notification);
+            $notification = array(
+                'message' => 'Notícia "' . $noticia->nome . '" foi publicada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.noticias')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarNoticia($id){
-        $noticia = TblNoticias::find($id);
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editarnoticia', compact('noticia','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $noticia = TblNoticias::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarnoticia', compact('noticia','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarNoticia(Request $request){
-        $noticia = TblNoticias::find($request->id);
-        $noticia->nome = $request->nome;
-        $noticia->descricao = $request->descricao;
-        $noticia->save();
-
-        if($request->foto){
-            \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-            $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $noticia = TblNoticias::find($request->id);
+            $noticia->nome = $request->nome;
+            $noticia->descricao = $request->descricao;
             $noticia->save();
-        }
 
-        $notification = array(
-            'message' => 'Notícia "' . $noticia->nome . '" foi atualizada com sucesso!', 
-            'alert-type' => 'success'
-        );
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/noticias/').'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $noticia->foto = 'noticia-'.$noticia->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $noticia->save();
+            }
 
-        return redirect()->route('usuario.noticias')->with($notification);
+            $notification = array(
+                'message' => 'Notícia "' . $noticia->nome . '" foi atualizada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.noticias')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirFotoNoticia(Request $request){
-        $foto = $request['foto'];
-        $noticia = TblNoticias::find($request->id);
-        $noticia->foto = null;
-        $noticia->save();
-        File::delete(public_path().'/storage/noticias/'.$foto);
-        return \Response::json(['message' => 'File successfully delete'], 200);
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $foto = $request['foto'];
+            $noticia = TblNoticias::find($request->id);
+            $noticia->foto = null;
+            $noticia->save();
+            File::delete(public_path().'/storage/noticias/'.$foto);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }else{ return view('error'); }
     }
 
     public function excluirNoticia($id){
-        $noticia = TblNoticias::find($id);
-        if($noticia->foto != null) File::delete(public_path().'/storage/noticias/'.$noticia->foto);
-        $noticia->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $noticia = TblNoticias::find($id);
+            if($noticia->foto != null) File::delete(public_path().'/storage/noticias/'.$noticia->foto);
+            $noticia->delete();
 
-        $notification = array(
-            'message' => 'Notícia "' . $noticia->nome . '" foi excluída com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Notícia "' . $noticia->nome . '" foi excluída com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.noticias')->with($notification);
+            return redirect()->route('usuario.noticias')->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     
     // SERMÕES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function sermoes(){
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -475,71 +560,90 @@ class HomeController extends Controller
     }
 
     public function tbl_sermoes(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $sermao = TblSermoes::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($sermao)->addColumn('action',function($sermao){
-            return '<a href="editarSermao/'.$sermao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $sermao = TblSermoes::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($sermao)->addColumn('action',function($sermao){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarSermao/'.$sermao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function incluirSermao(Request $request){
-        $sermao = new TblSermoes();
-        $sermao->id_igreja = $request->igreja;
-        $sermao->nome = $request->nome;
-        $sermao->link = $request->link;
-        $sermao->descricao = $request->descricao;
-        $sermao->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $sermao = new TblSermoes();
+            $sermao->id_igreja = $request->igreja;
+            $sermao->nome = $request->nome;
+            $sermao->link = $request->link;
+            $sermao->descricao = $request->descricao;
+            $sermao->save();
 
-        $notification = array(
-            'message' => 'Sermão "' . $sermao->nome . '" foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sermão "' . $sermao->nome . '" foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.sermoes')->with($notification);
+            return redirect()->route('usuario.sermoes')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarSermao($id){
-        $sermao = TblSermoes::find($id);
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editarsermao', compact('sermao','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $sermao = TblSermoes::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarsermao', compact('sermao','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarSermao(Request $request){
-        $sermao = TblSermoes::find($request->id);
-        $sermao->nome = $request->nome;
-        $sermao->link = $request->link;
-        $sermao->descricao = $request->descricao;
-        $sermao->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $sermao = TblSermoes::find($request->id);
+            $sermao->nome = $request->nome;
+            $sermao->link = $request->link;
+            $sermao->descricao = $request->descricao;
+            $sermao->save();
 
-        $notification = array(
-            'message' => 'Sermão "' . $sermao->nome . '" foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sermão "' . $sermao->nome . '" foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.sermoes')->with($notification);
+            return redirect()->route('usuario.sermoes')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirSermao($id){
-        $sermao = TblSermoes::find($id);
-        $sermao->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $sermao = TblSermoes::find($id);
+            $sermao->delete();
 
-        $notification = array(
-            'message' => 'Sermão "' . $sermao->nome . '" foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sermão "' . $sermao->nome . '" foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.sermoes')->with($notification);
+            return redirect()->route('usuario.sermoes')->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // CONFIGURACOES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function configuracoes(){
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -553,71 +657,166 @@ class HomeController extends Controller
     }
 
     public function adicionarMenu(Request $request){
-        $menu = new TblMenu();
-        $menu->id_configuracao = $request->id_configuracao;
-        $menu->nome = $request->nome;
-        $menu->ordem = $request->ordem;
-        if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $menu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $menu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $menu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $menu->link = 'eventofixo/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $menu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $menu->link = $request->url;
-        }
-        $menu->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $menu = new TblMenu();
+            $menu->id_configuracao = $request->id_configuracao;
+            $menu->nome = $request->nome;
+            $menu->ordem = $request->ordem;
+            if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $menu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $menu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $menu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $menu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $menu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $menu->link = $request->url;
+            }
+            $menu->save();
 
-        $notification = array(
-            'message' => 'Menu ' . $menu->nome . ' foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Menu ' . $menu->nome . ' foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarMenu(Request $request){
-        $menu = TblMenu::find($request->id);
-        $menu->nome = $request->nome;
-        $menu->ordem = $request->ordem;
-        if($request->link == 0){
-            $menu->link = null;
-        }else if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $menu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $menu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $menu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $menu->link = 'eventofixo/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $menu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $menu->link = $request->url;
-        }
-        $menu->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $menu = TblMenu::find($request->id);
+            $menu->nome = $request->nome;
+            $menu->ordem = $request->ordem;
+            if($request->link == 0){
+                $menu->link = null;
+            }else if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $menu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $menu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $menu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $menu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $menu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $menu->link = $request->url;
+            }
+            $menu->save();
 
-        $notification = array(
-            'message' => 'Menu ' . $menu->nome . ' foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Menu ' . $menu->nome . ' foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirMenu($id){
-        $sub_menus = \DB::table('tbl_sub_menus')
-            ->select('tbl_sub_menus.id')
-            ->where('tbl_sub_menus.id_menu','=',$id)
-            ->get();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $sub_menus = \DB::table('tbl_sub_menus')
+                ->select('tbl_sub_menus.id')
+                ->where('tbl_sub_menus.id_menu','=',$id)
+                ->get();
 
-        foreach($sub_menus as $sub_menu){
+            foreach($sub_menus as $sub_menu){
+                $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
+                    ->select('tbl_sub_sub_menus.id')
+                    ->where('tbl_sub_sub_menus.id_submenu','=',$id)
+                    ->get();
+
+                foreach($sub_sub_menus as $sub_sub_menu){
+                    TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
+                }
+
+                TblSubMenu::where('id', $sub_menu->id)->delete();
+            }
+
+            $menu = TblMenu::find($id);
+            TblMenu::where('id', $id)->delete();
+
+            $notification = array(
+                'message' => 'Menu ' . $menu->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return back()->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function adicionarSubMenu(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $submenu = new TblSubMenu();
+            $submenu->id_menu = $request->id_menu;
+            $submenu->nome = $request->nome;
+            $submenu->ordem = $request->ordem;
+            if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $submenu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $submenu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $submenu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $submenu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $submenu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $submenu->link = $request->url;
+            }
+            $submenu->save();
+
+            $notification = array(
+                'message' => 'Submenu ' . $submenu->nome . ' foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return back()->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarSubMenu(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $submenu = TblSubMenu::find($request->id);
+            $submenu->id_menu = $request->id_menu;
+            $submenu->nome = $request->nome;
+            $submenu->ordem = $request->ordem;
+            if($request->link == 0){
+                $submenu->link = null;
+            }else if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $submenu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $submenu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $submenu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $submenu->link = 'evento/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $submenu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $submenu->link = $request->url;
+            }
+            $submenu->save();
+
+            $notification = array(
+                'message' => 'Submenu ' . $submenu->nome . ' foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return back()->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirSubMenu($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
             $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
                 ->select('tbl_sub_sub_menus.id')
                 ->where('tbl_sub_sub_menus.id_submenu','=',$id)
@@ -627,194 +826,118 @@ class HomeController extends Controller
                 TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
             }
 
-            TblSubMenu::where('id', $sub_menu->id)->delete();
-        }
+            $submenu = TblSubMenu::find($id);
+            TblSubMenu::where('id', $id)->delete();
 
-        $menu = TblMenu::find($id);
-        TblMenu::where('id', $id)->delete();
+            $notification = array(
+                'message' => 'Submenu ' . $submenu->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        $notification = array(
-            'message' => 'Menu ' . $menu->nome . ' foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        return back()->with($notification);
-    }
-
-    public function adicionarSubMenu(Request $request){
-        $submenu = new TblSubMenu();
-        $submenu->id_menu = $request->id_menu;
-        $submenu->nome = $request->nome;
-        $submenu->ordem = $request->ordem;
-        if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $submenu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $submenu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $submenu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $submenu->link = 'eventofixo/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $submenu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $submenu->link = $request->url;
-        }
-        $submenu->save();
-
-        $notification = array(
-            'message' => 'Submenu ' . $submenu->nome . ' foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        return back()->with($notification);
-    }
-
-    public function editarSubMenu(Request $request){
-        $submenu = TblSubMenu::find($request->id);
-        $submenu->id_menu = $request->id_menu;
-        $submenu->nome = $request->nome;
-        $submenu->ordem = $request->ordem;
-        if($request->link == 0){
-            $submenu->link = null;
-        }else if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $submenu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $submenu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $submenu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $submenu->link = 'evento/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $submenu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $submenu->link = $request->url;
-        }
-        $submenu->save();
-
-        $notification = array(
-            'message' => 'Submenu ' . $submenu->nome . ' foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        return back()->with($notification);
-    }
-
-    public function excluirSubMenu($id){
-        $sub_sub_menus = \DB::table('tbl_sub_sub_menus')
-            ->select('tbl_sub_sub_menus.id')
-            ->where('tbl_sub_sub_menus.id_submenu','=',$id)
-            ->get();
-
-        foreach($sub_sub_menus as $sub_sub_menu){
-            TblSubSubMenu::where('id', $sub_sub_menu->id)->delete();
-        }
-
-        $submenu = TblSubMenu::find($id);
-        TblSubMenu::where('id', $id)->delete();
-
-        $notification = array(
-            'message' => 'Submenu ' . $submenu->nome . ' foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
-
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function adicionarSubSubMenu(Request $request){
-        //dd($request->all());
-        $subsubmenu = new TblSubSubMenu();
-        $subsubmenu->id_submenu = $request->id_submenu;
-        $subsubmenu->nome = $request->nome;
-        $subsubmenu->ordem = $request->ordem;
-        if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $subsubmenu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $subsubmenu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $subsubmenu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $subsubmenu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $subsubmenu->link = $request->url;
-        }
-        $subsubmenu->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $subsubmenu = new TblSubSubMenu();
+            $subsubmenu->id_submenu = $request->id_submenu;
+            $subsubmenu->nome = $request->nome;
+            $subsubmenu->ordem = $request->ordem;
+            if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $subsubmenu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $subsubmenu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $subsubmenu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $subsubmenu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $subsubmenu->link = $request->url;
+            }
+            $subsubmenu->save();
 
-        $notification = array(
-            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi adicionado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarSubSubMenu(Request $request){
-        $subsubmenu = new TblSubSubMenu();
-        $subsubmenu->id_submenu = $request->id_submenu;
-        $subsubmenu->nome = $request->nome;
-        $subsubmenu->ordem = $request->ordem;
-        if($request->link == 0){
-            $submenu->link = null;
-        }if($request->link == 1){
-            $modulo = TblModulo::find($request->modulo);
-            $subsubmenu->link = $modulo->rota;
-        }else if($request->link == 2){
-            $subsubmenu->link = 'publicacao/'.$request->publicacao;
-        }else if($request->link == 3){
-            $subsubmenu->link = 'evento/'.$request->evento;
-        }else if($request->link == 4){
-            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
-        }else if($request->link == 5){
-            $subsubmenu->link = 'noticia/'.$request->noticia;
-        }else if($request->link == 6){
-            $subsubmenu->link = $request->url;
-        }
-        $subsubmenu->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $subsubmenu = new TblSubSubMenu();
+            $subsubmenu->id_submenu = $request->id_submenu;
+            $subsubmenu->nome = $request->nome;
+            $subsubmenu->ordem = $request->ordem;
+            if($request->link == 0){
+                $submenu->link = null;
+            }if($request->link == 1){
+                $modulo = TblModulo::find($request->modulo);
+                $subsubmenu->link = $modulo->rota;
+            }else if($request->link == 2){
+                $subsubmenu->link = 'publicacao/'.$request->publicacao;
+            }else if($request->link == 3){
+                $subsubmenu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $subsubmenu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $subsubmenu->link = $request->url;
+            }
+            $subsubmenu->save();
 
-        $notification = array(
-            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi alterado com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirSubSubMenu($id){
-        $subsubmenu = TblSubSubMenu::find($id);
-        TblSubSubMenu::where('id', $id)->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $subsubmenu = TblSubSubMenu::find($id);
+            TblSubSubMenu::where('id', $id)->delete();
 
-        $notification = array(
-            'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi excluído com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Sub-Submenu ' . $subsubmenu->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
 
     public function salvarConfiguracoes(Request $request){
-        $configuracao = TblConfiguracoes::find($request->id);
-        $configuracao->id_template = $request->id_template;
-        $configuracao->cor = $request->cor;
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $configuracao = TblConfiguracoes::find($request->id);
+            $configuracao->id_template = $request->id_template;
+            $configuracao->cor = $request->cor;
 
-        $configuracao->save();
+            $configuracao->save();
 
-        $notification = array(
-            'message' => 'Configurações da congregação alteradas com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Configurações da congregação alteradas com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return back()->with($notification);
+            return back()->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // EVENTOS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function eventos(){
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -851,8 +974,8 @@ class HomeController extends Controller
     
     // PUBLICAÇÕES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function publicacoes(){
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg')) == false){
+            return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -862,90 +985,109 @@ class HomeController extends Controller
     }
 
     public function tbl_publicacoes(){
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $publicacoes = TblPublicacoes::where('id_igreja','=',$perfil->id_igreja)->get();
-        return DataTables::of($publicacoes)->addColumn('action',function($publicacoes){
-            return '<a href="editarPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            '<a href="excluirPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
-        })
-        ->make(true);
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $publicacoes = TblPublicacoes::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($publicacoes)->addColumn('action',function($publicacoes){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
     }
 
     public function incluirPublicacao(Request $request){
-        $publicacao = new TblPublicacoes();
-        $publicacao->id_igreja = $request->igreja;
-        $publicacao->nome = $request->nome;
-        $publicacao->html = $request->html;
-        $publicacao->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $publicacao = new TblPublicacoes();
+            $publicacao->id_igreja = $request->igreja;
+            $publicacao->nome = $request->nome;
+            $publicacao->html = $request->html;
+            $publicacao->save();
 
-        foreach($request->galeria as $f_){
-            $foto = new TblPublicacaoFotos();
-            $foto->id_publicacao = $publicacao->id;
-            $foto->foto = "vazio";
-            $foto->save();
+            foreach($request->galeria as $f_){
+                $foto = new TblPublicacaoFotos();
+                $foto->id_publicacao = $publicacao->id;
+                $foto->foto = "vazio";
+                $foto->save();
 
-            \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
-            $foto->save();
-        }
-            
-        $notification = array(
-            'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
-            'alert-type' => 'success'
-        );
+                \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+                $foto->save();
+            }
+                
+            $notification = array(
+                'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.publicacoes')->with($notification);
+            return redirect()->route('usuario.publicacoes')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function editarPublicacao($id){
-        $publicacao = TblPublicacoes::find($id);
-        $fotos = TblPublicacaoFotos::where('id_publicacao','=',$publicacao->id)->get();
-        $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-        $igreja = obter_dados_igreja_id($perfil->id_igreja);
-        $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-        return view('usuario.editarpublicacao', compact('publicacao','fotos','igreja','modulos_igreja'));
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $publicacao = TblPublicacoes::find($id);
+            $fotos = TblPublicacaoFotos::where('id_publicacao','=',$publicacao->id)->get();
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarpublicacao', compact('publicacao','fotos','igreja','modulos_igreja'));
+        }else{ return view('error'); }
     }
 
     public function atualizarPublicacao(Request $request){
-        $publicacao = TblPublicacoes::find($request->id);
-        $publicacao->nome = $request->nome;
-        $publicacao->html = $request->html;
-        $publicacao->save();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $publicacao = TblPublicacoes::find($request->id);
+            $publicacao->nome = $request->nome;
+            $publicacao->html = $request->html;
+            $publicacao->save();
 
-        if($request->galeria) foreach($request->galeria as $f_){
-            $foto = new TblPublicacaoFotos();
-            $foto->id_publicacao = $publicacao->id;
-            $foto->foto = "vazio";
-            $foto->save();
+            if($request->galeria) foreach($request->galeria as $f_){
+                $foto = new TblPublicacaoFotos();
+                $foto->id_publicacao = $publicacao->id;
+                $foto->foto = "vazio";
+                $foto->save();
 
-            \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
-            $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
-            $foto->save();
-        }
-            
-        $notification = array(
-            'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
-            'alert-type' => 'success'
-        );
+                \Image::make($f_)->save(public_path('storage/galerias-publicacoes/').'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$publicacao->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
+                $foto->save();
+            }
+                
+            $notification = array(
+                'message' => 'Publicação "' . $publicacao->nome . '" foi adicionada com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.publicacoes')->with($notification);
+            return redirect()->route('usuario.publicacoes')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirPublicacao($id){
-        $publicacao = TblPublicacoes::find($id);
-        $fotos = TblPublicacaoFotos::where("id_publicacao","=",$publicacao->id)->get();
-        foreach($fotos as $foto){
-            File::delete(public_path().'/storage/galerias-publicacoes/'.$foto->foto);
-            $foto->delete();
-        }
-        $publicacao->delete();
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $publicacao = TblPublicacoes::find($id);
+            $fotos = TblPublicacaoFotos::where("id_publicacao","=",$publicacao->id)->get();
+            foreach($fotos as $foto){
+                File::delete(public_path().'/storage/galerias-publicacoes/'.$foto->foto);
+                $foto->delete();
+            }
+            $publicacao->delete();
 
-        $notification = array(
-            'message' => 'Publicação "' . $publicacao->nome . '" foi excluída com sucesso!', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Publicação "' . $publicacao->nome . '" foi excluída com sucesso!', 
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('usuario.publicacoes')->with($notification);
+            return redirect()->route('usuario.publicacoes')->with($notification);
+        }else{ return view('error'); }
     }
 
     public function excluirFotoPublicacao(Request $request){
@@ -953,6 +1095,181 @@ class HomeController extends Controller
         $foto->delete();
         File::delete(public_path().'/storage/galerias-publicacoes/'.$request['foto']);
         return \Response::json(['message' => 'File successfully delete'], 200);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
+    // CONTA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function conta(){
+        $usuario = User::find(\Auth::user()->id);
+        return view('usuario.conta', compact('usuario'));
+    }
+
+    public function atualizarConta(Request $request){
+        $usuario = User::find(\Auth::user()->id);
+        $usuario->nome = $request->nome;
+        $usuario->email = $request->email;
+        
+        $count = \DB::table('users')
+            ->select('users.email')
+            ->where('users.id','<>',$usuario->id)
+            ->where('users.email','=',$usuario->email)
+            ->count();
+        if($count == 0){
+            if(empty($request->senha) || $request->senha == $request->senhac){
+                if(!empty($request->senha)) $usuario->password = bcrypt($request->senha);
+
+                $usuario->save();
+
+                $notification = array(
+                    'message' => 'Sua conta foi alterada com sucesso!', 
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->back()->with($notification);
+            }else{
+                $notification = array(
+                    'message' => 'Falha na confirmação das senhas.', 
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->back()->with($notification);
+            }
+        }else{
+            $notification = array(
+                'message' => 'Esse email já está sendo utilizado.', 
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // USUÁRIOS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function usuarios(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            return view('usuario.usuarios', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_usuarios(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $usuarios = \DB::table('users')
+                ->select('users.*')
+                ->leftJoin('tbl_perfis','users.id_perfil','=','tbl_perfis.id')
+                ->where('tbl_perfis.id_igreja','=',$perfil->id_igreja)
+                ->get();
+            return DataTables::of($usuarios)->addColumn('action',function($usuarios){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarUsuario/'.$usuarios->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<label title="Status do Usuário" class="switch"><input onClick="switch_status(this)" name="'.$usuarios->nome.'" class="status" id="'.$usuarios->id.'" type="checkbox" '.(($usuarios->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
+    }
+
+    public function switchStatusUsuario(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $usuario = User::find($request->id);
+            ($usuario->status == 1) ? $usuario->status = 0 : $usuario->status = 1 ;
+            $usuario->save();
+        }else{ return view('error'); }
+    }
+
+    public function incluirUsuario(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function editarUsuario(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function atualizarUsuario(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function excluirUsuario(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // PERFIS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function perfis(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            return view('usuario.perfis', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_perfis(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $perfis = TblPerfil::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($perfis)->addColumn('action',function($perfis){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirPerfil/'.$perfis->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })
+            ->make(true);
+        }
+    }
+
+    public function incluirPerfil(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function editarPerfil(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function atualizarPerfil(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+
+        }else{ return view('error'); }
+    }
+
+    public function excluirPerfil(){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 }
