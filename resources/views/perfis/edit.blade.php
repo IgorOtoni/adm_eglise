@@ -139,7 +139,7 @@ $(function(){
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Editar usuário
+        Editar perfil
         <!--<small>it all starts here</small>-->
         </h1>
     </section>

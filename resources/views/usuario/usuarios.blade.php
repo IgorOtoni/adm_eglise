@@ -122,7 +122,7 @@ $(function () {
 <!-- /.content-wrapper -->
 
 <div class="modal fade" id="modal-incluir">
-  <form id="incluirUsuarioFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuarios.incluir')}}" enctype="multipart/form-data">
+  <form id="incluirUsuarioFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.incluirUsuario')}}" enctype="multipart/form-data">
   @csrf
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -172,7 +172,7 @@ $(function () {
                     <div class="form-group has-feedback">
                       <label>Selecione o perfil do usuário:</label>
                       <select id="perfil" name="perfil" class="form-control" required>
-                        <?php $perfis = App\TblPerfil::orderBy('nome','ASC')->get(); ?>
+                        <?php $perfis = App\TblPerfil::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($perfis as $perfil)
                         <option value="{{$perfil->id}}">{{$perfil->nome}}</option>
                         @endforeach

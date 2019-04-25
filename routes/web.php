@@ -122,10 +122,11 @@ Route::group(['middleware' => 'auth'], function () {
         //Route::get('/', 'HomeController@index')->name('usuario.index');
         Route::get('/home', 'HomeController@index')->name('usuario.home');
 
-        Route::get('/usuarios', 'HomeController@index')->name('usuario.usuarios');
-        Route::get('/perfis', 'HomeController@index')->name('usuario.perfis');
+        // FUNÇÕES ===============================================================================
+        Route::get('/carregarModulosIgreja/{id}', 'HomeController@modulos_igreja')->name('usuario.carregarModulosIgreja');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
         Route::get('/doacoes', 'HomeController@index')->name('usuario.doacoes');
-        Route::get('/eventosfixos', 'HomeController@index')->name('usuario.eventosfixos');
 
         // CRUD BANNERS ==========================================================================
         Route::get('/banners', 'HomeController@banners')->name('usuario.banners');
@@ -231,7 +232,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/incluirPerfil', 'HomeController@incluirPerfil')->name('usuario.incluirPerfil');
         Route::get('/editarPerfil/{id}', 'HomeController@editarPerfil')->name('usuario.editarPerfil');
         Route::post('/atualizarPerfil', 'HomeController@atualizarPerfil')->name('usuario.atualizarPerfil');
-        Route::get('/excluirPerfil/{id}', 'HomeController@excluirPerfil')->name('usuario.excluirPerfil');
+        //Route::get('/excluirPerfil/{id}', 'HomeController@excluirPerfil')->name('usuario.excluirPerfil');
+        Route::get('/switchStatusPerfil/{id}', 'HomeController@switchStatusPerfil')->name('usuario.switchStatusPerfil');
+        Route::get('/carregarPermissoesPerfil/{id}', 'HomeController@carregarPermissoesPerfil')->name('perfis.carregarPermissoesPerfil');
+        Route::post('/atualizarPermissoesPerfil', 'HomeController@atualizarPermissoesPerfil')->name('usuario.atualizarPermissoesPerfil');
         //////////////////////////////////////////////////////////////////////////////////////////
     });
 });

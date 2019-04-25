@@ -22,6 +22,9 @@ use App\TblSermoes;
 use App\TblPublicacaoFotos;
 use App\TblPublicacoes;
 use App\User;
+use App\TblPerfisIgrejasModulos;
+use App\TblIgrejasModulos;
+use App\TblPerfisPermissoes;
 use Calendar;
 
 class HomeController extends Controller
@@ -49,6 +52,17 @@ class HomeController extends Controller
             return view('usuario.home');
         }
     }
+
+    // FUNCOES ÚTEIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function modulos_igreja($id){
+        $modulos['data'] = \DB::table('tbl_modulos')
+            ->select('tbl_modulos.*')
+            ->leftJoin('tbl_igrejas_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
+            ->where('tbl_igrejas_modulos.id_igreja','=',$id)
+            ->get();
+        return json_encode($modulos);
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     // BANNER AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function banners()
@@ -1190,29 +1204,107 @@ class HomeController extends Controller
         }else{ return view('error'); }
     }
 
-    public function incluirUsuario(){
+    public function incluirUsuario(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $usuario = new User();
+            $usuario->nome = $request->nome;
+            $usuario->email = $request->email;
+            $usuario->id_perfil = $request->perfil;
+            
+            $count = \DB::table('users')
+                ->select('users.email')
+                ->where('users.id','<>',$usuario->id)
+                ->where('users.email','=',$usuario->email)
+                ->count();
+            if($count == 0){
+                if(!empty($request->senha) && $request->senha == $request->senhac){
+                    $usuario->password = bcrypt($request->senha);
 
+                    $usuario->save();
+
+                    $notification = array(
+                        'message' => 'Usuário ' . $usuario->nome . ' foi incluído(a) com sucesso!', 
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->route('usuario.usuarios')->with($notification);
+                }else{
+                    $notification = array(
+                        'message' => 'Falha na confirmação das senhas.', 
+                        'alert-type' => 'error'
+                    );
+
+                    return redirect()->back()->with($notification);
+                }
+            }else{
+                $notification = array(
+                    'message' => 'Esse email já está sendo utilizado.', 
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->back()->with($notification);
+            }
         }else{ return view('error'); }
     }
 
-    public function editarUsuario(){
+    public function editarUsuario($id){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-
+            $usuario = User::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarusuario', compact('usuario','igreja','modulos_igreja'));
         }else{ return view('error'); }
     }
 
-    public function atualizarUsuario(){
+    public function atualizarUsuario(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $usuario = User::find($request->id);
+            $usuario->nome = $request->nome;
+            $usuario->email = $request->email;
+            $usuario->id_perfil = $request->perfil;
+            
+            $count = \DB::table('users')
+                ->select('users.email')
+                ->where('users.id','<>',$usuario->id)
+                ->where('users.email','=',$usuario->email)
+                ->count();
+            if($count == 0){
+                if(empty($request->senha) || $request->senha == $request->senhac){
+                    if(!empty($request->senha)) $usuario->password = bcrypt($request->senha);
 
+                    $usuario->save();
+
+                    $notification = array(
+                        'message' => 'Usuário ' . $usuario->nome . ' foi aletrado(a) com sucesso!', 
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->route('usuario.usuarios')->with($notification);
+                }else{
+                    $notification = array(
+                        'message' => 'Falha na confirmação das senhas.', 
+                        'alert-type' => 'error'
+                    );
+
+                    return redirect()->back()->with($notification);
+                }
+            }else{
+                $notification = array(
+                    'message' => 'Esse email já está sendo utilizado.', 
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->back()->with($notification);
+            }
         }else{ return view('error'); }
     }
 
-    public function excluirUsuario(){
+    /*public function excluirUsuario(){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
 
         }else{ return view('error'); }
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////////////////////////
 
     // PERFIS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1236,11 +1328,12 @@ class HomeController extends Controller
             return DataTables::of($perfis)->addColumn('action',function($perfis){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+                    '<a href="carregarPermissoesPerfil/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirPerfil/'.$perfis->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })
@@ -1248,28 +1341,193 @@ class HomeController extends Controller
         }
     }
 
-    public function incluirPerfil(){
+    public function switchStatusPerfil(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $perfil = TblPerfil::find($request->id);
+            ($perfil->status == 1) ? $perfil->status = 0 : $perfil->status = 1 ;
+            $perfil->save();
+        }else{ return view('error'); }
+    }
+
+    public function incluirPerfil(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $perfil = new TblPerfil();
+            $perfil->nome = $request->nome;
+            $perfil->descricao = $request->descricao;
+            $perfil->id_igreja = $request->igreja;
 
+            $count = TblPerfil::where("nome", "=", $perfil->nome)->where("id_igreja", "=", $perfil->id_igreja)->count();
+            if($count == 0){
+                $perfil->save();
+                $perfil_modulo = new TblPerfisIgrejasModulos();
+
+                foreach ($request->modulos as $key => $value) {
+                    $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
+                    $modulo_igreja = $modulo_igreja[0];
+
+                    $data = [
+                        'id_perfil' => $perfil->id,
+                        'id_modulo_igreja' => $modulo_igreja->id,
+                    ];
+                    $perfil_modulo->create($data);
+                }
+
+                $notification = array(
+                    'message' => $perfil->nome . ' foi incluído(a) com sucesso!', 
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->route('usuario.perfis')->with($notification);
+            }else{
+                $notification = array(
+                    'message' => 'O nome informado já está na base de dados!', 
+                    'alert-type' => 'error'
+                );
+
+                return back()->with($notification);
+            }
         }else{ return view('error'); }
     }
 
-    public function editarPerfil(){
+    public function editarPerfil($id){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-
+            $usuario = User::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            $perfil = TblPerfil::find($id);
+            $modulos = obter_modulos_perfil($perfil);
+            return view('usuario.editarperfil', compact('usuario','igreja','modulos_igreja','perfil','modulos'));
         }else{ return view('error'); }
     }
 
-    public function atualizarPerfil(){
+    public function atualizarPerfil(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $perfil = TblPerfil::find($request->id);
+            $perfil->nome = $request->nome;
+            $perfil->descricao = $request->descricao;
 
+            $count = TblPerfil::where("nome", "=", $perfil->nome)->where("id_igreja", "=", $perfil->id_igreja)->where("id","<>",$perfil->id)->count();
+            if($count == 0){
+                $perfil->save();
+
+                $modulos_do_perfil = TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->get();
+                if(count($modulos_do_perfil) > 0) foreach($modulos_do_perfil as $modulo_perfil){
+                    TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->delete();
+                }
+                TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->delete();
+
+                $perfil_modulo = new TblPerfisIgrejasModulos();
+
+                foreach ($request->modulos as $key => $value) {
+                    $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
+                    $modulo_igreja = $modulo_igreja[0];
+
+                    $data = [
+                        'id_perfil' => $perfil->id,
+                        'id_modulo_igreja' => $modulo_igreja->id,
+                    ];
+                    $perfil_modulo->create($data);
+                }
+
+                $notification = array(
+                    'message' => $perfil->nome . ' foi incluído(a) com sucesso!', 
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->route('usuario.perfis')->with($notification);
+            }else{
+                $notification = array(
+                    'message' => 'O nome informado já está na base de dados!', 
+                    'alert-type' => 'error'
+                );
+
+                return back()->with($notification);
+            }
         }else{ return view('error'); }
     }
 
-    public function excluirPerfil(){
+    public function carregarPermissoesPerfil($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_apresentativos_igreja($igreja);
+            $perfil = \DB::table('tbl_perfis')
+                ->select('tbl_perfis.*')
+                ->where('tbl_perfis.id','=',$id)
+                ->get();
+            $perfil = $perfil[0];
+            $modulos = \DB::table('tbl_modulos')
+                ->select('tbl_modulos.*', 'tbl_perfis_igrejas_modulos.id as id_perfis_igrejas_modulos')
+                ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
+                ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
+                ->leftJoin('tbl_perfis', 'tbl_perfis_igrejas_modulos.id_perfil', '=', 'tbl_perfis.id')
+                ->where('tbl_perfis.id','=',$id)
+                //->groupBy('tbl_modulos.id')
+                ->orderBy('nome', 'ASC')
+                ->get();
+            $permissoes = array();
+            foreach($modulos as $modulo){
+                $permissoes_ativas = \DB::table('tbl_permissoes')
+                    ->select('tbl_permissoes.*')
+                    ->leftJoin('tbl_perfis_permissoes', 'tbl_permissoes.id', '=', 'tbl_perfis_permissoes.id_permissao')
+                    ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_perfis_permissoes.id_perfil_igreja_modulo', '=', 'tbl_perfis_igrejas_modulos.id')
+                    ->leftJoin('tbl_igrejas_modulos', 'tbl_perfis_igrejas_modulos.id_modulo_igreja', '=', 'tbl_igrejas_modulos.id')
+                    ->where('tbl_igrejas_modulos.id_modulo','=',$modulo->id)
+                    ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id)
+                    ->get();
+                $permissoes[$modulo->id]['ativas'] = $permissoes_ativas;
+                $permissoes_todas = \DB::table('tbl_permissoes')
+                    ->select('tbl_permissoes.*')
+                    ->leftJoin('tbl_modulos_permissoes', 'tbl_modulos_permissoes.id_permissao', '=', 'tbl_permissoes.id')
+                    ->leftJoin('tbl_modulos', 'tbl_modulos.id', '=', 'tbl_modulos_permissoes.id_modulo')
+                    ->where('tbl_modulos.id','=',$modulo->id)
+                    ->orderBy('nome', 'ASC')
+                    ->get();
+                $permissoes[$modulo->id]['todas'] = $permissoes_todas;
+            }
+            return view('usuario.permissoesperfil', compact('igreja','modulos_igreja','perfil','modulos','permissoes'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarPermissoesPerfil(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            unset($request["_token"]);
+            $id_perfil = $request["id_perfil"];
+            unset($request["id_perfil"]);
+            foreach ($request->all() as $id_perfil_modulo_igreja => $permissao) {
+                TblPerfisPermissoes::where('id_perfil_igreja_modulo', '=', $id_perfil_modulo_igreja)->delete();
+                foreach($permissao as $posicao => $id_permissao){
+                    $perfil_permissao = new TblPerfisPermissoes();
+
+                    $data = [
+                        'id_perfil_igreja_modulo' => $id_perfil_modulo_igreja,
+                        'id_permissao' => $id_permissao,
+                    ];
+
+                    $perfil_permissao->create($data);
+                }
+            }
+
+            $perfil = \DB::table('tbl_perfis')
+                ->select('tbl_perfis.*')
+                ->where('tbl_perfis.id','=',$id_perfil)
+                ->get();
+            $perfil = $perfil[0];
+
+            $notification = array(
+                'message' => $perfil->nome . ' teve suas permissões alteradas!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.perfis')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    /*public function excluirPerfil(){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
             
         }else{ return view('error'); }
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////////////////////////
 }
