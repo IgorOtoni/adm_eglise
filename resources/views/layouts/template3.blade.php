@@ -58,36 +58,25 @@
                                 <ul>
                                     <?php
                                     foreach($menus as $menu){
-                                        if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
-                                            <li><a href="/{{$igreja->url}}/{{($menu->link != null) ? $menu->link != null : "#"}}">{{$menu->nome}}</a>
+                                        ?><li><a href="{{verifica_link($menu->link, $igreja)}}">{{$menu->nome}}</a><?php
+                                            if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
                                                 <ul class="dropdown">
                                                     <?php foreach($submenus[$menu->id] as $submenu){
+                                                        ?><li><a href="{{verifica_link($submenu->link, $igreja)}}">{{$submenu->nome}}</a><?php
                                                         if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
-                                                            <li><a href="/{{$igreja->url}}/{{($submenu->link != null) ? $submenu->link != null : "#"}}">{{$submenu->nome}}</a>
-                                                                <ul class="dropdown">
-                                                                    <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
-                                                                        if($subsubmenu->link != null){
-                                                                            ?> <li><a href="/{{$igreja->url}}/{{$subsubmenu->link}}">{{$subsubmenu->nome}}</a></li> <?php
-                                                                        }else{
-                                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$subsubmenu->nome}}</a></li> <?php
-                                                                        }
-                                                                    } ?>
-                                                                </ul>
-                                                            </li>
-                                                        <?php }else if($submenu->link != null){
-                                                            ?> <li><a href="/{{$igreja->url}}/{{$submenu->link}}">{{$submenu->nome}}</a></li> <?php
-                                                        }else{
-                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$submenu->nome}}</a></li> <?php
+                                                            <ul class="dropdown">
+                                                                <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
+                                                                    ?> <li><a href="/{{verifica_link($subsubmenu->link, $igreja)}}">{{$subsubmenu->nome}}</a></li> <?php
+                                                                } ?>
+                                                            </ul>
+                                                        <?php
                                                         }
+                                                        ?></li><?php
                                                     } ?>
                                                 </ul>
-                                            </li>
-                                            <?php
-                                        }else if($menu->link != null){
-                                            ?> <li><a href="/{{$igreja->url}}/{{$menu->link}}">{{$menu->nome}}</a></li> <?php
-                                        }else{
-                                            ?> <li><a href="/{{$igreja->url}}/#">{{$menu->nome}}</a></li> <?php
-                                        }
+                                                <?php
+                                            }
+                                        ?></li><?php
                                     }
                                     ?>
                                 </ul>

@@ -56,94 +56,26 @@
                                 <ul>
                                     <?php
                                     foreach($menus as $menu){
-                                        if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
-                                            <li><a href="/{{$igreja->url}}/{{($menu->link != null) ? $menu->link != null : "#"}}">{{$menu->nome}}</a>
+                                        ?><li><a href="{{verifica_link($menu->link, $igreja)}}">{{$menu->nome}}</a><?php
+                                            if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
                                                 <ul class="dropdown">
                                                     <?php foreach($submenus[$menu->id] as $submenu){
+                                                        ?><li><a href="{{verifica_link($submenu->link, $igreja)}}">{{$submenu->nome}}</a><?php
                                                         if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
-                                                            <li><a href="/{{$igreja->url}}/{{($submenu->link != null) ? $submenu->link != null : "#"}}">{{$submenu->nome}}</a>
-                                                                <ul class="dropdown">
-                                                                    <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
-                                                                        if($subsubmenu->link != null){
-                                                                            ?> <li><a href="/{{$igreja->url}}/{{$subsubmenu->link}}">{{$subsubmenu->nome}}</a></li> <?php
-                                                                        }else{
-                                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$subsubmenu->nome}}</a></li> <?php
-                                                                        }
-                                                                    } ?>
-                                                                </ul>
-                                                            </li>
-                                                        <?php }else if($submenu->link != null){
-                                                            ?> <li><a href="/{{$igreja->url}}/{{$submenu->link}}">{{$submenu->nome}}</a></li> <?php
-                                                        }else{
-                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$submenu->nome}}</a></li> <?php
+                                                            <ul class="dropdown">
+                                                                <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
+                                                                    ?> <li><a href="/{{verifica_link($subsubmenu->link, $igreja)}}">{{$subsubmenu->nome}}</a></li> <?php
+                                                                } ?>
+                                                            </ul>
+                                                        <?php
                                                         }
+                                                        ?></li><?php
                                                     } ?>
                                                 </ul>
-                                            </li>
-                                            <?php
-                                        }else if($menu->link != null){
-                                            ?> <li><a href="/{{$igreja->url}}/{{$menu->link}}">{{$menu->nome}}</a></li> <?php
-                                        }else{
-                                            ?> <li><a href="/{{$igreja->url}}/#">{{$menu->nome}}</a></li> <?php
-                                        }
-                                    }
-
-                                    /*$ids_modulos_permitidos = array();
-                                    $x = 0;
-                                    foreach($modulos as $modulo){
-                                        $ids_modulos_permitidos[$x++] = $modulo->id_modulo;
-                                    }
-                                    if(in_array(8, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Sobre nós</a>
-                                            <ul class="dropdown">
-                                            <li><a href="/{{$igreja->url}}/apresentacao">Visões e valores</a></li>
-                                            <!--<li><a href="#">Ministros</a></li>-->
-                                            <li><a href="/{{$igreja->url}}/contato">Contato</a></li>
-                                            </ul>
-                                        </li>
-                                        <?php
-                                    }
-                                    if(in_array(5, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Eventos</a>
-                                            <ul class="dropdown">
-                                            <li><a href="/{{$igreja->url}}/eventosfixos">Eventos fixos</a></li>
-                                            <li><a href="/{{$igreja->url}}/eventos">Linha do tempo</a></li>
-                                            </ul>
-                                        </li>
-                                        <?php
-                                    } ?>
-                                    <?php if(in_array(12, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
-                                        <li><a href="#">Mídia</a>
-                                            <ul class="dropdown">
-                                            <?php if(in_array(12, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
-                                            }
-                                            if(in_array(10, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
                                                 <?php
                                             }
-                                            if(in_array(9, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
-                                                <?php
-                                            } ?>
-                                            </ul>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if(in_array(11, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Doações</a>
-                                            <ul class="dropdown">
-                                            <li><a href="#">Doações</a></li>
-                                            <li><a href="#">Projetos e causas</a></li>
-                                            </ul>
-                                            </li>
-                                        <?php
-                                    }*/
+                                        ?></li><?php
+                                    }
                                     ?>
                                 </ul>
 

@@ -18,7 +18,7 @@ class Tbl_Banner_Seeder extends Seeder
             'nome'=>'Banner 1',
             'descricao'=>'Teste teste teste teste teste teste teste teste teste teste teste teste.',
             'foto'=>'banner-1-1.jpg',
-            'link'=>'/primeiraiba/noticia/1',
+            'link'=>'/primeiraiba/noticia/5',
             'ordem'=>1,
             'id_igreja'=>1,
         ]);
@@ -27,7 +27,7 @@ class Tbl_Banner_Seeder extends Seeder
             'nome'=>'Banner 2',
             'descricao'=>'Teste teste teste teste teste teste teste teste teste teste teste teste.',
             'foto'=>'banner-2-1.jpg',
-            'link'=>'/primeiraiba/evento/1',
+            'link'=>'/primeiraiba/evento/5',
             'ordem'=>2,
             'id_igreja'=>1,
         ]);

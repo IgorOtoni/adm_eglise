@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="pt">
 <head>
-    <!-- Basic Page Needs
-    ================================================== -->
+    <!-- Basic Page Needs ================================================== -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{{$igreja->nome}}</title>
     <meta name="description" content="">
@@ -12,32 +11,24 @@
     ================================================== -->
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="format-detection" content="telephone=no">
-    <!-- CSS
-    ================================================== -->
+    <!-- CSS ================================================== -->
     <link href="{{asset('template_igreja/template-padrao/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/css/bootstrap-rtl.min.css" rel="stylesheet')}}" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/plugins/mediaelement/mediaelementplayer.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/css/style.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/css/rtl.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/plugins/prettyphoto/css/prettyPhoto.css')}}" rel="stylesheet" type="text/css">
-    <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="css/ie8.css" media="screen" /><![endif]-->
     <!-- Color Style -->
     <link href="{{asset('template_igreja/template-padrao/colors/color1.css')}}" rel="stylesheet" type="text/css"> 
     <link href="{{asset('template_igreja/template-padrao/css/custom.css')}}" rel="stylesheet" type="text/css">
-    <!-- SCRIPTS
-    ================================================== -->
-    <script src="{{asset('template_igreja/template-padrao/js/modernizr.js')}}"></script><!-- Modernizr -->
-    <!-- Nivo Slider Styles -->
-    <!--<link rel="stylesheet" href="{{asset('template_igreja/template-padrao/plugins/nivoslider/themes/default/default.css')}}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{{asset('template_igreja/template-padrao/plugins/nivoslider/nivo-slider.css')}}" type="text/css" media="screen" />-->
+    <!-- SCRIPTS ================================================== -->
+    <!-- Modernizr -->
+    <script src="{{asset('template_igreja/template-padrao/js/modernizr.js')}}"></script>
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     <link rel="stylesheet" type="text/css" href="{{asset('template_igreja/template-padrao/css/extralayers.css')}}" media="screen" />	
     <link rel="stylesheet" type="text/css" href="{{asset('template_igreja/template-padrao/plugins/rs-plugin/css/settings.css')}}" media="screen" />
 </head>
 <body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-    <![endif]-->
     <div class="body"> 
         <!-- Start Site Header -->
         <header class="site-header">
@@ -61,93 +52,29 @@
                 <div class="col-md-12">
                 <nav class="navigation">
                     <ul class="sf-menu">
-                        
-                    <?php foreach($menus as $menu){
-                        if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
-                            <li><a href="/{{$igreja->url}}/{{($menu->link != null) ? $menu->link != null : "#"}}">{{$menu->nome}}</a>
-                                <ul class="dropdown">
-                                    <?php foreach($submenus[$menu->id] as $submenu){
-                                        if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
-                                            <li><a href="/{{$igreja->url}}/{{($submenu->link != null) ? $submenu->link != null : "#"}}">{{$submenu->nome}}</a>
+                        <?php
+                        foreach($menus as $menu){
+                            ?><li><a href="{{verifica_link($menu->link, $igreja)}}">{{$menu->nome}}</a><?php
+                                if($submenus != null && array_key_exists($menu->id, $submenus) && count($submenus[$menu->id]) > 0){ ?>
+                                    <ul class="dropdown">
+                                        <?php foreach($submenus[$menu->id] as $submenu){
+                                            ?><li><a href="{{verifica_link($submenu->link, $igreja)}}">{{$submenu->nome}}</a><?php
+                                            if($subsubmenus != null && array_key_exists($submenu->id, $subsubmenus) && count($subsubmenus[$submenu->id]) > 0){ ?>
                                                 <ul class="dropdown">
                                                     <?php foreach($subsubmenus[$submenu->id] as $subsubmenu){
-                                                        if($subsubmenu->link != null){
-                                                            ?> <li><a href="/{{$igreja->url}}/{{$subsubmenu->link}}">{{$subsubmenu->nome}}</a></li> <?php
-                                                        }else{
-                                                            ?> <li><a href="/{{$igreja->url}}/#">{{$subsubmenu->nome}}</a></li> <?php
-                                                        }
+                                                        ?> <li><a href="/{{verifica_link($subsubmenu->link, $igreja)}}">{{$subsubmenu->nome}}</a></li> <?php
                                                     } ?>
                                                 </ul>
-                                            </li>
-                                        <?php }else if($submenu->link != null){
-                                            ?> <li><a href="/{{$igreja->url}}/{{$submenu->link}}">{{$submenu->nome}}</a></li> <?php
-                                        }else{
-                                            ?> <li><a href="/{{$igreja->url}}/#">{{$submenu->nome}}</a></li> <?php
-                                        }
-                                    } ?>
-                                </ul>
-                            </li>
-                            <?php
-                        }else if($menu->link != null){
-                            ?> <li><a href="/{{$igreja->url}}/{{$menu->link}}">{{$menu->nome}}</a></li> <?php
-                        }else{
-                            ?> <li><a href="/{{$igreja->url}}/#">{{$menu->nome}}</a></li> <?php
+                                            <?php
+                                            }
+                                            ?></li><?php
+                                        } ?>
+                                    </ul>
+                                    <?php
+                                }
+                            ?></li><?php
                         }
-                    }
-
-                    /*
-                    ?> <li><a href="/{{$igreja->url}}/login" style="background-color: #2F4F4F; border-radius: 2px; color: honeydew;">Login</a></li> <?php
-                    $ids_modulos_permitidos = array();
-                    $x = 0;
-                    foreach($modulos as $modulo){
-                        $ids_modulos_permitidos[$x++] = $modulo->id_modulo;
-                    }
-                    if(in_array(8, $ids_modulos_permitidos)){
                         ?>
-                        <li><a href="#">Sobre nós</a>
-                            <ul class="dropdown">
-                            <li><a href="/{{$igreja->url}}/apresentacao">Visões e valores</a></li>
-                            <!--<li><a href="#">Ministros</a></li>-->
-                            <li><a href="/{{$igreja->url}}/contato">Contato</a></li>
-                            </ul>
-                        </li>
-                        <?php
-                    }
-                    if(in_array(5, $ids_modulos_permitidos)){
-                        ?>
-                        <li><a href="#">Eventos</a>
-                            <ul class="dropdown">
-                            <li><a href="/{{$igreja->url}}/eventosfixos">Eventos fixos</a></li>
-                            <li><a href="/{{$igreja->url}}/eventos">Linha do tempo</a></li>
-                            </ul>
-                        </li>
-                        <?php
-                    }
-                    if(in_array(12, $ids_modulos_permitidos)){
-                        ?>
-                        <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
-                    }
-                    if(in_array(10, $ids_modulos_permitidos)){
-                        ?>
-                        <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
-                        <?php
-                    }
-                    if(in_array(9, $ids_modulos_permitidos)){
-                        ?>
-                        <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
-                        <?php
-                    }
-                    if(in_array(11, $ids_modulos_permitidos)){
-                        ?>
-                        <li><a href="#">Doações</a>
-                            <ul class="dropdown">
-                            <li><a href="#">Doações para congregação</a></li>
-                            <li><a href="#">Projetos e causas</a></li>
-                            </ul>
-                            </li>
-                        <?php
-                    }*/
-                    ?>
                     </ul>
                 </nav>
                 </div>

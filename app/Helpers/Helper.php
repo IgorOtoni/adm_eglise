@@ -126,7 +126,15 @@ function limpa_html($html){
     $html = trim($html);
     return $html;
 }
-
+function verifica_link($link, $igreja){
+    if($link == null || empty($link) || trim($link) == ""){
+        return "/".$igreja->url;
+    }else if(substr($link, 0, 3) == "http"){
+        return $link;
+    }else{
+        return "/".$igreja->url."/".$link;
+    }
+}
 // ÁREA DE AUTENTICAÇÃO E VALIDAÇÃO DE MÓDULOS E PERMISSÕES !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function valida_modulo($id_perfil, $id_modulo){
     $retorno = null;

@@ -125,7 +125,8 @@ class HomeController extends Controller
             $banner = TblBanner::find($request->id);
             $banner->nome = $request->nome;
             $banner->ordem = $request->ordem;
-            $banner->descricao = $request->descricao;if($request->link == 0){
+            $banner->descricao = $request->descricao;
+            if($request->link == 0){
                 $banner->link = null;
             }if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
@@ -135,8 +136,10 @@ class HomeController extends Controller
             }else if($request->link == 3){
                 $banner->link = $request->url;
             }
-            \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
-            $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $banner->foto = 'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+            }
             $banner->save();
 
             $notification = array(
