@@ -36,7 +36,6 @@ class TblIgrejaController extends Controller
     }
 
     public function tbl_igrejas(){
-        //$igrejas = TblIgreja::orderBy('nome', 'ASC');
         $igrejas = \DB::table('tbl_igrejas')
             ->select('tbl_igrejas.*', 'tbl_configuracoes.id as id_configuracao', 'tbl_configuracoes.url','tbl_configuracoes.id_template')
             ->leftJoin('tbl_configuracoes', 'tbl_igrejas.id', '=', 'tbl_configuracoes.id_igreja')
@@ -44,12 +43,20 @@ class TblIgrejaController extends Controller
             ->get();
         return DataTables::of($igrejas)->addColumn('action',function($igrejas){
             return '<a href="igrejas/editarIgreja/'.$igrejas->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-            //'<a data-id="'.$igrejas->id_configuracao.'" data-url="'.$igrejas->url.'" data-template="'.$igrejas->id_template.'" class="btn btn-xs btn-warning bt-configuracoes" data-toggle="modal" data-target="#modal-configuracoes"><i class="fa fa-cog"></i></a>'.'&nbsp'.
             '<a href="igrejas/configuracoes/'.$igrejas->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></a>'.'&nbsp'.
-            //'<a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>'.'&nbsp'.
             '<label title="Status da Igreja" class="switch"><input onClick="switch_status(this)" name="'.$igrejas->nome.'" class="status" id="'.$igrejas->id.'" type="checkbox" '.(($igrejas->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
-        })
-        ->make(true);
+        })->editColumn('created_at', function($igrejas) {
+            if($igrejas->created_at != null)
+                return Carbon::parse($igrejas->created_at)->format('d/m/Y');
+            else
+                return null;
+        })->editColumn('updated_at', function($igrejas) {
+            if($igrejas->updated_at != null){
+                $upd = Carbon::parse($igrejas->updated_at)->diffForHumans();
+                return $upd;
+            }else
+                return null;
+        })->make(true);
     }
 
     public function switchStatus(Request $request){

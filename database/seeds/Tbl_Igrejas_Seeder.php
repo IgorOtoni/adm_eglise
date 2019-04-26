@@ -20,6 +20,7 @@ class Tbl_Igrejas_Seeder extends Seeder
             'num'=> '230',
             'cep'=> '35.181-018',
             'logo'=> 'logo-igreja-1.jpg',
+            'status'=> true,
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Segunda Igreja Batista',
@@ -32,7 +33,8 @@ class Tbl_Igrejas_Seeder extends Seeder
             'cep'=>'35.181-018',
             'logo'=> 'logo-igreja-2.jpg',
             'telefone'=>'(99) 99999-9999',
-            'email' => 'segundaiba@eglise.com'
+            'email' => 'segundaiba@eglise.com',
+            'status'=> true,
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Terceira Igreja Batista',
@@ -42,7 +44,8 @@ class Tbl_Igrejas_Seeder extends Seeder
             'rua' => '7',
             'num'=>'230',
             'cep'=>'35.181-018',
-            'email' => 'terceira@eglise.com'
+            'email' => 'terceira@eglise.com',
+            'status'=> true,
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Quarta Igreja Batista',
@@ -54,6 +57,7 @@ class Tbl_Igrejas_Seeder extends Seeder
             'num'=>'230',
             'cep'=>'35.181-018',
             'logo'=> 'logo-igreja-3.jpg',
+            'status'=> true,
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Quinta Igreja Batista',

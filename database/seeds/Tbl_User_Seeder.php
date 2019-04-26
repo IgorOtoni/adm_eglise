@@ -17,18 +17,21 @@ class Tbl_User_Seeder extends Seeder
             'email'=>'igorotoni96@outlook.com',
             'id_perfil'=> 1,
             'password'=>bcrypt('123456'),
+            'status'=> true,
         ]);
         DB::table('users')->insert([
             'nome'=>'Paulo Paixão',
             'email'=>'paulo.paixao@hotsystems.com.br',
             'id_perfil'=> 1,
             'password'=>bcrypt('123456'),
+            'status'=> true,
         ]);
         DB::table('users')->insert([
             'nome'=>'Hadailton Carvalho',
             'email'=>'hadailton.carvalho@hotsystems.com.br',
             'id_perfil'=> 1,
             'password'=>bcrypt('123456'),
+            'status'=> true,
         ]);
 
         DB::table('users')->insert([
@@ -36,6 +39,7 @@ class Tbl_User_Seeder extends Seeder
             'email'=>'pastor@hotsystems.com.br',
             'id_perfil'=> 4,
             'password'=>bcrypt('123456'),
+            'status'=> true,
         ]);
     }
 }

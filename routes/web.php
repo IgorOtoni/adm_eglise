@@ -40,11 +40,37 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
+// VALIDAÇÃO DE AUTENTICAÇÃO FEITA AQUI: PRIMEIRA A SER EXECUTADA
 Route::get('/autenticar', function () {
-    if (Auth::user()->id_perfil == 1)
-        return redirect()->route('admin.home');
-    else if (Auth::user()->id_perfil != 1)
-        return redirect()->route('usuario.home');
+    if(Auth::user()->status == true){
+        // VERIFICAÇÃO BÁSICA 1: PARA AUTENTICAR O USUÁRIO PRECISA ESTAR ATIVO
+        if (Auth::user()->id_perfil == null || Auth::user()->id_perfil == 1){
+            // SE O USUÁRIO NÃO TÊM UM PERFIL OU ESSE É IGUAL A 1 ELE É UM ADMINISTRADOR
+            return redirect()->route('admin.home');
+        }else if(Auth::user()->id_perfil != null && Auth::user()->id_perfil != 1){
+            // SE O USUÁRIO TÊM UM PERFIL E ESSE É DIFERENTE DE 1 ELE NÃO É UM AMINISTRADOR
+            $perfil = TblPerfil::find(Auth::user()->id_perfil);
+            if($perfil->status == true){
+                // VERIFICAÇÃO BÁSICA 2: PARA AUTENTICAR O PERFIL PRECISA ESTAR ATIVO
+                $igreja = TblIgrejas::find($perfil->id_igreja);
+                if($igreja->status == true){
+                    // VERIFICAÇÃO BÁSICA 3: PARA AUTENTICAR A CONGREGAÇÃO PRECISA ESTAR ATIVO
+                    return redirect()->route('usuario.home');
+                }else{
+                    auth()->logout();
+                    return redirect('login')->with('message', 'O serviço de sua congregação está inativo.');
+                }
+            }else{
+                auth()->logout();
+                return redirect('login')->with('message', 'Seu perfil está desativado.');
+            }
+        }
+        auth()->logout();
+        return redirect('login')->with('message', 'Seu perfil não foi encontrado.');
+    }else{
+        auth()->logout();
+        return redirect('login')->with('message', 'Seu usuário está desativado.');
+    }
 });
 Route::get('error', function () {
     return view('error');

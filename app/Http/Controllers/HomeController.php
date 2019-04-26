@@ -25,6 +25,7 @@ use App\User;
 use App\TblPerfisIgrejasModulos;
 use App\TblIgrejasModulos;
 use App\TblPerfisPermissoes;
+use Carbon\Carbon;
 use Calendar;
 
 class HomeController extends Controller
@@ -93,6 +94,17 @@ class HomeController extends Controller
                     $btn_excluir = '<a href="excluirBanner/'.$banners->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($banners) {
+                if($banners->created_at != null)
+                    return Carbon::parse($banners->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($banners) {
+                if($banners->updated_at != null){
+                    $upd = Carbon::parse($banners->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }
@@ -225,6 +237,22 @@ class HomeController extends Controller
                     $btn_excluir = '<a href="excluirGaleria/'.$galeria->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('data', function($galeria) {
+                if($galeria->data != null)
+                    return Carbon::parse($galeria->data)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('created_at', function($galeria) {
+                if($galeria->created_at != null)
+                    return Carbon::parse($galeria->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($galeria) {
+                if($galeria->updated_at != null){
+                    $upd = Carbon::parse($galeria->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }
@@ -356,6 +384,17 @@ class HomeController extends Controller
                     $btn_excluir = '<a href="excluirEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($eventofixo) {
+                if($eventofixo->created_at != null)
+                    return Carbon::parse($eventofixo->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($eventofixo) {
+                if($eventofixo->updated_at != null){
+                    $upd = Carbon::parse($eventofixo->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }
@@ -474,6 +513,17 @@ class HomeController extends Controller
                     $btn_excluir = '<a href="excluirNoticia/'.$noticia->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($noticia) {
+                if($noticia->created_at != null)
+                    return Carbon::parse($noticia->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($noticia) {
+                if($noticia->updated_at != null){
+                    $upd = Carbon::parse($noticia->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }
@@ -589,6 +639,17 @@ class HomeController extends Controller
                     $btn_excluir = '<a href="excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($sermao) {
+                if($sermao->created_at != null)
+                    return Carbon::parse($sermao->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($sermao) {
+                if($sermao->updated_at != null){
+                    $upd = Carbon::parse($sermao->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }
@@ -1191,6 +1252,19 @@ class HomeController extends Controller
                     $btn_excluir = '<label title="Status do Usuário" class="switch"><input onClick="switch_status(this)" name="'.$usuarios->nome.'" class="status" id="'.$usuarios->id.'" type="checkbox" '.(($usuarios->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($usuarios) {
+                if($usuarios->created_at != null)
+                    return Carbon::parse($usuarios->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($usuarios) {
+                if($usuarios->updated_at != null){
+                    $upd = Carbon::parse($usuarios->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })->addColumn('perfil',function($usuarios){
+                return (TblPerfil::find($usuarios->id_perfil))->nome;
             })
             ->make(true);
         }
@@ -1336,6 +1410,17 @@ class HomeController extends Controller
                     $btn_excluir = '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($perfis) {
+                if($perfis->created_at != null)
+                    return Carbon::parse($perfis->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($perfis) {
+                if($perfis->updated_at != null){
+                    $upd = Carbon::parse($perfis->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
             })
             ->make(true);
         }

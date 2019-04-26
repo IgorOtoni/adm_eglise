@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\TblPerfil;
+use App\TblIgreja;
 use DataTables;
+use Carbon\Carbon;
 
 class TblUsuariosController extends Controller
 {
@@ -18,6 +21,25 @@ class TblUsuariosController extends Controller
         return DataTables::of($usuarios)->addColumn('action',function($usuarios){
             return '<a href="/admin/usuarios/editarUsuario/'.$usuarios->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
             '<label title="Status do Usuário" class="switch"><input onClick="switch_status(this)" name="'.$usuarios->nome.'" class="status" id="'.$usuarios->id.'" type="checkbox" '.(($usuarios->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
+        })->addColumn('perfil',function($usuarios){
+            return (TblPerfil::find($usuarios->id))->nome;
+        })->addColumn('igreja',function($usuarios){
+            $perfil = TblPerfil::find($usuarios->id);
+            if($perfil->id != null && $perfil->id != 1)
+                return (TblIgreja::find($perfil->id))->nome;
+            else
+                return 'Administrador da Plataforma';
+        })->editColumn('created_at', function($usuarios) {
+            if($usuarios->created_at != null)
+                return Carbon::parse($usuarios->created_at)->format('d/m/Y');
+            else
+                return null;
+        })->editColumn('updated_at', function($usuarios) {
+            if($usuarios->updated_at != null){
+                $upd = Carbon::parse($usuarios->updated_at)->diffForHumans();
+                return $upd;
+            }else
+                return null;
         })
         ->make(true);
     }
@@ -42,6 +64,7 @@ class TblUsuariosController extends Controller
         $usuario = new User();
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
+        $usuario->id_perfil = $request->perfil;
         
         $count = \DB::table('users')
             ->select('users.email')

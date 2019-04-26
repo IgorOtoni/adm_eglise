@@ -8,6 +8,23 @@
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<!-- DataTables Plugins -->
+<script src="{{asset('template_adm/bower_components/datatables.plugins/dataTables.buttons.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/buttons.html5.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/jszip.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/pdfmake.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/vfs_fonts.js') }}"></script>
+
+<style>
+td.details-control {
+    background: url('/images/details_open.jpeg') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('/images/details_close.jpeg') no-repeat center center;
+}
+</style>
+
 <script>
 function switch_status(comp){
   var id = $(comp).prop('id');
@@ -21,6 +38,30 @@ function switch_status(comp){
   }else{
     toastr.error(nome + " teve seu status desativado!");
   }
+}
+
+function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table class="table table-bordered">'+
+        '<tr>'+
+            '<th>Nome:</th>'+
+            '<th>Congregação:</th>'+
+            '<th>Descrição:</th>'+
+            '</tr>'+
+        '<tr>'+
+            '<td>'+valida(d.nome)+'</td>'+
+            '<td>'+valida_congregacao(d.igreja)+'</td>'+
+            '<td>'+valida(d.descricao)+'</td>'+
+            '</tr>'+
+        '</table>';
+}
+
+function valida(txt){
+  return (txt ? txt : '<span class="label bg-red">Não informado</span>')
+}
+
+function valida_congregacao(txt){
+  return (txt != 'Administrador da Plataforma' ? txt : '<span class="label bg-yellow">' + txt + '</span>')
 }
 
 $("#igreja").on("change", function(){
@@ -98,7 +139,7 @@ $(function () {
 
     $('#select_2_modulos').select2();
 
-    $('#tbl_perfis').DataTable({
+    var table = $('#tbl_perfis').DataTable({
     'paging'      : true,
     'lengthChange': true,
     'searching'   : true,
@@ -106,40 +147,70 @@ $(function () {
     'info'        : true,
     'autoWidth'   : true,
 
-    /*"language": {            
-        "sEmptyTable":   "Nenhum registro encontrado",
-        "sProcessing":   "Carregando,aguarde...",
-        "sLengthMenu":   "Mostrar MENU registos",
-        "sZeroRecords":  "A busca não retornou nehum registro",
-        "sInfo":         "Mostrando de START à END de um total TOTAL registros",
-        "sInfoEmpty":    "Mostrando de 0 à 0 de um total 0 registros",
-        "sInfoFiltered": "(filtrado de MAX registros no total)",
-        "sInfoPostFix":  "",
-        "sSearch":       "Pesquisar:",
-        "sUrl":          "",
-        "oPaginate": {
-            "sFirst":    "Primeiro",
-            "sPrevious": "Anterior",
-            "sNext":     "Próximo",
-            "sLast":     "Último"
-        },
-        "oAria": {
-            "sSortAscending":  ": Ordenar colunas de forma ascendente",
-            "sSortDescending": ": Ordenar colunas de forma descendente"
-        }
-      },*/
-
+    "language": {            
+      "sEmptyTable":   "Nenhum registro encontrado",
+      "sProcessing":   "Carregando,aguarde...",
+      "sLengthMenu":   "Mostrar _MENU_ registos",
+      "sZeroRecords":  "A busca não retornou nehum registro",
+      "sInfo":         "Mostrando de _START_ à _END_ de um total de _TOTAL_ registros",
+      "sInfoEmpty":    "Mostrando de 0 à 0 de um total 0 registros",
+      "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+      "sInfoPostFix":  "",
+      "sSearch":       "Pesquisar:",
+      "sUrl":          "",
+      "oPaginate": {
+          "sFirst":    "Primeiro",
+          "sPrevious": "Anterior",
+          "sNext":     "Próximo",
+          "sLast":     "Último"
+      },
+      "oAria": {
+          "sSortAscending":  ": Ordenar colunas de forma ascendente",
+          "sSortDescending": ": Ordenar colunas de forma descendente"
+      }
+    },
+      dom: 'Bfrtip',
+    buttons: [
+      { "extend": 'excelHtml5', "text":'EXCEL',"className": 'btn btn-primary' },
+      { "extend": 'csvHtml5', "text":'CSV',"className": 'btn btn-primary' },
+      { "extend": 'pdfHtml5', "text":'PDF',"className": 'btn btn-primary' },
+        //'excelHtml5','csvHtml5','pdfHtml5'
+    ],
     'processing': true,
     'autoWidth': false,
     //'serverSide': false,
     'ajax': '/admin/perfis/tbl_perfis',
     'columns': [
+            {
+              "className":      'details-control',
+              "orderable":      false,
+              "data":           null,
+              "defaultContent": ''
+            },
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },
-            { data: 'descricao', name: 'descricao' },
+            { data: 'igreja', name: 'igreja' },
             { data: 'action', name: 'action' },
-          ]
-  })
+          ],
+          order: [[1, 'asc']]
+  });
+
+  // Add event listener for opening and closing details
+  $('#tbl_perfis tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+
+      if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+      }
+      else {
+          // Open this row
+          row.child( format(row.data()) ).show();
+          tr.addClass('shown');
+      }
+  });
 
 })
 </script>
@@ -172,9 +243,10 @@ $(function () {
                 <table id="tbl_perfis" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>Descrição</th>
+                    <th>Congregação</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -186,10 +258,6 @@ $(function () {
         </div>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-      Footer
-    </div>
-    <!-- /.box-footer-->
   </div>
   <!-- /.box -->
 

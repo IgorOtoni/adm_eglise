@@ -11,6 +11,7 @@ class Tbl_Menus_Seeder extends Seeder
      */
     public function run()
     {
+        // PRIMEIRA IBA //////////////////////////////////////////////////////////////////
         DB::table('tbl_menus')->insert([
             'id'=>1,
             'id_configuracao'=>3,
@@ -45,7 +46,9 @@ class Tbl_Menus_Seeder extends Seeder
             'link'=>'noticias',
             'ordem'=>6,
         ]);
+        ////////////////////////////////////////////////////////////////////////////////////////
 
+        // SEGUNDA IBA /////////////////////////////////////////////////////////////////////////
         DB::table('tbl_menus')->insert([
             'id'=>6,
             'id_configuracao'=>2,
@@ -78,7 +81,9 @@ class Tbl_Menus_Seeder extends Seeder
             'nome'=>'Eventos',
             'ordem'=>3,
         ]);
+        ///////////////////////////////////////////////////////////////////////////////////////
 
+        // TERCEIRA IBA ///////////////////////////////////////////////////////////////////////
         DB::table('tbl_menus')->insert([
             'id'=>11,
             'id_configuracao'=>1,
@@ -104,5 +109,34 @@ class Tbl_Menus_Seeder extends Seeder
             'nome'=>'Eventos',
             'ordem'=>3,
         ]);
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        // QUARTA IBA /////////////////////////////////////////////////////////////////////////
+        DB::table('tbl_menus')->insert([
+            'id'=>15,
+            'id_configuracao'=>4,
+            'nome'=>'Login',
+            'link'=>'login',
+            'ordem'=>1,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'id'=>16,
+            'id_configuracao'=>4,
+            'nome'=>'Sobre nós',
+            'ordem'=>2,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'id'=>17,
+            'id_configuracao'=>4,
+            'nome'=>'Mídia',
+            'ordem'=>4,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'id'=>18,
+            'id_configuracao'=>4,
+            'nome'=>'Eventos',
+            'ordem'=>3,
+        ]);
+        ///////////////////////////////////////////////////////////////////////////////////////
     }
 }

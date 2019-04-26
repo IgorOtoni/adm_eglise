@@ -89,63 +89,6 @@
                                             ?> <li><a href="/{{$igreja->url}}/#">{{$menu->nome}}</a></li> <?php
                                         }
                                     }
-
-                                    /*$ids_modulos_permitidos = array();
-                                    $x = 0;
-                                    foreach($modulos as $modulo){
-                                        $ids_modulos_permitidos[$x++] = $modulo->id_modulo;
-                                    }
-                                    if(in_array(8, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Sobre nós</a>
-                                            <ul class="dropdown">
-                                            <li><a href="/{{$igreja->url}}/apresentacao">Visões e valores</a></li>
-                                            <!--<li><a href="#">Ministros</a></li>-->
-                                            <li><a href="/{{$igreja->url}}/contato">Contato</a></li>
-                                            </ul>
-                                        </li>
-                                        <?php
-                                    }
-                                    if(in_array(5, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Eventos</a>
-                                            <ul class="dropdown">
-                                            <li><a href="/{{$igreja->url}}/eventosfixos">Eventos fixos</a></li>
-                                            <li><a href="/{{$igreja->url}}/eventos">Linha do tempo</a></li>
-                                            </ul>
-                                        </li>
-                                        <?php
-                                    } ?>
-                                    <?php if(in_array(12, $ids_modulos_permitidos) || in_array(10, $ids_modulos_permitidos) || in_array(9, $ids_modulos_permitidos)){ ?>
-                                        <li><a href="#">Mídia</a>
-                                            <ul class="dropdown">
-                                            <?php if(in_array(12, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/sermoes">Sermões</a></li><?php
-                                            }
-                                            if(in_array(10, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/galeria">Galeria</a></li>
-                                                <?php
-                                            }
-                                            if(in_array(9, $ids_modulos_permitidos)){
-                                                ?>
-                                                <li><a href="/{{$igreja->url}}/noticias">Notícias</a></li>
-                                                <?php
-                                            } ?>
-                                            </ul>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if(in_array(11, $ids_modulos_permitidos)){
-                                        ?>
-                                        <li><a href="#">Doações</a>
-                                            <ul class="dropdown">
-                                            <li><a href="#">Doações</a></li>
-                                            <li><a href="#">Projetos e causas</a></li>
-                                            </ul>
-                                            </li>
-                                        <?php
-                                    }*/
                                     ?>
                                 </ul>
 
