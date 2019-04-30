@@ -58,7 +58,7 @@ $(function () {
         <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluír publicação</a>
         </div>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive">
         <div class="row">
             <div class="col-md-12">
                 <table id="tbl_publicacoes" class="table table-bordered table-striped">

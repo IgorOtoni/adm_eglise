@@ -37,7 +37,7 @@ function switch_status(comp){
 
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table class="table table-bordered">'+
+    return '<div class="table-responsive"><table class="table table-bordered">'+
         '<tr>'+
             '<th>Nome:</th>'+
             '<th>Email:</th>'+
@@ -52,7 +52,7 @@ function format ( d ) {
             '<td>'+valida_congregacao(d.igreja)+'</td>'+
             '<td>'+valida(d.created_at)+'</td>'+
             '</tr>'+
-        '</table>';
+        '</table></div>';
 }
 
 function valida(txt){
@@ -164,26 +164,22 @@ $(function () {
         <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluír usuário</a>
       </div>
     </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="tbl_usuarios" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Perfil</th>
-                    <th>Igreja</th>
-                    <th>Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="box-body table-responsive">
+      <table id="tbl_usuarios" class="table table-bordered table-striped">
+      <thead>
+      <tr>
+          <th></th>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Perfil</th>
+          <th>Igreja</th>
+          <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      
+      </tbody>
+      </table>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">

@@ -181,7 +181,7 @@ $(function(){
             </div>
         <?php } ?>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive">
         <table id="tbl_banners" class="table table-bordered table-striped">
         <thead>
         <tr>

@@ -1,5 +1,8 @@
 <?php
 
+use App\TblPerfil;
+use App\TblIgreja;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,7 +55,7 @@ Route::get('/autenticar', function () {
             $perfil = TblPerfil::find(Auth::user()->id_perfil);
             if($perfil->status == true){
                 // VERIFICAÇÃO BÁSICA 2: PARA AUTENTICAR O PERFIL PRECISA ESTAR ATIVO
-                $igreja = TblIgrejas::find($perfil->id_igreja);
+                $igreja = TblIgreja::find($perfil->id_igreja);
                 if($igreja->status == true){
                     // VERIFICAÇÃO BÁSICA 3: PARA AUTENTICAR A CONGREGAÇÃO PRECISA ESTAR ATIVO
                     return redirect()->route('usuario.home');

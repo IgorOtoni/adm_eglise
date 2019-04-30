@@ -29,7 +29,7 @@ tr.shown td.details-control {
 <script>
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table class="table table-bordered">'+
+    return '<div class="table-responsive"><table class="table table-bordered">'+
         '<tr>'+
             '<th>Nome:</th>'+
             '<th>Hoarário e local:</th>'+
@@ -40,7 +40,7 @@ function format ( d ) {
             '<td>'+valida(d.dados_horario_local)+'</td>'+
             '<td>'+valida(d.descricao)+'</td>'+
             '</tr>'+
-        '</table>';
+        '</table></div>';
 }
 
 function valida(txt){
@@ -158,7 +158,7 @@ $(function(){
             </div>
         <?php } ?>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive">
         <table id="tbl_eventosfixos" class="table table-bordered table-striped">
         <thead>
         <tr>

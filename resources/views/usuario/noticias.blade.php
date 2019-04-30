@@ -29,7 +29,7 @@ tr.shown td.details-control {
 <script>
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table class="table table-bordered">'+
+    return '<div class=" table-responsive"><table class="table table-bordered">'+
         '<tr>'+
             '<th>Nome:</th>'+
             '<th>Descrição:</th>'+
@@ -42,7 +42,7 @@ function format ( d ) {
             '<td>'+valida(d.created_at)+'</td>'+
             '<td>'+valida(d.updated_at)+'</td>'+
             '</tr>'+
-        '</table>';
+        '</table></div>';
 }
 
 function valida(txt){

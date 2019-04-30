@@ -51,7 +51,7 @@ function switch_status(comp){
 
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table class="table table-bordered">'+
+    return '<div class="table-responsive"><table class="table table-bordered">'+
         '<tr>'+
             '<th>Nome:</th>'+
             '<th>Estado:</th>'+
@@ -74,7 +74,7 @@ function format ( d ) {
             '<td>'+valida(d.telefone)+'</td>'+
             '<td>'+valida(d.email)+'</td>'+
             '</tr>'+
-        '</table>';
+        '</table></div>';
 }
 
 function valida(txt){
@@ -274,7 +274,7 @@ $('#modal-configuracoes').on('show.bs.modal', function (event) {
             <a class="btn btn-success" data-toggle="modal" data-target="#modal-incluir"><i class="fa fa-plus"></i>&nbspIncluir igreja</a>
           </div>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table id="tbl_igrejas" class="table table-bordered table-striped">
             <thead>
             <tr>
