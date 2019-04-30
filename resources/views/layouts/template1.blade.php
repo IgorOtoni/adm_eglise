@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-10 col-sm-8 col-xs-8">
                         <ul class="top-navigation pull-right">
-                            <h4>{{$igreja->nome}}</h4>
+                            <h5>{{$igreja->nome}}</h5>
                         </ul>
                     </div>
                     <div class="col-sm-2 col-xs-2">
