@@ -186,7 +186,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                     <!-- LAYER NR. 1 --><!--data-end="3000"-->
                     <div class="tp-caption large_text randomrotate tp-resizeme" 
                             data-x="100" 
-                            data-y="200"  
+                            data-y="300"  
                         data-speed="300" 
                         data-start="500" 
                         data-easing="Power3.easeInOut" 
@@ -211,7 +211,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                     <!-- LAYER NR. 2 --><!--data-end="4000"-->
                     <div class="tp-caption large_text randomrotate tp-resizeme" 
                             data-x="100" 
-                            data-y="259"  
+                            data-y="350"  
                         data-speed="300" 
                         data-start="800" 
                         data-easing="Power3.easeInOut" 

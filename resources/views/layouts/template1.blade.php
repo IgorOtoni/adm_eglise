@@ -13,10 +13,8 @@
     <meta name="format-detection" content="telephone=no">
     <!-- CSS ================================================== -->
     <link href="{{asset('template_igreja/template-padrao/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('template_igreja/template-padrao/css/bootstrap-rtl.min.css" rel="stylesheet')}}" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/plugins/mediaelement/mediaelementplayer.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/css/style.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('template_igreja/template-padrao/css/rtl.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('template_igreja/template-padrao/plugins/prettyphoto/css/prettyPhoto.css')}}" rel="stylesheet" type="text/css">
     <!-- Color Style -->
     <link href="{{asset('template_igreja/template-padrao/colors/color1.css')}}" rel="stylesheet" type="text/css"> 
@@ -35,14 +33,17 @@
         <div class="topbar">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 col-sm-6 col-xs-8">
+                    <div class="col-md-2 col-sm-2 col-xs-2">
                     <h1 class="logo"> <a href="/{{$igreja->url}}/"><img style="witdh: 100px; height: 50px;" src="{{asset('/storage/'.(($igreja->logo != null) ? 'igrejas/'.$igreja->logo : 'no-logo.jpg' ))}}" alt="Logo"></a> </h1>
                     </div>
-                    <div class="col-md-8 col-sm-6 col-xs-4">
-                    <ul class="top-navigation hidden-sm hidden-xs">
-                        <h3>{{$igreja->nome}}</h3>
-                    </ul>
-                    <a href="#" class="visible-sm visible-xs menu-toggle"><i class="fa fa-bars"></i></a> </div>
+                    <div class="col-md-10 col-sm-8 col-xs-8">
+                        <ul class="top-navigation pull-right">
+                            <h4>{{$igreja->nome}}</h4>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                        <a href="#" class="visible-sm visible-xs menu-toggle"><i class="fa fa-bars"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
