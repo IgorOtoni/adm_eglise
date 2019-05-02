@@ -35,7 +35,14 @@ $(function(){
         allowedFileExtensions: ["jpg", "png", "gif"]
     });
 
-    $('#duracao').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    $('#duracao').daterangepicker({ 
+        timePicker24Hour: true,
+        timePicker: true,
+        timePickerIncrement: 30, 
+        locale: {
+            format: 'DD/MM/YYYY H:mm'
+        },
+    })
 
     //Timepicker
     $('.timepicker').timepicker({
@@ -108,7 +115,7 @@ $(function(){
                 </div>
                 <div class="col-md-12">
                     <div class="form-group has-feedback">
-                        <label >Data e horário de início:</label>
+                        <label >Data e horário de início e término:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-clock-o"></i>
@@ -119,6 +126,14 @@ $(function(){
                         </div>
                     </div>
                     <!--<input id="data" name="data" type="date" class="form-control" placeholder="Ordem">-->
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group has-feedback">
+                        <label >Local:</label>
+                        <input name="local" type="text" class="form-control" placeholder="Local" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -133,7 +148,7 @@ $(function(){
                 <div class="col-md-12">
                     <div class="form-group has-feedback">
                         <label >Foto</label>
-                        <input name="foto" type="file" id="input_img" required>
+                        <input name="foto" type="file" id="input_img">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>

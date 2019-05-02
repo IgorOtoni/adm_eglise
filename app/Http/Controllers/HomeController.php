@@ -50,7 +50,66 @@ class HomeController extends Controller
         if(\Auth::user()->id_perfil == 1){
             return view('home');
         }else{
-            return view('usuario.home');
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+
+            $x = 0;
+
+            $quadros[$x]['info'] = TblBanner::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Banners';
+            $quadros[$x]['icon'] = 'fa-play';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblEventos::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Linha do tempo';
+            $quadros[$x]['icon'] = 'fa-clock-o';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblEventosFixos::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Eventos fixos';
+            $quadros[$x]['icon'] = 'fa-calendar';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblGalerias::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Galerias';
+            $quadros[$x]['icon'] = 'fa-file-image-o';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblNoticias::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Notícias';
+            $quadros[$x]['icon'] = 'fa-newspaper-o';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblPerfil::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Perfis';
+            $quadros[$x]['icon'] = 'fa-users';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblPublicacoes::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Publicações';
+            $quadros[$x]['icon'] = 'fa-thumbs-o-up';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = TblSermoes::where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Sermões';
+            $quadros[$x]['icon'] = 'fa-microphone';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            $quadros[$x]['info'] = \DB::table('users')->leftJoin('tbl_perfis','users.id_perfil','=','tbl_perfis.id')->where('id_igreja','=',$igreja->id)->count();
+            $quadros[$x]['title'] = 'Usuários ativos';
+            $quadros[$x]['icon'] = 'fa-child';
+            $quadros[$x]['color'] = 'green';
+            $x++;
+
+            return view('usuario.home', compact('quadros'));
         }
     }
 
@@ -126,15 +185,21 @@ class HomeController extends Controller
             $banner->nome = $request->nome;
             $banner->ordem = $request->ordem;
             $banner->descricao = $request->descricao;
-            if($request->link == 0){
-                $banner->link = null;
-            }if($request->link == 1){
+            if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $banner->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $banner->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $banner->link = $request->url;
+                $menu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $menu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $menu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             if($request->foto){
                 \Image::make($request->foto)->save(public_path('storage/banners/').'banner-'.$banner->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
@@ -159,15 +224,21 @@ class HomeController extends Controller
             $banner->ordem = $request->ordem;
             $banner->descricao = $request->descricao;
             $banner->foto = "null";
-            if($request->link == 0){
-                $banner->link = null;
-            }if($request->link == 1){
+            if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $banner->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $banner->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $banner->link = $request->url;
+                $menu->link = 'evento/'.$request->evento;
+            }else if($request->link == 4){
+                $menu->link = 'eventofixo/'.$request->eventofixo;
+            }else if($request->link == 5){
+                $menu->link = 'noticia/'.$request->noticia;
+            }else if($request->link == 6){
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             $banner->save();
 
@@ -270,14 +341,14 @@ class HomeController extends Controller
             $galeria->data = muda_data($request->data);
             $galeria->save();
 
-            foreach($request->fotos as $foto){
+            foreach($request->fotos as $f_){
                 $foto = new TblFotos();
                 $foto->id_galeria = $galeria->id;
                 $foto->foto = "vazio";
                 $foto->save();
 
-                \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
-                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
+                \Image::make($f_)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
                 $foto->save();
             }
                 
@@ -328,14 +399,14 @@ class HomeController extends Controller
             $galeria->data = muda_data($request->data);
             $galeria->save();
 
-            if($request->fotos) foreach($request->fotos as $foto){
+            if($request->fotos) foreach($request->fotos as $f_){
                 $foto = new TblFotos();
                 $foto->id_galeria = $galeria->id;
                 $foto->foto = "vazio";
                 $foto->save();
 
-                \Image::make($foto)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension(),90);
-                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$foto->getClientOriginalExtension();
+                \Image::make($f_)->save(public_path('storage/galerias/').'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $foto->foto = 'foto-'.$foto->id.'-'.$galeria->id.'-'.$request->igreja.'.'.$f_->getClientOriginalExtension();
                 $foto->save();
             }
                 
@@ -358,7 +429,7 @@ class HomeController extends Controller
     }
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    // EVENTOS FIXO AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // EVENTOS FIXOS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function eventosfixos()
     {
         if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg')) == false){
@@ -752,6 +823,8 @@ class HomeController extends Controller
             }else if($request->link == 5){
                 $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
                 $menu->link = $request->url;
             }
             $menu->save();
@@ -770,9 +843,7 @@ class HomeController extends Controller
             $menu = TblMenu::find($request->id);
             $menu->nome = $request->nome;
             $menu->ordem = $request->ordem;
-            if($request->link == 0){
-                $menu->link = null;
-            }else if($request->link == 1){
+            if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
                 $menu->link = $modulo->rota;
             }else if($request->link == 2){
@@ -784,6 +855,8 @@ class HomeController extends Controller
             }else if($request->link == 5){
                 $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
                 $menu->link = $request->url;
             }
             $menu->save();
@@ -837,17 +910,19 @@ class HomeController extends Controller
             $submenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $submenu->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $submenu->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $submenu->link = 'evento/'.$request->evento;
+                $menu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $submenu->link = 'eventofixo/'.$request->eventofixo;
+                $menu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $submenu->link = 'noticia/'.$request->noticia;
+                $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $submenu->link = $request->url;
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             $submenu->save();
 
@@ -866,21 +941,21 @@ class HomeController extends Controller
             $submenu->id_menu = $request->id_menu;
             $submenu->nome = $request->nome;
             $submenu->ordem = $request->ordem;
-            if($request->link == 0){
-                $submenu->link = null;
-            }else if($request->link == 1){
+            if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $submenu->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $submenu->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $submenu->link = 'evento/'.$request->evento;
+                $menu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $submenu->link = 'evento/'.$request->eventofixo;
+                $menu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $submenu->link = 'noticia/'.$request->noticia;
+                $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $submenu->link = $request->url;
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             $submenu->save();
 
@@ -924,17 +999,19 @@ class HomeController extends Controller
             $subsubmenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $subsubmenu->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $subsubmenu->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $subsubmenu->link = 'evento/'.$request->evento;
+                $menu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+                $menu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $subsubmenu->link = 'noticia/'.$request->noticia;
+                $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $subsubmenu->link = $request->url;
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             $subsubmenu->save();
 
@@ -953,21 +1030,21 @@ class HomeController extends Controller
             $subsubmenu->id_submenu = $request->id_submenu;
             $subsubmenu->nome = $request->nome;
             $subsubmenu->ordem = $request->ordem;
-            if($request->link == 0){
-                $submenu->link = null;
-            }if($request->link == 1){
+            if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $subsubmenu->link = $modulo->rota;
+                $menu->link = $modulo->rota;
             }else if($request->link == 2){
-                $subsubmenu->link = 'publicacao/'.$request->publicacao;
+                $menu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $subsubmenu->link = 'evento/'.$request->evento;
+                $menu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
+                $menu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $subsubmenu->link = 'noticia/'.$request->noticia;
+                $menu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $subsubmenu->link = $request->url;
+                $menu->link = 'sermao/'.$request->sermao;
+            }else if($request->link == 7){
+                $menu->link = $request->url;
             }
             $subsubmenu->save();
 
@@ -1046,7 +1123,103 @@ class HomeController extends Controller
     }
 
     public function incluirEvento(Request $request){
-        dd($request->all());
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $evento = new TblEventos();
+            $evento->id_igreja = $request->igreja;
+            $evento->nome = $request->nome;
+            $evento->descricao = $request->descricao;
+            $evento->descricao = $request->descricao;
+            $evento->dados_local = $request->local;
+            // FORMATAÇÃO DAS DATAS
+            $datas = $request->data;
+            $datas = explode(" - ", $datas);
+            $data_inicio = \Carbon\Carbon::parse(muda_data_tempo($datas[0]))->format('Y-m-d H:i:s');
+            $data_fim = \Carbon\Carbon::parse(muda_data_tempo($datas[1]))->format('Y-m-d H:i:s');
+            $evento->dados_horario_inicio = $data_inicio;
+            $evento->dados_horario_fim = $data_fim;
+            $evento->save();
+
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/timeline/').'timeline-'.$evento->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $evento->foto = 'timeline-'.$evento->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $evento->save();
+            }
+
+            $notification = array(
+                'message' => 'Evento "' . $evento->nome . '" foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventos')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarEvento($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $evento = TblEventos::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarevento', compact('evento','igreja','modulos_igreja'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarEnvento(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $evento = TblEventos::find($id);
+
+            $evento->nome = $request->nome;
+            $evento->descricao = $request->descricao;
+            $evento->descricao = $request->descricao;
+            $evento->dados_local = $request->local;
+            // FORMATAÇÃO DAS DATAS
+            $datas = $request->data;
+            $datas = explode(" - ", $datas);
+            $data_inicio = \Carbon\Carbon::parse(muda_data_tempo($datas[0]))->format('Y-m-d H:i:s');
+            $data_fim = \Carbon\Carbon::parse(muda_data_tempo($datas[1]))->format('Y-m-d H:i:s');
+            $evento->dados_horario_inicio = $data_inicio;
+            $evento->dados_horario_fim = $data_fim;
+            $evento->save();
+
+            if($request->foto){
+                \Image::make($request->foto)->save(public_path('storage/timeline/').'timeline-'.$evento->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension()),90);
+                $evento->foto = 'timeline-'.$evento->id.'-'.$request->igreja.'.'.strtolower($request->foto->getClientOriginalExtension());
+                $evento->save();
+            }
+
+            $notification = array(
+                'message' => 'Evento "' . $evento->nome . '" foi atualizado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventos')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirFotoEvento(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $foto = $request['foto'];
+            $eventofixo = TblEventos::find($request->id);
+            $eventofixo->foto = null;
+            $eventofixo->save();
+            File::delete(public_path().'/storage/timeline/'.$foto);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }else{ return view('error'); }
+    }
+
+    public function excluirEvento($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $eventofixo = TblEventos::find($id);
+            if($eventofixo->foto != null) File::delete(public_path().'/storage/timeline/'.$eventofixo->foto);
+            $eventofixo->delete();
+
+            $notification = array(
+                'message' => 'Evento "' . $eventofixo->nome . '" foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventos')->with($notification);
+        }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     

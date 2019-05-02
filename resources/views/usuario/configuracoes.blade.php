@@ -17,6 +17,8 @@ $(function(){
     $("#modal-incluir-menu #eventosfixos_area").html("");
     var html_noticias_area_menu = $("#modal-incluir-menu #noticias_area").html();
     $("#modal-incluir-menu #noticias_area").html("");
+    var html_sermoes_area_menu = $("#modal-incluir-menu #sermoes_area").html();
+    $("#modal-incluir-menu #sermoes_area").html("");
     var html_url_externa_area_menu = $("#modal-incluir-menu #url_externa_area").html();
     $("#modal-incluir-menu #url_externa_area").html("");
 
@@ -29,6 +31,7 @@ $(function(){
         $("#modal-incluir-menu #eventos_area").html("");
         $("#modal-incluir-menu #eventosfixos_area").html("");
         $("#modal-incluir-menu #noticias_area").html("");
+        $("#modal-incluir-menu #sermoes_area").html("");
         $("#modal-incluir-menu #url_externa_area").html("");
 
         op = $("#modal-incluir-menu #link").val();
@@ -43,6 +46,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-incluir-menu #noticias_area").html(html_noticias_area_menu);
         }else if(op == 6){
+            $("#modal-incluir-menu #sermoes_area").html(html_sermoes_area_menu);
+        }else if(op == 7){
             $("#modal-incluir-menu #url_externa_area").html(html_url_externa_area_menu);
         }
 
@@ -60,6 +65,8 @@ $(function(){
     $("#modal-editar-menu #eventosfixos_area").html("");
     var html_noticias_area_menu_editar = $("#modal-editar-menu #noticias_area").html();
     $("#modal-editar-menu #noticias_area").html("");
+    var html_sermoes_area_menu_editar = $("#modal-editar-menu #sermoes_area").html();
+    $("#modal-editar-menu #sermoes_area").html("");
     var html_url_externa_area_menu_editar = $("#modal-editar-menu #url_externa_area").html();
     $("#modal-editar-menu #url_externa_area").html("");
 
@@ -69,6 +76,7 @@ $(function(){
         $("#modal-editar-menu #eventos_area").html("");
         $("#modal-editar-menu #eventosfixos_area").html("");
         $("#modal-editar-menu #noticias_area").html("");
+        $("#modal-editar-menu #sermoes_area").html("");
         $("#modal-editar-menu #url_externa_area").html("");
 
         op = $("#modal-editar-menu #link").val();
@@ -83,6 +91,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-editar-menu #noticias_area").html(html_noticias_area_menu_editar);
         }else if(op == 6){
+            $("#modal-editar-menu #sermoes_area").html(html_sermoes_area_menu_editar);
+        }else if(op == 7){
             $("#modal-editar-menu #url_externa_area").html(html_url_externa_area_menu_editar);
         }
 
@@ -102,6 +112,8 @@ $(function(){
     $("#modal-incluir-submenu #eventosfixos_area").html("");
     var html_noticias_area_sub = $("#modal-incluir-submenu #noticias_area").html();
     $("#modal-incluir-submenu #noticias_area").html("");
+    var html_sermoes_area_sub = $("#modal-incluir-submenu #sermoes_area").html();
+    $("#modal-incluir-submenu #sermoes_area").html("");
     var html_url_externa_area_sub = $("#modal-incluir-submenu #url_externa_area").html();
     $("#modal-incluir-submenu #url_externa_area").html("");
 
@@ -114,6 +126,7 @@ $(function(){
         $("#modal-incluir-submenu #eventos_area").html("");
         $("#modal-incluir-submenu #eventosfixos_area").html("");
         $("#modal-incluir-submenu #noticias_area").html("");
+        $("#modal-incluir-submenu #sermoes_area").html("");
         $("#modal-incluir-submenu #url_externa_area").html("");
 
         op = $("#modal-incluir-submenu #link").val();
@@ -128,6 +141,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-incluir-submenu #noticias_area").html(html_noticias_area_sub);
         }else if(op == 6){
+            $("#modal-incluir-submenu #sermoes_area").html(html_sermoes_area_sub);
+        }else if(op == 7){
             $("#modal-incluir-submenu #url_externa_area").html(html_url_externa_area_sub);
         }
 
@@ -145,6 +160,8 @@ $(function(){
     $("#modal-editar-submenu #eventosfixos_area").html("");
     var html_noticias_area_sub_editar = $("#modal-editar-submenu #noticias_area").html();
     $("#modal-editar-submenu #noticias_area").html("");
+    var html_sermoes_area_sub_editar = $("#modal-editar-submenu #sermoes_area").html();
+    $("#modal-editar-submenu #sermoes_area").html("");
     var html_url_externa_area_sub_editar = $("#modal-editar-submenu #url_externa_area").html();
     $("#modal-editar-submenu #url_externa_area").html("");
 
@@ -154,6 +171,7 @@ $(function(){
         $("#modal-editar-submenu #eventos_area").html("");
         $("#modal-editar-submenu #eventosfixos_area").html("");
         $("#modal-editar-submenu #noticias_area").html("");
+        $("#modal-editar-submenu #sermoes_area").html("");
         $("#modal-editar-submenu #url_externa_area").html("");
 
         op = $("#modal-editar-submenu #link").val();
@@ -168,6 +186,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-editar-submenu #noticias_area").html(html_noticias_area_sub_editar);
         }else if(op == 6){
+            $("#modal-editar-submenu #sermoes_area").html(html_sermoes_area_sub_editar);
+        }else if(op == 7){
             $("#modal-editar-submenu #url_externa_area").html(html_url_externa_area_sub_editar);
         }
 
@@ -187,6 +207,8 @@ $(function(){
     $("#modal-incluir-subsubmenu #eventosfixos_area").html("");
     var html_noticias_area_subsub = $("#modal-incluir-subsubmenu #noticias_area").html();
     $("#modal-incluir-subsubmenu #noticias_area").html("");
+    var html_sermoes_area_subsub = $("#modal-incluir-subsubmenu #sermoes_area").html();
+    $("#modal-incluir-subsubmenu #sermoes_area").html("");
     var html_url_externa_area_subsub = $("#modal-incluir-subsubmenu #url_externa_area").html();
     $("#modal-incluir-subsubmenu #url_externa_area").html("");
 
@@ -199,6 +221,7 @@ $(function(){
         $("#modal-incluir-subsubmenu #eventos_area").html("");
         $("#modal-incluir-subsubmenu #eventosfixos_area").html("");
         $("#modal-incluir-subsubmenu #noticias_area").html("");
+        $("#modal-incluir-subsubmenu #sermoes_area").html("");
         $("#modal-incluir-subsubmenu #url_externa_area").html("");
 
         op = $("#modal-incluir-subsubmenu #link").val();
@@ -213,6 +236,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-incluir-subsubmenu #noticias_area").html(html_noticias_area_subsub);
         }else if(op == 6){
+            $("#modal-incluir-subsubmenu #sermoes_area").html(html_sermoes_area_subsub);
+        }else if(op == 7){
             $("#modal-incluir-subsubmenu #url_externa_area").html(html_url_externa_area_subsub);
         }
 
@@ -230,6 +255,8 @@ $(function(){
     $("#modal-editar-subsubmenu #eventosfixos_area").html("");
     var html_noticias_area_subsub_editar = $("#modal-editar-subsubmenu #noticias_area").html();
     $("#modal-editar-subsubmenu #noticias_area").html("");
+    var html_sermoes_area_subsub_editar = $("#modal-editar-subsubmenu #sermoes_area").html();
+    $("#modal-editar-subsubmenu #sermoes_area").html("");
     var html_url_externa_area_subsub_editar = $("#modal-editar-subsubmenu #url_externa_area").html();
     $("#modal-editar-subsubmenu #url_externa_area").html("");
 
@@ -242,6 +269,7 @@ $(function(){
         $("#modal-editar-subsubmenu #eventos_area").html("");
         $("#modal-editar-subsubmenu #eventosfixos_area").html("");
         $("#modal-editar-subsubmenu #noticias_area").html("");
+        $("#modal-editar-subsubmenu #sermoes_area").html("");
         $("#modal-editar-subsubmenu #url_externa_area").html("");
 
         op = $("#modal-editar-subsubmenu #link").val();
@@ -256,6 +284,8 @@ $(function(){
         }else if(op == 5){
             $("#modal-editar-subsubmenu #noticias_area").html(html_noticias_area_subsub_editar);
         }else if(op == 6){
+            $("#modal-editar-subsubmenu #sermoes_area").html(html_sermoes_area_subsub_editar);
+        }else if(op == 7){
             $("#modal-editar-subsubmenu #url_externa_area").html(html_url_externa_area_subsub_editar);
         }
 
@@ -314,6 +344,11 @@ $('#modal-editar-menu').on('hide.bs.modal', function (event) {
     $("#modal-editar-menu #link").val(0);
     $("#modal-editar-menu #modulos_area").html("");
     $("#modal-editar-menu #publicacoes_area").html("");
+    $("#modal-editar-menu #noticias_area").html("");
+    $("#modal-editar-menu #eventos_area").html("");
+    $("#modal-editar-menu #eventosfixos_area").html("");
+    $("#modal-editar-menu #publicacoes_area").html("");
+    $("#modal-editar-menu #sermoes_area").html("");
     $("#modal-editar-menu #url_externa_area").html("");
 });
 
@@ -350,6 +385,11 @@ $('#modal-editar-submenu').on('hide.bs.modal', function (event) {
 
     $("#modal-editar-submenu #modulos_area").html("");
     $("#modal-editar-submenu #publicacoes_area").html("");
+    $("#modal-editar-submenu #noticias_area").html("");
+    $("#modal-editar-submenu #eventos_area").html("");
+    $("#modal-editar-submenu #eventosfixos_area").html("");
+    $("#modal-editar-submenu #publicacoes_area").html("");
+    $("#modal-editar-submenu #sermoes_area").html("");
     $("#modal-editar-submenu #url_externa_area").html("");
 });
 
@@ -388,6 +428,11 @@ $('#modal-editar-subsubmenu').on('hide.bs.modal', function (event) {
 
     $("#modal-editar-subsubmenu #modulos_area").html("");
     $("#modal-editar-subsubmenu #publicacoes_area").html("");
+    $("#modal-editar-subsubmenu #noticias_area").html("");
+    $("#modal-editar-subsubmenu #eventos_area").html("");
+    $("#modal-editar-subsubmenu #eventosfixos_area").html("");
+    $("#modal-editar-subsubmenu #publicacoes_area").html("");
+    $("#modal-editar-subsubmenu #sermoes_area").html("");
     $("#modal-editar-subsubmenu #url_externa_area").html("");
 });
 
@@ -604,7 +649,8 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="3">Link para evento</option>
                     <option value="4">Link para evento fixo</option>
                     <option value="5">Link para notícia</option>
-                    <option value="6">Link externo</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -663,6 +709,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -730,7 +788,8 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="3">Link para evento</option>
                     <option value="4">Link para evento fixo</option>
                     <option value="5">Link para notícia</option>
-                    <option value="6">Link externo</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -789,6 +848,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -856,7 +927,8 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="3">Link para evento</option>
                     <option value="4">Link para evento fixo</option>
                     <option value="5">Link para notícia</option>
-                    <option value="6">Link externo</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -915,6 +987,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -988,7 +1072,8 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="3">Link para evento</option>
                     <option value="4">Link para evento fixo</option>
                     <option value="5">Link para notícia</option>
-                    <option value="6">Link externo</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -1047,6 +1132,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -1131,7 +1228,8 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="3">Link para evento</option>
                     <option value="4">Link para evento fixo</option>
                     <option value="5">Link para notícia</option>
-                    <option value="6">Link externo</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -1190,6 +1288,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -1279,10 +1389,11 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <option value="0" selected>Sem link</option>
                     <option value="1">Link para módulo do sistema</option>
                     <option value="2">Link para publicação</option>
-                    <option value="2">Link para evento</option>
-                    <option value="2">Link para evento fixo</option>
-                    <option value="2">Link para notícia</option>
-                    <option value="3">Link externo</option>
+                    <option value="3">Link para evento</option>
+                    <option value="4">Link para evento fixo</option>
+                    <option value="5">Link para notícia</option>
+                    <option value="6">Link para sermão</option>
+                    <option value="7">Link externo</option>
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
@@ -1341,6 +1452,18 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                     <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($noticias as $noticia)
                         <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                    @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div id="sermoes_area" class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Sermões</label>
+                <select id="noticia" name="noticia" class="form-control" required>
+                    <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                    @foreach ($sermoes as $sermao)
+                        <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>

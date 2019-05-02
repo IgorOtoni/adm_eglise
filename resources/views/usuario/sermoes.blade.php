@@ -15,6 +15,8 @@
 <script src="{{asset('template_adm/bower_components/datatables.plugins/jszip.min.js') }}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.plugins/pdfmake.min.js') }}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.plugins/vfs_fonts.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/buttons.colVis.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/buttons.bootstrap.min.js') }}"></script>
 
 <style>
 td.details-control {
@@ -79,9 +81,10 @@ $(function(){
         },
         dom: 'Bfrtip',
         buttons: [
-        { "extend": 'excelHtml5', "text":'EXCEL',"className": 'btn btn-primary' },
-        { "extend": 'csvHtml5', "text":'CSV',"className": 'btn btn-primary' },
-        { "extend": 'pdfHtml5', "text":'PDF',"className": 'btn btn-primary' },
+        { "extend": 'excelHtml5', "text":'<i class="fa fa-file-excel-o"></i>&nbsp;EXCEL',"className": 'btn btn-success' },
+        { "extend": 'csvHtml5', "text":'<i class="fa fa-file-code-o"></i>&nbsp;CSV',"className": 'btn btn-warning' },
+        { "extend": 'pdfHtml5', "text":'<i class="fa fa-file-pdf-o"></i>&nbsp;PDF',"className": 'btn btn-danger' },
+        { "extend": 'colvis', "text":'<i class="fa fa-eye-slash"></i>&nbsp;Visibilidade',"className": 'btn btn-primary' },
             //'excelHtml5','csvHtml5','pdfHtml5'
         ],
         'processing': true,
@@ -158,7 +161,7 @@ $(function(){
         <table id="tbl_sermoes" class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th></th>
+            <th>Expandir</th>
             <th>#</th>
             <th>Nome</th>
             <th>Ações</th>

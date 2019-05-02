@@ -173,5 +173,23 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
             'id_permissao'=>3,
         ]);
         //////////////////////////////////////
+
+        // Permissões do módulo de configurações
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>28,
+            'id_modulo'=>22,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>29,
+            'id_modulo'=>22,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>30,
+            'id_modulo'=>22,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
     }
 }

@@ -97,6 +97,17 @@ function obter_menus_configuracao($id){
 function muda_cep($cep){
     return str_replace(".", "", str_replace("-", "", $cep));
 }
+function muda_data_tempo($data){
+    $retorno = str_replace("/", "-", $data);
+    $split_ = explode(' ', $retorno);
+    $split = explode('-', $split_[0]);
+    return $split[2] . '-' . $split[1] . '-' . $split[0] . ' ' . $split_[1];
+}function muda_data_tempo_($data){
+    $retorno = str_replace("/", "-", $data);
+    $split_ = explode(' ', $retorno);
+    $split = explode('-', $split_[0]);
+    return $split[2] . '/' . $split[1] . '/' . $split[0] . ' ' . $split_[1];
+}
 function muda_data($data){
     $retorno = str_replace("/", "-", $data);
     $split = explode('-', $retorno);

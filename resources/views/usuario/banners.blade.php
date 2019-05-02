@@ -15,6 +15,8 @@
 <script src="{{asset('template_adm/bower_components/datatables.plugins/jszip.min.js') }}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.plugins/pdfmake.min.js') }}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.plugins/vfs_fonts.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/buttons.colVis.min.js') }}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.plugins/buttons.bootstrap.min.js') }}"></script>
 
 <style>
 td.details-control {
@@ -50,6 +52,14 @@ $(function(){
     $("#modal-incluir #modulos_area").html("");
     var html_publicacoes_area = $("#modal-incluir #publicacoes_area").html();
     $("#modal-incluir #publicacoes_area").html("");
+    var html_eventos_area = $("#modal-incluir #eventos_area").html();
+    $("#modal-incluir #eventos_area").html("");
+    var html_eventosfixos_area = $("#modal-incluir #eventosfixos_area").html();
+    $("#modal-incluir #eventosfixos_area").html("");
+    var html_noticias_area = $("#modal-incluir #noticias_area").html();
+    $("#modal-incluir #noticias_area").html("");
+    var html_sermoes_area = $("#modal-incluir #sermoes_area").html();
+    $("#modal-incluir #sermoes_area").html("");
     var html_url_externa_area = $("#modal-incluir #url_externa_area").html();
     $("#modal-incluir #url_externa_area").html("");
 
@@ -59,6 +69,10 @@ $(function(){
     $('#modal-incluir #link').on('change', function (event) {
         $("#modal-incluir #modulos_area").html("");
         $("#modal-incluir #publicacoes_area").html("");
+        $("#modal-incluir #eventos_area").html("");
+        $("#modal-incluir #eventosfixos_area").html("");
+        $("#modal-incluir #noticias_area").html("");
+        $("#modal-incluir #sermoes_area").html("");
         $("#modal-incluir #url_externa_area").html("");
 
         op = $("#modal-incluir #link").val();
@@ -67,6 +81,14 @@ $(function(){
         }else if(op == 2){
             $("#modal-incluir #publicacoes_area").html(html_publicacoes_area);
         }else if(op == 3){
+            $("#modal-incluir #eventos_area").html(html_eventos_area);
+        }else if(op == 4){
+            $("#modal-incluir #eventosfixos_area").html(html_eventosfixos_area);
+        }else if(op == 5){
+            $("#modal-incluir #noticias_area").html(html_noticias_area);
+        }else if(op == 6){
+            $("#modal-incluir #sermoes_area").html(html_sermoes_area);
+        }else if(op == 7){
             $("#modal-incluir #url_externa_area").html(html_url_externa_area);
         }
 
@@ -106,9 +128,10 @@ $(function(){
         },
         dom: 'Bfrtip',
         buttons: [
-        { "extend": 'excelHtml5', "text":'EXCEL',"className": 'btn btn-primary' },
-        { "extend": 'csvHtml5', "text":'CSV',"className": 'btn btn-primary' },
-        { "extend": 'pdfHtml5', "text":'PDF',"className": 'btn btn-primary' },
+        { "extend": 'excelHtml5', "text":'<i class="fa fa-file-excel-o"></i>&nbsp;EXCEL',"className": 'btn btn-success' },
+        { "extend": 'csvHtml5', "text":'<i class="fa fa-file-code-o"></i>&nbsp;CSV',"className": 'btn btn-warning' },
+        { "extend": 'pdfHtml5', "text":'<i class="fa fa-file-pdf-o"></i>&nbsp;PDF',"className": 'btn btn-danger' },
+        { "extend": 'colvis', "text":'<i class="fa fa-eye-slash"></i>&nbsp;Visibilidade',"className": 'btn btn-primary' },
             //'excelHtml5','csvHtml5','pdfHtml5'
         ],
         'processing': true,
@@ -124,6 +147,7 @@ $(function(){
                 },
                 { data: 'id', name: 'id' },
                 { data: 'nome', name: 'nome' },
+                { data: 'ordem', name: 'ordem' },
                 { data: 'action', name: 'action' },
                 ],
                 order: [[1, 'asc']]
@@ -185,9 +209,10 @@ $(function(){
         <table id="tbl_banners" class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th></th>
+            <th>Expandir</th>
             <th>#</th>
             <th>Nome</th>
+            <th>Ordem</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -253,7 +278,11 @@ $(function(){
                         <option value="0" selected>Sem link</option>
                         <option value="1">Link para módulo do sistema</option>
                         <option value="2">Link para publicação</option>
-                        <option value="3">Link externo</option>
+                        <option value="3">Link para evento</option>
+                        <option value="4">Link para evento fixo</option>
+                        <option value="5">Link para notícia</option>
+                        <option value="6">Link para sermão</option>
+                        <option value="7">Link externo</option>
                     </select>
                     <div class="help-block with-errors"></div>
                     </div>
@@ -276,6 +305,54 @@ $(function(){
                         <?php $publicacoes = App\TblPublicacoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($publicacoes as $publicacao)
                             <option value="{{$publicacao->id}}">{{$publicacao->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="eventos_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos</label>
+                    <select id="evento" name="evento" class="form-control" required>
+                        <?php $eventos = App\TblEventos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($eventos as $evento)
+                            <option value="{{$evento->id}}">{{$evento->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="eventosfixos_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos fixos</label>
+                    <select id="eventofixo" name="eventofixo" class="form-control" required>
+                        <?php $eventosfixos = App\TblEventosFixos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($eventosfixos as $eventofixo)
+                            <option value="{{$eventofixo->id}}">{{$eventofixo->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="noticias_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos fixos</label>
+                    <select id="noticia" name="noticia" class="form-control" required>
+                        <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($noticias as $noticia)
+                            <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="sermoes_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Sermões</label>
+                    <select id="noticia" name="noticia" class="form-control" required>
+                        <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($sermoes as $sermao)
+                            <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                         @endforeach
                     </select>
                     <div class="help-block with-errors"></div>

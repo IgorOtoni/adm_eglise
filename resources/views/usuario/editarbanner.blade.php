@@ -52,28 +52,45 @@ $(function(){
             });
         });
 
-    var html_modulos_area = $("#editarBannerFormulario #modulos_area").html();
+    var html_modulos_area_menu_editar = $("#editarBannerFormulario #modulos_area").html();
     $("#editarBannerFormulario #modulos_area").html("");
-    var html_publicacoes_area = $("#editarBannerFormulario #publicacoes_area").html();
+    var html_publicacoes_area_menu_editar = $("#editarBannerFormulario #publicacoes_area").html();
     $("#editarBannerFormulario #publicacoes_area").html("");
-    var html_url_externa_area = $("#editarBannerFormulario #url_externa_area").html();
+    var html_eventos_area_menu_editar = $("#editarBannerFormulario #eventos_area").html();
+    $("#editarBannerFormulario #eventos_area").html("");
+    var html_eventosfixos_area_menu_editar = $("#editarBannerFormulario #eventosfixos_area").html();
+    $("#editarBannerFormulario #eventosfixos_area").html("");
+    var html_noticias_area_menu_editar = $("#editarBannerFormulario #noticias_area").html();
+    $("#editarBannerFormulario #noticias_area").html("");
+    var html_sermoes_area_menu_editar = $("#editarBannerFormulario #sermoes_area").html();
+    $("#editarBannerFormulario #sermoes_area").html("");
+    var html_url_externa_area_menu_editar = $("#editarBannerFormulario #url_externa_area").html();
     $("#editarBannerFormulario #url_externa_area").html("");
-
-    $('#editarBannerFormulario').validator('update');
-    $('#editarBannerFormulario').validator('validate');
 
     $('#editarBannerFormulario #link').on('change', function (event) {
         $("#editarBannerFormulario #modulos_area").html("");
         $("#editarBannerFormulario #publicacoes_area").html("");
+        $("#editarBannerFormulario #eventos_area").html("");
+        $("#editarBannerFormulario #eventosfixos_area").html("");
+        $("#editarBannerFormulario #noticias_area").html("");
+        $("#editarBannerFormulario #sermoes_area").html("");
         $("#editarBannerFormulario #url_externa_area").html("");
 
         op = $("#editarBannerFormulario #link").val();
         if(op == 1){
-            $("#editarBannerFormulario #modulos_area").html(html_modulos_area);
+            $("#editarBannerFormulario #modulos_area").html(html_modulos_area_menu_editar);
         }else if(op == 2){
-            $("#editarBannerFormulario #publicacoes_area").html(html_publicacoes_area);
+            $("#editarBannerFormulario #publicacoes_area").html(html_publicacoes_area_menu_editar);
         }else if(op == 3){
-            $("#editarBannerFormulario #url_externa_area").html(html_url_externa_area);
+            $("#editarBannerFormulario #eventos_area").html(html_eventos_area_menu_editar);
+        }else if(op == 4){
+            $("#editarBannerFormulario #eventosfixos_area").html(html_eventosfixos_area_menu_editar);
+        }else if(op == 5){
+            $("#editarBannerFormulario #noticias_area").html(html_noticias_area_menu_editar);
+        }else if(op == 6){
+            $("#editarBannerFormulario #sermoes_area").html(html_sermoes_area_menu_editar);
+        }else if(op == 7){
+            $("#editarBannerFormulario #url_externa_area").html(html_url_externa_area_menu_editar);
         }
 
         $('#editarBannerFormulario').validator('update');
@@ -140,7 +157,11 @@ $(function(){
                         <option value="0" selected>Sem link</option>
                         <option value="1">Link para módulo do sistema</option>
                         <option value="2">Link para publicação</option>
-                        <option value="3">Link externo</option>
+                        <option value="3">Link para evento</option>
+                        <option value="4">Link para evento fixo</option>
+                        <option value="5">Link para notícia</option>
+                        <option value="6">Link para sermão</option>
+                        <option value="7">Link externo</option>
                     </select>
                     <div class="help-block with-errors"></div>
                     </div>
@@ -163,6 +184,54 @@ $(function(){
                         <?php $publicacoes = App\TblPublicacoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($publicacoes as $publicacao)
                             <option value="{{$publicacao->id}}">{{$publicacao->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="eventos_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos</label>
+                    <select id="evento" name="evento" class="form-control" required>
+                        <?php $eventos = App\TblEventos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($eventos as $evento)
+                            <option value="{{$evento->id}}">{{$evento->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="eventosfixos_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos fixos</label>
+                    <select id="eventofixo" name="eventofixo" class="form-control" required>
+                        <?php $eventosfixos = App\TblEventosFixos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($eventosfixos as $eventofixo)
+                            <option value="{{$eventofixo->id}}">{{$eventofixo->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="noticias_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Eventos fixos</label>
+                    <select id="noticia" name="noticia" class="form-control" required>
+                        <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($noticias as $noticia)
+                            <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="sermoes_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Sermões</label>
+                    <select id="noticia" name="noticia" class="form-control" required>
+                        <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($sermoes as $sermao)
+                            <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
                         @endforeach
                     </select>
                     <div class="help-block with-errors"></div>
