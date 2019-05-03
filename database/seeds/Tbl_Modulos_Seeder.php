@@ -82,6 +82,12 @@ class Tbl_Modulos_Seeder extends Seeder
             'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
+            'id'=>23,
+            'nome'=>'Login',
+            'descricao'=>'Funcionalidade do site apresentativo.',
+            'rota'=>'login',
+        ]);
+        DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>'',
@@ -107,9 +113,15 @@ class Tbl_Modulos_Seeder extends Seeder
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>5,
-            'nome'=>'Eventos',
+            'nome'=>'Eventos Fixos',
             'descricao'=>'Funcionalidade do site apresentativo.',
-            'rota'=>'evento',
+            'rota'=>'eventosfixos',
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>5,
+            'nome'=>'Linha do tempo',
+            'descricao'=>'Funcionalidade do site apresentativo.',
+            'rota'=>'eventos',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>6,
@@ -123,12 +135,12 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'',
             'rota'=>'escolaBiblica',
         ]);
-        DB::table('tbl_modulos')->insert([
+        /*DB::table('tbl_modulos')->insert([
             'id'=>8,
             'nome'=>'Configurações',
             'descricao'=>'Funcionalidade do site apresentativo.',
             'rota'=>'configuracoes',
-        ]);
+        ]);*/
         DB::table('tbl_modulos')->insert([
             'id'=>9,
             'nome'=>'Notícias',

@@ -459,7 +459,7 @@ $('#modal-configuracoes').on('show.bs.modal', function (event) {
                                 style="width: 100%;" required>
                           <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
                           @foreach ($modulos as $modulo)
-                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                            <option value="{{$modulo->id}}">{{$modulo->nome}} - {{$modulo->sistema}} - {{($modulo->gerencial) ? 'Gerencial' : 'Apresentativo'}}</option>
                           @endforeach
                         </select>
                         <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
