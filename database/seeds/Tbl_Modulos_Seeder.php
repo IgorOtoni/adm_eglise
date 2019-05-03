@@ -118,29 +118,23 @@ class Tbl_Modulos_Seeder extends Seeder
             'rota'=>'eventosfixos',
         ]);
         DB::table('tbl_modulos')->insert([
-            'id'=>5,
+            'id'=>6,
             'nome'=>'Linha do tempo',
             'descricao'=>'Funcionalidade do site apresentativo.',
             'rota'=>'eventos',
         ]);
         DB::table('tbl_modulos')->insert([
-            'id'=>6,
+            'id'=>7,
             'nome'=>'Agenda Pastoral',
             'descricao'=>'',
             'rota'=>'agendaPastoral',
         ]);
         DB::table('tbl_modulos')->insert([
-            'id'=>7,
+            'id'=>8,
             'nome'=>'Escola Bíblica',
             'descricao'=>'',
             'rota'=>'escolaBiblica',
         ]);
-        /*DB::table('tbl_modulos')->insert([
-            'id'=>8,
-            'nome'=>'Configurações',
-            'descricao'=>'Funcionalidade do site apresentativo.',
-            'rota'=>'configuracoes',
-        ]);*/
         DB::table('tbl_modulos')->insert([
             'id'=>9,
             'nome'=>'Notícias',
