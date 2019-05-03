@@ -91,7 +91,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
     $x = 1;
     foreach($banners as $banner){
         if($banner->link != null){
-            ?> <a href="{{$banner->link}}"> <?php
+            ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
         }
         ?>
         <!-- Single Hero Slide -->

@@ -180,7 +180,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
         
                     <?php
                     if($banner->link != null){
-                        ?> <a href="{{$banner->link}}"> <?php
+                        ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
                     }
                     ?>
                     <!-- LAYER NR. 1 --><!--data-end="3000"-->
@@ -205,11 +205,11 @@ $('#modal-evento').on('show.bs.modal', function (event) {
                     }
                     
                     if($banner->link != null){
-                        ?> <a href="{{$banner->link}}"> <?php
+                        ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
                     }
                     ?>
                     <!-- LAYER NR. 2 --><!--data-end="4000"-->
-                    <div class="tp-caption large_text randomrotate tp-resizeme" 
+                    <div class="tp-caption medium_text randomrotate tp-resizeme" 
                             data-x="100" 
                             data-y="350"  
                         data-speed="300" 

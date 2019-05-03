@@ -39,6 +39,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(16),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>3,
+            'foto'=>"timeline-3-3.jpg",
             'descricao'=>"Comemoração do natal, viva ao nascimento de Jesus Cristo.",
         ]);
         DB::table('tbl_eventos')->insert([
@@ -59,7 +60,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(5),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>1,
-            'foto'=>"timeline-1-3.jpg",
+            'foto'=>"timeline-5-1.jpg",
             'descricao'=>"A igreja estará jejuando e orando juntos pela intenção X.",
         ]);
         DB::table('tbl_eventos')->insert([
@@ -79,6 +80,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(16),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>1,
+            'foto'=>'timeline-7-1.jpg',
             'descricao'=>"Comemoração do natal, viva ao nascimento de Jesus Cristo.",
         ]);
         DB::table('tbl_eventos')->insert([
@@ -88,7 +90,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(21),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>1,
-            'foto'=>"timeline-4-3.jpg",
+            'foto'=>"timeline-8-1.jpg",
             'descricao'=>"Palestra divulgando a plataforma Église e sua utilização para ministros e membros.",
         ]);
 
@@ -99,7 +101,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(5),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>2,
-            'foto'=>"timeline-1-3.jpg",
+            'foto'=>"timeline-9-2.jpg",
             'descricao'=>"A igreja estará jejuando e orando juntos pela intenção X.",
         ]);
         DB::table('tbl_eventos')->insert([
@@ -110,7 +112,6 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>2,
             'descricao'=>"Comemoração da páscoa, viva a ressureição de Jesus Cristo.",
-            //'banner'=>true,
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>11,
@@ -119,6 +120,7 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(16),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>2,
+            'foto'=>'timeline-11-2.jpg',
             'descricao'=>"Comemoração do natal, viva ao nascimento de Jesus Cristo.",
         ]);
         DB::table('tbl_eventos')->insert([
@@ -128,64 +130,67 @@ class Tbl_Eventos_Seeder extends Seeder
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(21),
             'dados_local'=>"Na própria igreja.",
             'id_igreja'=>2,
-            'foto'=>"timeline-4-3.jpg",
+            'foto'=>"timeline-12-2.jpg",
             'descricao'=>"Palestra divulgando a plataforma Église e sua utilização para ministros e membros.",
         ]);
 
         DB::table('tbl_eventos')->insert([
             'id'=>13,
-            'nome'=>"Evento de teste",
+            'nome'=>"Retiro do grupo de jovens",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(50),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(51),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No clube da igreja em Ipatinga.",
             'id_igreja'=>1,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'descricao'=>"Retiro para os jovens da região, faça sua pré-incrição. Serão 3 dias, com almoço e janta incluso, durará 3 dias.",
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>14,
-            'nome'=>"Evento de teste",
+            'nome'=>"Retiro do grupo de jovens",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(60),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(61),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No clube da igreja em Ipatinga.",
             'id_igreja'=>2,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'descricao'=>"Retiro para os jovens da região, faça sua pré-incrição. Serão 3 dias, com almoço e janta incluso, durará 3 dias.",
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>15,
-            'nome'=>"Evento de teste",
+            'nome'=>"Retiro do grupo de jovens",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(70),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(71),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No clube da igreja em Ipatinga.",
             'id_igreja'=>3,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'descricao'=>"Retiro para os jovens da região, faça sua pré-incrição. Serão 3 dias, com almoço e janta incluso, durará 3 dias.",
         ]);
 
         DB::table('tbl_eventos')->insert([
             'id'=>16,
-            'nome'=>"Evento de teste",
+            'nome'=>"Teatro sobre a vida de Moisés",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(80),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(81),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No salão da escola Metodista.",
             'id_igreja'=>1,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'foto'=>"timeline-16-1.jpg",
+            'descricao'=>"Tetro para a comunidade, ingresso na hora por 5 reais ou contribuição com algum alimento não perecível.",
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>17,
-            'nome'=>"Evento de teste",
+            'nome'=>"Teatro sobre a vida de Moisés",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(90),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(91),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No salão da escola Metodista.",
             'id_igreja'=>2,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'foto'=>"timeline-17-2.jpg",
+            'descricao'=>"Tetro para a comunidade, ingresso na hora por 5 reais ou contribuição com algum alimento não perecível.",
         ]);
         DB::table('tbl_eventos')->insert([
             'id'=>18,
-            'nome'=>"Evento de teste",
+            'nome'=>"Teatro sobre a vida de Moisés",
             'dados_horario_inicio'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(100),
             'dados_horario_fim'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(101),
-            'dados_local'=>"Em qualquer lugar.",
+            'dados_local'=>"No salão da escola Metodista.",
             'id_igreja'=>3,
-            'descricao'=>"Evento adicionado ao sistema para testes com os templates e paginação.",
+            'foto'=>"timeline-18-3.jpg",
+            'descricao'=>"Tetro para a comunidade, ingresso na hora por 5 reais ou contribuição com algum alimento não perecível.",
         ]);
     }
 }

@@ -89,7 +89,7 @@ class Tbl_Sub_Menus_Seeder extends Seeder
         DB::table('tbl_sub_menus')->insert([
             'id'=>11,
             'id_menu'=>8,
-            'nome'=>'Publicações',
+            'nome'=>'Notícias',
             'link'=>'noticias',
             'ordem'=>3,
         ]);
@@ -141,7 +141,7 @@ class Tbl_Sub_Menus_Seeder extends Seeder
         DB::table('tbl_sub_menus')->insert([
             'id'=>18,
             'id_menu'=>13,
-            'nome'=>'Publicações',
+            'nome'=>'Notícias',
             'link'=>'noticias',
             'ordem'=>3,
         ]);
@@ -193,7 +193,7 @@ class Tbl_Sub_Menus_Seeder extends Seeder
         DB::table('tbl_sub_menus')->insert([
             'id'=>25,
             'id_menu'=>16,
-            'nome'=>'Publicações',
+            'nome'=>'Notícias',
             'link'=>'noticias',
             'ordem'=>3,
         ]);

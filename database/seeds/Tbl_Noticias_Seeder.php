@@ -19,7 +19,6 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-1-3.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
-            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>2,
@@ -54,7 +53,6 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-5-1.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
-            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>6,
@@ -89,7 +87,6 @@ class Tbl_Noticias_Seeder extends Seeder
             'foto'=>"noticia-9-2.jpg",
             'descricao'=>"Nova plataforma Église é anunciada pela Hotsystems, e será um sistema de aprsentação e gerência para qualquer congregação religiosa.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(-50),
-            //'banner'=>true,
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>10,
@@ -119,75 +116,75 @@ class Tbl_Noticias_Seeder extends Seeder
 
         DB::table('tbl_noticias')->insert([
             'id'=>13,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Precisamos de pessoas com talento musical.",
             'id_igreja'=>1,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Queremos montar um coral para os cultos, se você estiver interssado, procure a igreja, telefone ou mande um email com seu nome informando seu interesse e habilidade.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(5),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>14,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Precisamos de pessoas com talento musical.",
             'id_igreja'=>2,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Queremos montar um coral para os cultos, se você estiver interssado, procure a igreja, telefone ou mande um email com seu nome informando seu interesse e habilidade.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(5),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>15,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Precisamos de pessoas com talento musical.",
             'id_igreja'=>3,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Queremos montar um coral para os cultos, se você estiver interssado, procure a igreja, telefone ou mande um email com seu nome informando seu interesse e habilidade.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(5),
             'updated_at'=>Carbon::now()
         ]);
 
         DB::table('tbl_noticias')->insert([
             'id'=>16,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Estamos vendendo rifas!",
             'id_igreja'=>1,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Iremos sortear uma cesta de livros e CDs gospel, com objetivos de arrecadar fundos para missionários no Acre.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(10),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>17,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Estamos vendendo rifas!",
             'id_igreja'=>2,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Iremos sortear uma cesta de livros e CDs gospel, com objetivos de arrecadar fundos para missionários no Acre.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(10),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>18,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"Estamos vendendo rifas!",
             'id_igreja'=>3,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"Iremos sortear uma cesta de livros e CDs gospel, com objetivos de arrecadar fundos para missionários no Acre.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(10),
             'updated_at'=>Carbon::now()
         ]);
 
         DB::table('tbl_noticias')->insert([
             'id'=>19,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"A igreja passará por reformas no dia 1 de abril.",
             'id_igreja'=>1,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"O portão principal da igreja será reparado, pedimos a colaboração de todos para com os pedreiros e que evitem frequentar a igreja neste dia para que a obra ocorra bem.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(15),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>20,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"A igreja passará por reformas no dia 1 de abril.",
             'id_igreja'=>2,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"O portão principal da igreja será reparado, pedimos a colaboração de todos para com os pedreiros e que evitem frequentar a igreja neste dia para que a obra ocorra bem.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(15),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('tbl_noticias')->insert([
             'id'=>21,
-            'nome'=>"Notícia de teste.",
+            'nome'=>"A igreja passará por reformas no dia 1 de abril.",
             'id_igreja'=>3,
-            'descricao'=>"Notícia de teste para validação dos templastes do sistema.",
+            'descricao'=>"O portão principal da igreja será reparado, pedimos a colaboração de todos para com os pedreiros e que evitem frequentar a igreja neste dia para que a obra ocorra bem.",
             'created_at'=>Carbon::parse(date('Y-m-d h:i:s', time()))->addHour(15),
             'updated_at'=>Carbon::now()
         ]);

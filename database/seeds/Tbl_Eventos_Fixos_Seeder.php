@@ -19,7 +19,6 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>3,
             'foto'=>"evento-1-3.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 7:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
-            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>2,
@@ -36,7 +35,6 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>3,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
-            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
@@ -46,7 +44,6 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>1,
             'foto'=>"evento-4-1.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 8:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
-            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>5,
@@ -63,7 +60,6 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>1,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
-            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
@@ -73,7 +69,6 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>2,
             'foto'=>"evento-7-2.jpg",
             'descricao'=>"Grupo que se reúne para orar na igreja toda quarta as 6:00 horas da manhã, aberto a todos que queiram participar, leve sua família!",
-            //'banner'=>true,
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>8,
@@ -90,51 +85,56 @@ class Tbl_Eventos_Fixos_Seeder extends Seeder
             'id_igreja'=>2,
             'foto'=>null,
             'descricao'=>"Tempo que os pastores dedicam a atender os membros na igreja.",
-            //'banner'=>true,
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>10,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de jovens",
+            'dados_horario_local'=>"Todos os domingos as 15 horas no parque da cidade.",
             'id_igreja'=>1,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-10-1.jpg',
+            'descricao'=>"Jovens da igreja se reúnem para realizar dinâmicas e momentos de lazer.",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>11,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de jovens",
+            'dados_horario_local'=>"Todos os domingos as 15 horas no parque da cidade.",
             'id_igreja'=>2,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-11-2.jpg',
+            'descricao'=>"Jovens da igreja se reúnem para realizar dinâmicas e momentos de lazer.",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>12,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de jovens",
+            'dados_horario_local'=>"Todos os domingos as 15 horas no parque da cidade.",
             'id_igreja'=>3,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-12-3.jpg',
+            'descricao'=>"Jovens da igreja se reúnem para realizar dinâmicas e momentos de lazer.",
         ]);
 
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>13,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de estudo bíblico",
+            'dados_horario_local'=>"Todas as segundas as 19 horas no salão da escola Metodista.",
             'id_igreja'=>1,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-13-1.jpg',
+            'descricao'=>"Grupo de estudo que realizar leituras, reflexões e depoimnentos sobre passagens da bíblia.",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>14,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de estudo bíblico",
+            'dados_horario_local'=>"Todas as segundas as 19 horas no salão da escola Metodista.",
             'id_igreja'=>2,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-14-2.jpg',
+            'descricao'=>"Grupo de estudo que realizar leituras, reflexões e depoimnentos sobre passagens da bíblia.",
         ]);
         DB::table('tbl_eventos_fixos')->insert([
             'id'=>15,
-            'nome'=>"Evento de teste",
-            'dados_horario_local'=>"Em qualquer lugar em qualquer horário.",
+            'nome'=>"Grupo de estudo bíblico",
+            'dados_horario_local'=>"Todas as segundas as 19 horas no salão da escola Metodista.",
             'id_igreja'=>3,
-            'descricao'=>"Evento de teste adicionado ao sistema para validação do template.",
+            'foto'=>'evento-15-3.jpg',
+            'descricao'=>"Grupo de estudo que realizar leituras, reflexões e depoimnentos sobre passagens da bíblia.",
         ]);
     }
 }
