@@ -660,7 +660,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -799,7 +801,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -938,7 +942,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -1083,7 +1089,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -1239,7 +1247,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
@@ -1403,7 +1413,9 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <label >Módulos</label>
                 <select id="modulo" name="modulo" class="form-control" required>
                     @foreach ($modulos_igreja as $modulo)
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @if (!$modulos_igreja->gerencial)
+                            <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>
