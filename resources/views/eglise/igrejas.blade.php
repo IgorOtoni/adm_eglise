@@ -4,12 +4,11 @@
 <div class="content-wrapper">
 <div class="container">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!--<section class="content-header">
     <h1>
         Congregações
-        <!--<small>Example 2.0</small>-->
     </h1>
-    </section>
+    </section>-->
 
     <center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center>
     <!-- Main content -->
@@ -26,7 +25,11 @@
         
         <div class="attachment-pushed" style="word-wrap: break-word; overflow-wrap: break-word;">
             <h4 class="attachment-heading">
-                <a href="/{{($igreja->url != null && $igreja->status == true) ? $igreja->url: "#"}}">{{$igreja->nome}}</a>
+                @if ($igreja->url != null && $igreja->status == true)
+                    <a href="{{($igreja->url != null && $igreja->status == true) ? "/".$igreja->url: "#"}}">{{$igreja->nome}}</a>
+                @else
+                    {{$igreja->nome}}
+                @endif
             </h4>
 
             <div class="attachment-text">
