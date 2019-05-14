@@ -52,10 +52,10 @@ $(function () {
       allowedFileExtensions: ["jpg", "png", "gif"],
       <?php if($igreja->logo != null){ ?>
       initialPreview: [
-        "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage/igrejas/'.$igreja->logo}}",
+        "{{'/storage/igrejas/'.$igreja->logo}}",
       ],
       <?php } ?>
-      deleteUrl: "{{'http://'.env('DB_HOST').'/adm_eglise/public/storage'}}",
+      deleteUrl: "{{'/storage'}}",
       uploadExtraData:{'_token':$("#csrf_token").val()},
       initialPreviewAsData: true,
       //initialPreviewFileType: "image",

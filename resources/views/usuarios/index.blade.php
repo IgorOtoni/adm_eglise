@@ -120,6 +120,7 @@ $(function () {
             { data: 'nome', name: 'nome' },
             { data: 'perfil', name: 'perfil' },
             { data: 'igreja', name: 'igreja' },
+            { data: 'status', name: 'status' },
             { data: 'action', name: 'action' },
           ],
           order: [[1, 'asc']]
@@ -176,6 +177,7 @@ $(function () {
           <th>Nome</th>
           <th>Perfil</th>
           <th>Igreja</th>
+          <th>Status</th>
           <th>Ações</th>
       </tr>
       </thead>

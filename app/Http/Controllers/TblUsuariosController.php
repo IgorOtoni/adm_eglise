@@ -29,6 +29,12 @@ class TblUsuariosController extends Controller
                 return (TblIgreja::find($perfil->id))->nome;
             else
                 return 'Administrador da Plataforma';
+        })->addColumn('status',function($usuarios){
+            if($usuarios->isOnline()){
+                return "<span class='label bg-green'>Online</span>";
+            }else{
+                return "<span class='label bg-red'>Offline</span>";
+            }
         })->editColumn('created_at', function($usuarios) {
             if($usuarios->created_at != null)
                 return Carbon::parse($usuarios->created_at)->format('d/m/Y');
@@ -40,8 +46,7 @@ class TblUsuariosController extends Controller
                 return $upd;
             }else
                 return null;
-        })
-        ->make(true);
+        })->rawColumns(['status', 'action'])->make(true);
     }
 
     public function edit($id){
