@@ -18,12 +18,13 @@ class LastUserActivity
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
+            //Registra ultima iteração do usuário via cache
             $expiresAt = Carbon::now()->addMinutes(1);
             Cache::put('user-is-online-'.Auth::user()->id,true,$expiresAt);
-            //Registra ultima iteração do usuário
+            //Registra ultima iteração do usuário via base de dados
             $usuario = User::find(Auth::user()->id);
-            $usuario->ultimo_acesso = Carbon::now();
-            if($request->path()!="logout")
+            $usuario->ultimo_acesso = Carbon::now();  
+            //Registra ultima requisçaõ do usuário via base de dados          
             $usuario->ultima_url = $request->path();
             $usuario->save();
         }
