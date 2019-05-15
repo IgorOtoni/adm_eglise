@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->boolean('status')->default(false);
             //$table->bigInteger('id_membro');
             //$table->foreign('id_membro')->references('id')->on('tbl_membros');
+            $table->datetime('ultimo_acesso')->nullable();
+            $table->string('ultima_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
