@@ -23,6 +23,7 @@ class LastUserActivity
             //Registra ultima iteração do usuário
             $usuario = User::find(Auth::user()->id);
             $usuario->ultimo_acesso = Carbon::now();
+            if($request->path()!="logout")
             $usuario->ultima_url = $request->path();
             $usuario->save();
         }
