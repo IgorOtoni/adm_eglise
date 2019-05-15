@@ -21,11 +21,13 @@ class LastUserActivity
             //Registra ultima iteração do usuário via cache
             $expiresAt = Carbon::now()->addMinutes(1);
             Cache::put('user-is-online-'.Auth::user()->id,true,$expiresAt);
-            //Registra ultima iteração do usuário via base de dados
+            //Registra ultima iteração do usuário via DB
             $usuario = User::find(Auth::user()->id);
-            $usuario->ultimo_acesso = Carbon::now();  
-            //Registra ultima requisçaõ do usuário via base de dados          
+            $usuario->ultimo_acesso = Carbon::now();
+            //Registra ultima requisição do usuário via DB
+            if($request->path()!="logout")
             $usuario->ultima_url = $request->path();
+            //salva informações via DB
             $usuario->save();
         }
         return $next($request);
