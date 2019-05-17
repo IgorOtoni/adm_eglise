@@ -45,9 +45,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{{route('login')}}">Login</a></li>
-            <li><a href="{{route('plataforma.congregacoes')}}">Congregações</a></li>
             <li><a href="{{route('plataforma.home')}}">Inicial</a></li>
+            <li><a href="{{route('plataforma.congregacoes')}}">Congregações</a></li>
+            <li><a href="{{route('plataforma.formulario')}}">Cadastro</a></li>
+            <li><a href="{{route('login')}}">Login</a></li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->

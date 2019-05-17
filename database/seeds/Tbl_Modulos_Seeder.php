@@ -128,12 +128,14 @@ class Tbl_Modulos_Seeder extends Seeder
             'nome'=>'Agenda Pastoral',
             'descricao'=>'',
             'rota'=>'agendaPastoral',
+            'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>8,
             'nome'=>'Escola Bíblica',
             'descricao'=>'',
             'rota'=>'escolaBiblica',
+            'gerencial'=>true,
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>9,

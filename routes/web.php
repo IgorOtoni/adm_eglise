@@ -40,6 +40,11 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+Route::get('/formulario', 'PlataformaController@formulario')->name('plataforma.formulario');
+Route::post('/cadastro', 'PlataformaController@cadastro')->name('plataforma.incluirIgreja');
+
+Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.congregacoes');
+
 Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
 
@@ -84,8 +89,6 @@ Route::get('/logout', function () {
     auth()->logout();
     return redirect('login');
 });
-
-Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.congregacoes');
 
 Route::group(['middleware' => 'auth'], function () {
     /*Route::get('/autenticar', function () {

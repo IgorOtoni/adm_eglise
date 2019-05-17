@@ -123,7 +123,7 @@ class HomeController extends Controller
         return json_encode($modulos);
     }
     ///////////////////////////////////////////////////////////////////////////////////////
-
+    
     // BANNER AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function banners()
     {
@@ -796,7 +796,7 @@ class HomeController extends Controller
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
-            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            $modulos_igreja = obter_modulos_igreja($igreja);
             $retorno = obter_menus_configuracao($igreja->id_configuracao);
             $menus = $retorno[0];
             $submenus = $retorno[1];
