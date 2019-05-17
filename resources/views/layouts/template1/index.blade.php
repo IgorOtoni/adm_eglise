@@ -163,309 +163,248 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 </script>
 @endpush
 @section('content')
-<!-- Start Hero Slider -->
-<div class="slider-rev-cont">
-<div class="tp-banner-container">
-    <div class="tp-banner">
-        <ul style="display:none;">
-            <?php
-            $x = 1;
-            foreach($banners as $banner){
-                ?>
-                <!-- SLIDE  -->
-                <li data-transition="fade" data-slotamount="1" data-masterspeed="1000"  data-saveperformance="off" data-title="{{$x++}}">
-                    <!-- MAIN IMAGE -->
-                    <img src="/storage/banners/{{$banner->foto}}"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                    <!-- LAYERS -->
-        
-                    <?php
-                    if($banner->link != null){
-                        ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
-                    }
-                    ?>
-                    <!-- LAYER NR. 1 --><!--data-end="3000"-->
-                    <div class="tp-caption large_text randomrotate tp-resizeme" 
-                            data-x="100" 
-                            data-y="300"  
-                        data-speed="300" 
-                        data-start="500" 
-                        data-easing="Power3.easeInOut" 
-                        data-splitin="none" 
-                        data-splitout="none" 
-                        data-elementdelay="0.1" 
-                        data-endelementdelay="0.1" 
-                            
-                data-endspeed="300" 
-            
-                        style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->nome}} 
-                    </div>
-                    <?php
-                    if($banner->link != null){
-                        ?> </a> <?php
-                    }
-                    
-                    if($banner->link != null){
-                        ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
-                    }
-                    ?>
-                    <!-- LAYER NR. 2 --><!--data-end="4000"-->
-                    <div class="tp-caption medium_text randomrotate tp-resizeme" 
-                            data-x="100" 
-                            data-y="350"  
-                        data-speed="300" 
-                        data-start="800" 
-                        data-easing="Power3.easeInOut" 
-                        data-splitin="none" 
-                        data-splitout="none" 
-                        data-elementdelay="0.1" 
-                        data-endelementdelay="0.1" 
-                        
-                data-endspeed="300" 
-            
-                        style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->descricao}} 
-                    </div>
-                    <?php
-                    if($banner->link != null){
-                        ?> </a> <?php
-                    }
-                    ?>
-                </li>
+<?php
+if($banners != null && sizeof($banners)){
+    ?>
+    <!-- Start Hero Slider -->
+    <div class="slider-rev-cont">
+    <div class="tp-banner-container">
+        <div class="tp-banner">
+            <ul style="display:none;">
                 <?php
-            }
-            ?>
-        </ul>	
-        <div class="tp-bannertimer" style="display:none;"></div>	
+                $x = 1;
+                foreach($banners as $banner){
+                    ?>
+                    <!-- SLIDE  -->
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000"  data-saveperformance="off" data-title="{{$x++}}">
+                        <!-- MAIN IMAGE -->
+                        <img src="/storage/banners/{{$banner->foto}}"  alt="fullslide1"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                        <!-- LAYERS -->
+            
+                        <?php
+                        if($banner->link != null){
+                            ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
+                        }
+                        ?>
+                        <!-- LAYER NR. 1 --><!--data-end="3000"-->
+                        <div class="tp-caption large_text randomrotate tp-resizeme" 
+                                data-x="100" 
+                                data-y="300"  
+                            data-speed="300" 
+                            data-start="500" 
+                            data-easing="Power3.easeInOut" 
+                            data-splitin="none" 
+                            data-splitout="none" 
+                            data-elementdelay="0.1" 
+                            data-endelementdelay="0.1" 
+                                
+                    data-endspeed="300" 
+                
+                            style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->nome}} 
+                        </div>
+                        <?php
+                        if($banner->link != null){
+                            ?> </a> <?php
+                        }
+                        
+                        if($banner->link != null){
+                            ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
+                        }
+                        ?>
+                        <!-- LAYER NR. 2 --><!--data-end="4000"-->
+                        <div class="tp-caption medium_text randomrotate tp-resizeme" 
+                                data-x="100" 
+                                data-y="350"  
+                            data-speed="300" 
+                            data-start="800" 
+                            data-easing="Power3.easeInOut" 
+                            data-splitin="none" 
+                            data-splitout="none" 
+                            data-elementdelay="0.1" 
+                            data-endelementdelay="0.1" 
+                            
+                    data-endspeed="300" 
+                
+                            style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">{{$banner->descricao}} 
+                        </div>
+                        <?php
+                        if($banner->link != null){
+                            ?> </a> <?php
+                        }
+                        ?>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>	
+            <div class="tp-bannertimer" style="display:none;"></div>	
+        </div>
     </div>
-</div>
-</div>
-<!-- End Hero Slider -->
-<!-- Start Page Header -->
-<div class="page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Últimas notícias</h1>
+    </div>
+    <?php
+}
+?>
+
+<?php
+if($noticias != null && sizeof($noticias) != 0){
+    ?>
+    <!-- End Hero Slider -->
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Últimas notícias</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- End Page Header -->
-<!-- Start Content -->
-<div class="main" role="main">
-<div id="content" class="content full">
-    <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-        <ul class="grid-holder col-3 events-grid">
-            <?php foreach($noticias as $noticia){ ?>
-                <li class="grid-item post format-standard">
-                <div class="grid-item-inner">  
-                    <?php if($noticia->foto != null){ ?>
-                        <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
-                    <?php }else{ ?>
-                        <img src="/storage/no-news.jpg" alt=""> 
-                    <?php } ?>
-                    <div class="grid-content">
-                    <?php /* ?>
-                    <h3><a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="">{{$noticia->nome}}</a></h3>
-                    <?php */ ?>
-                    <h3><a href="/{{$igreja->url}}/noticia/{{$noticia->id}}">{{$noticia->nome}}</a></h3>
-                    <span class="meta-data"><span><i class="fa fa-calendar"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</span><!--<span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span>--></span>
-                    <?php
-                    if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
-                        ?>
-                        <span class="meta-data"><span><i class="fa fa-calendar"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</span></span>
+    <!-- End Page Header -->
+    <!-- Start Content -->
+    <div class="main" role="main">
+    <div id="content" class="content full">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <ul class="grid-holder col-3 events-grid">
+                <?php foreach($noticias as $noticia){ ?>
+                    <li class="grid-item post format-standard">
+                    <div class="grid-item-inner">  
+                        <?php if($noticia->foto != null){ ?>
+                            <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
+                        <?php }else{ ?>
+                            <img src="/storage/no-news.jpg" alt=""> 
+                        <?php } ?>
+                        <div class="grid-content">
+                        <?php /* ?>
+                        <h3><a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="">{{$noticia->nome}}</a></h3>
+                        <?php */ ?>
+                        <h3><a href="/{{$igreja->url}}/noticia/{{$noticia->id}}">{{$noticia->nome}}</a></h3>
+                        <span class="meta-data"><span><i class="fa fa-calendar"></i> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</span><!--<span><a href="#"><i class="fa fa-tag"></i>Uncategoried</a></span>--></span>
                         <?php
-                    }
-                    ?>
-                    <p>{{$noticia->descricao}}</p>
+                        if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
+                            ?>
+                            <span class="meta-data"><span><i class="fa fa-calendar"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</span></span>
+                            <?php
+                        }
+                        ?>
+                        <p>{{$noticia->descricao}}</p>
+                        </div>
                     </div>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+        </div>
+    </div>
+    </div>
+    <?php
+}
+?>
+
+<?php
+if($eventos != null && sizeof($eventos) != 0){
+    ?>
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Últimos eventos</h1>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Start Content -->
+    <div class="main" role="main">
+    <div id="content" class="content full">
+        <div class="container">
+        <ul class="timeline">
+            <?php 
+            $x = 0;
+            foreach($eventos as $evento){
+                $class = ($x % 2 == 0) ? "timeline-inverted" : "";
+                $x++;
+                ?>
+                <li class="{{$class}}">
+                    <div class="timeline-badge">{{strtoupper(\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('MMM YYYY'))}}</div>
+                    <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h3 class="timeline-title">
+                        <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}">{{$evento->nome}}</a>
+                        </h3>
+                    </div>
+                    <div class="timeline-body">
+                        <ul class="info-table">
+                            <li><i class="fa fa-calendar"></i> {{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}</li>
+                            <?php if($evento->dados_horario_fim != null){ ?>
+                                <li><i class="fa fa-clock-o"></i> Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}}</li>
+                            <?php } ?>
+                            <li><i class="fa fa-map-marker"></i> {{$evento->dados_local}}</li>
+                            <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
+                        </ul>
+                    </div>
+                    </div>
                 </li>
             <?php } ?>
         </ul>
+        </div>
     </div>
     </div>
-</div>
-</div>
+    <?php
+}
+?>
 
-<!-- Start Page Header -->
-<div class="page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Últimos álbuns</h1>
+<?php
+if($galerias != null && sizeof($galerias) != 0){
+    ?>
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Últimos álbuns</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- End Page Header -->
-<!-- Start Content -->
-<div class="main" role="main">
-<div id="content" class="content full">
-    <div class="container">
-    <div class="row">
-        <ul class="isotope-grid" data-sort-id="gallery">
-        <?php foreach($galerias as $galeria){ 
-            if(count($fotos[$galeria->id]) == 1){
-                $foto = $fotos[$galeria->id][0]; ?>
-                <li class="col-md-3 col-sm-3 grid-item post format-image"><h3>{{$galeria->nome}}</h3>
-                    <div class="grid-item-inner"> <a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto" class="media-box"> <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""> <!--<img src="/storage/galerias/{{$foto->foto}}" alt="">--> </a> </div>
-                </li>
-            <?php }else{ ?>
-                <li class="col-md-3 col-sm-3 grid-item post format-gallery"><h3>{{$galeria->nome}}</h3>
-                    <div class="grid-item-inner">
-                    <div class="media-box">
-                        <div class="flexslider" data-autoplay="yes" data-pagination="yes" data-arrows="yes" data-style="slide" data-pause="yes">
-                        <ul class="slides">
-                            <?php $fotos_ = $fotos[$galeria->id];
-                                foreach($fotos_ as $foto){ ?>
-                                <li class="item"><a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto[postname]"><img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""></a></li>
-                            <?php } ?>
-                        </ul>
+    <!-- End Page Header -->
+    <!-- Start Content -->
+    <div class="main" role="main">
+    <div id="content" class="content full">
+        <div class="container">
+        <div class="row">
+            <ul class="isotope-grid" data-sort-id="gallery">
+            <?php foreach($galerias as $galeria){ 
+                if(count($fotos[$galeria->id]) == 1){
+                    $foto = $fotos[$galeria->id][0]; ?>
+                    <li class="col-md-3 col-sm-3 grid-item post format-image"><h3>{{$galeria->nome}}</h3>
+                        <div class="grid-item-inner"> <a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto" class="media-box"> <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""> <!--<img src="/storage/galerias/{{$foto->foto}}" alt="">--> </a> </div>
+                    </li>
+                <?php }else{ ?>
+                    <li class="col-md-3 col-sm-3 grid-item post format-gallery"><h3>{{$galeria->nome}}</h3>
+                        <div class="grid-item-inner">
+                        <div class="media-box">
+                            <div class="flexslider" data-autoplay="yes" data-pagination="yes" data-arrows="yes" data-style="slide" data-pause="yes">
+                            <ul class="slides">
+                                <?php $fotos_ = $fotos[$galeria->id];
+                                    foreach($fotos_ as $foto){ ?>
+                                    <li class="item"><a href="/storage/galerias/{{$foto->foto}}" data-rel="prettyPhoto[postname]"><img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt=""></a></li>
+                                <?php } ?>
+                            </ul>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                </li>
-            <?php }
-        } ?>
-        </ul>
-    </div>
-    </div>
-</div>
-</div>
-<!-- Start Page Header -->
-<div class="page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Últimos eventos</h1>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Page Header -->
-<!-- Start Content -->
-<div class="main" role="main">
-<div id="content" class="content full">
-    <div class="container">
-    <ul class="timeline">
-        <?php 
-        $x = 0;
-        foreach($eventos as $evento){
-            $class = ($x % 2 == 0) ? "timeline-inverted" : "";
-            $x++;
-            ?>
-            <li class="{{$class}}">
-                <div class="timeline-badge">{{strtoupper(\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('MMM YYYY'))}}</div>
-                <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h3 class="timeline-title">
-                    <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}">{{$evento->nome}}</a>
-                    </h3>
-                </div>
-                <div class="timeline-body">
-                    <ul class="info-table">
-                        <li><i class="fa fa-calendar"></i> {{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}</li>
-                        <?php if($evento->dados_horario_fim != null){ ?>
-                            <li><i class="fa fa-clock-o"></i> Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}}</li>
-                        <?php } ?>
-                        <li><i class="fa fa-map-marker"></i> {{$evento->dados_local}}</li>
-                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
-                    </ul>
-                </div>
-                </div>
-            </li>
-        <?php } ?>
-    </ul>
-    </div>
-</div>
-</div>
-
-<!-- modals -->
-<div class="modal fade" id="modal-noticia">
-    <input type="hidden" name="id" id="id">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nome"></h4>
-        </div>
-        <div class="modal-body">
-        <div class="box-body">
-            <!--<article class="post-content">-->
-            <div class="event-description"> <img id="foto" src="" class="img-responsive">
-                <div class="spacer-20"></div>
-                <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Detalhes da notícia</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="info-table">
-                        <li><i class="fa fa-calendar" id="dth_publicacao"></i> </li>
-                        <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> </li>
-                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <p id="descricao"></p>
-            </div>
-            <!--</article>-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </li>
+                <?php }
+            } ?>
+            </ul>
         </div>
         </div>
     </div>
     </div>
-</div>
-
-<div class="modal fade" id="modal-evento">
-    <input type="hidden" name="id" id="id">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nome"></h4>
-        </div>
-        <div class="modal-body">
-        <div class="box-body">
-            <!--<article class="post-content">-->
-            <div class="event-description"> <img id="foto" src="" class="img-responsive">
-                <div class="spacer-20"></div>
-                <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Detalhes do evento</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="info-table">
-                        <li><i class="fa fa-calendar" id="dth_inicio"></i> </li>
-                        <li><i class="fa fa-clock-o" id="dth_fim"></i> </li>
-                        <li><i class="fa fa-map-marker" id="local"></i> </li>
-                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <p id="descricao"></p>
-            </div>
-            <!--</article>-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-<!-- end modals -->
+    <?php
+}
+?>
 @endsection

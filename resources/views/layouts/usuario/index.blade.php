@@ -114,7 +114,7 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
             ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
             ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
             ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$id_perfil)
-            ->where('tbl_modulos.sistema','=','web')
+            ->where('tbl_modulos.sistema','=','web/android')
             ->where('tbl_modulos.gerencial','=',true)
             ->orderBy('tbl_modulos.nome', 'ASC')
             ->get();

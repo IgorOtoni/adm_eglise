@@ -13,10 +13,16 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('template_adm/bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('template_adm/dist/css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{asset('template_adm/dist/css/AdminLTE-mod.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{asset('template_adm/dist/css/skins/_all-skins.min.css')}}">
+  <link rel="stylesheet" href="{{asset('template_adm/dist/css/skins/_all-skins-mod.css')}}">
+
+  <!-- jQuery 3 -->
+  <script src="{{asset('template_adm/bower_components/jquery/dist/jquery.min.js')}}"></script>
+
+  <!-- Toastr -->
+  <link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,18 +31,21 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <!-- Toastr -->
+  <script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
+<body class="hold-transition skin-rcc layout-top-nav">
 <div class="wrapper">
 
   <header class="main-header">
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../index2.html" class="navbar-brand"><b>Plataforma Eglise</b></a>
+          <a href="#" class="navbar-brand"><b>Plataforma Eglise</b></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -62,7 +71,7 @@
   <footer class="main-footer">
     <div class="container">
         <div class="pull-right hidden-xs">
-        <b>Plataforma Eglise</b>
+        <b>Eglise Sites</b>
         </div>
     </div>
     <!-- /.container -->
@@ -84,4 +93,28 @@
 <script src="{{asset('template_adm/dist/js/demo.js')}}"></script>
 @stack('script')
 </body>
+
+<!-- Toaster message SCRIPT -->
+<script>
+  @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type', 'info') }}";
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+  @endif
+</script>
 </html>

@@ -85,268 +85,195 @@ $('#modal-evento').on('show.bs.modal', function (event) {
 </script>
 @endpush
 @section('content')
-<!-- ##### Hero Area Start ##### -->
-<section class="hero-area">
-    <div class="hero-slides owl-carousel">
-        <?php
-        $x = 1;
-        foreach($banners as $banner){
-            if($banner->link != null){
-                ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
+<?php
+if($banners != null && sizeof($banners)){
+    ?>
+    <!-- ##### Hero Area Start ##### -->
+    <section class="hero-area">
+        <div class="hero-slides owl-carousel">
+            <?php
+            $x = 1;
+            foreach($banners as $banner){
+                if($banner->link != null){
+                    ?> <a href="{{verifica_link($banner->link, $igreja)}}"> <?php
+                }
+                ?>
+                <!-- Single Hero Slide -->
+                <div class="single-hero-slide bg-img bg-overlay" style="background-image: url(storage/{{(($banner->foto != null) ? "banners/".$banner->foto : "no-event.jpg")}});">
+                    <div class="container h-100">
+                        <div class="row h-100 align-items-center justify-content-end">
+                            <div class="col-12 col-lg-7">
+                                <!-- Slides Content -->
+                                <div class="hero-slides-content">
+                                    <h2 data-animation="fadeInUp" data-delay="100ms">{{$banner->nome}}</h2>
+                                    <h3 data-animation="fadeInUp" data-delay="300ms">{{$banner->descricao}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                if($banner->link != null){
+                    ?> </a> <?php
+                }
             }
             ?>
-            <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img bg-overlay" style="background-image: url(storage/{{(($banner->foto != null) ? "banners/".$banner->foto : "no-event.jpg")}});">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center justify-content-end">
-                        <div class="col-12 col-lg-7">
-                            <!-- Slides Content -->
-                            <div class="hero-slides-content">
-                                <h2 data-animation="fadeInUp" data-delay="100ms">{{$banner->nome}}</h2>
-                                <h3 data-animation="fadeInUp" data-delay="300ms">{{$banner->descricao}}</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Event Button -->
-                <!--<div class="next-event-btn" data-animation="bounceInDown" data-delay="900ms">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 text-right">
-                                <a href="#" class="btn faith-btn active">Sunday Workship: 10:30 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-            </div>
-            <?php
-            if($banner->link != null){
-                ?> </a> <?php
-            }
-        }
-        ?>
-    </div>
-</section>
-<!-- ##### Hero Area End ##### -->
+        </div>
+    </section>
+    <!-- ##### Hero Area End ##### -->
+    <?php
+}
+?>
 
-<!-- ##### Church Activities Area Start ##### -->
-<section class="church-activities-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-heading text-center mx-auto">
-                    <h3>Últimos eventos</h3>
+<?php
+if($noticias != null && sizeof($noticias) != 0){
+    ?>
+    <!-- ##### Blog Area Start ##### -->
+    <div class="faith-blog-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading text-center mx-auto">
+                        <h3>Últimas notícias</h3>
+                    </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <?php foreach($noticias as $noticia){ ?>
+                    <!-- Single Blog Area -->
+                    <div class="col-12 col-lg-4">
+                        <div class="single-blog-area mb-100">
+                            <div class="blog-thumbnail">
+                                <?php if($noticia->foto != null){ ?>
+                                    <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
+                                <?php }else{ ?>
+                                    <img src="/storage/no-news.jpg" alt=""> 
+                                <?php } ?>
+                                <div class="post-date">
+                                    <?php /* ?>
+                                    <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#"> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
+                                    <?php */ ?>
+                                    <a href="#">Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
+                                </div>
+                            </div>
+                            <div class="blog-content">
+                                <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}" class="blog-title">{{$noticia->nome}}</a>
+                                <p>{{$noticia->descricao}}</p>
+                                <?php
+                                if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
+                                    ?>
+                                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
             </div>
         </div>
+    </div>
+    <!-- ##### Blog Area End ##### -->
+    <?php
+}
+?>
 
-        <div class="row">
-            <div class="col-12 col-lg-12">
-                <!-- Upcoming Events -->
-                <div class="upcoming-events mb-100">
+<?php
+if($eventos != null && sizeof($eventos) != 0){
+    ?>
+    <!-- ##### Church Activities Area Start ##### -->
+    <section class="church-activities-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading text-center mx-auto">
+                        <h3>Últimos eventos</h3>
+                    </div>
+                </div>
+            </div>
 
-                    <?php 
-                    $x = 0;
-                    foreach($eventos as $evento){
+            <div class="row">
+                <div class="col-12 col-lg-12">
+                    <!-- Upcoming Events -->
+                    <div class="upcoming-events mb-100">
+
+                        <?php 
+                        $x = 0;
+                        foreach($eventos as $evento){
+                            ?>
+
+                            <!-- Single Upcoming Events -->
+                            <div class="single-upcoming-events d-flex align-items-center">
+                                <!-- Events Date & Thumbnail -->
+                                <div class="event-date-thumbnail d-flex align-items-center">
+                                    <div class="event-date">
+                                        <h6>{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YY h:mm A')}}</h6>
+                                    </div>
+                                    <div class="event-thumbnail bg-img" style="background-image: url({{(($evento->foto != null) ? "/storage/timeline/".$evento->foto : "/storage/no-event.jpg")}});"></div>
+                                </div>
+                                <!-- Events Content -->
+                                <div class="events-content">
+                                    <?php /* ?>
+                                    <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" href="#">
+                                        <h6>{{$evento->nome}}</h6>
+                                    </a>
+                                    <?php */ ?>
+                                    <a href="/{{$igreja->url}}/evento/{{$evento->id}}"><h6>{{$evento->nome}}</h6></a>
+                                    <p>Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}} @ {{$evento->dados_local}}</p>
+                                </div>
+                            </div>
+
+                            <?php
+                            $x++;
+                        }
                         ?>
 
-                        <!-- Single Upcoming Events -->
-                        <div class="single-upcoming-events d-flex align-items-center">
-                            <!-- Events Date & Thumbnail -->
-                            <div class="event-date-thumbnail d-flex align-items-center">
-                                <div class="event-date">
-                                    <h6>{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YY h:mm A')}}</h6>
-                                </div>
-                                <div class="event-thumbnail bg-img" style="background-image: url({{(($evento->foto != null) ? "/storage/timeline/".$evento->foto : "/storage/no-event.jpg")}});"></div>
-                            </div>
-                            <!-- Events Content -->
-                            <div class="events-content">
-                                <?php /* ?>
-                                <a data-toggle="modal" data-target="#modal-evento" data-foto="{{$evento->foto}}" data-local="{{$evento->dados_local}}" data-nome="{{$evento->nome}}" data-descricao="{{$evento->descricao}}" data-inicio="{{\Carbon\Carbon::parse($evento->dados_horario_inicio, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-fim="{{(($evento->dados_horario_fim != null) ? \Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio) : '')}}" href="#">
-                                    <h6>{{$evento->nome}}</h6>
-                                </a>
-                                <?php */ ?>
-                                <a href="/{{$igreja->url}}/evento/{{$evento->id}}"><h6>{{$evento->nome}}</h6></a>
-                                <p>Final previsto para {{\Carbon\Carbon::parse($evento->dados_horario_fim)->diffForHumans($evento->dados_horario_inicio)}} @ {{$evento->dados_local}}</p>
-                            </div>
-                        </div>
-
-                        <?php
-                        $x++;
-                    }
-                    ?>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- ##### Church Activities Area End ##### -->
+    </section>
+    <!-- ##### Church Activities Area End ##### -->
+    <?php
+}
+?>
 
-<!-- ##### Donate Area Start ##### -->
-<div class="faith-blog-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-heading text-center mx-auto">
-                    <h3>Últimas Álbuns</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <?php foreach($galerias as $galeria){ ?>
-                <h4>{{$galeria->nome}}</h4>
+<?php
+if($galerias != null && sizeof($galerias) != 0){
+    ?>
+    <!-- ##### Donate Area Start ##### -->
+    <section class="faith-blog-area section-padding-100-100" >
+        <div class="container">
+            <div class="row">
                 <div class="col-12">
-                    <div class="donate-slides owl-carousel">
-                        <?php $fotos_ = $fotos[$galeria->id];
-                            foreach($fotos_ as $foto){ ?>
-                            <!-- Single Donate Slide Area -->
-                            <div class="single-donate-slide">
-                                <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt="">
-                            </div>
-                        <?php } ?>
+                    <div class="section-heading text-center mx-auto">
+                        <h3>Últimas Álbuns</h3>
                     </div>
                 </div>
-            <?php } ?>
-        </div>
-    </div>
-</section>
-<!-- ##### Donate Area End ##### -->
-
-<!-- ##### Blog Area Start ##### -->
-<div class="faith-blog-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-heading text-center mx-auto">
-                    <h3>Últimas notícias</h3>
-                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <?php foreach($noticias as $noticia){ ?>
-                <!-- Single Blog Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single-blog-area mb-100">
-                        <div class="blog-thumbnail">
-                            <?php if($noticia->foto != null){ ?>
-                                <img src="/storage/noticias/{{$noticia->foto}}" alt=""> 
-                            <?php }else{ ?>
-                                <img src="/storage/no-news.jpg" alt=""> 
+            <div class="row">
+                <?php foreach($galerias as $galeria){ ?>
+                    <h4>{{$galeria->nome}}</h4>
+                    <div class="col-12">
+                        <div class="donate-slides owl-carousel">
+                            <?php $fotos_ = $fotos[$galeria->id];
+                                foreach($fotos_ as $foto){ ?>
+                                <!-- Single Donate Slide Area -->
+                                <div class="single-donate-slide">
+                                    <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt="">
+                                </div>
                             <?php } ?>
-                            <div class="post-date">
-                                <?php /* ?>
-                                <a data-publicacao="{{\Carbon\Carbon::parse($noticia->created_at, 'UTC')->isoFormat('Do MMMM YYYY, h:mm:ss A')}}" data-atualizacao="{{(($noticia->updated_at != null) ? \Carbon\Carbon::parse($noticia->updated_at)->diffForHumans() : '')}}" data-foto="{{$noticia->foto}}" data-nome="{{$noticia->nome}}" data-descricao="{{$noticia->descricao}}" data-toggle="modal" data-target="#modal-noticia" href="#"> Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
-                                <?php */ ?>
-                                <a href="#">Publicada {{\Carbon\Carbon::parse($noticia->created_at)->diffForHumans()}}</a>
-                            </div>
-                        </div>
-                        <div class="blog-content">
-                            <a href="/{{$igreja->url}}/noticia/{{$noticia->id}}" class="blog-title">{{$noticia->nome}}</a>
-                            <p>{{$noticia->descricao}}</p>
-                            <?php
-                            if($noticia->updated_at != null && $noticia->updated_at != $noticia->created_at){
-                                ?>
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Atualizada {{\Carbon\Carbon::parse($noticia->updated_at)->diffForHumans()}}</a>
-                                <?php
-                            }
-                            ?>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
-
-        </div>
-    </div>
-</div>
-<!-- ##### Blog Area End ##### -->
-
-<!-- modals -->
-<div class="modal fade" id="modal-noticia">
-    <input type="hidden" name="id" id="id">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title" id="nome"></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-        <div class="box-body">
-            <!--<article class="post-content">-->
-            <div class="event-description"> <img id="foto" src="" class="img-responsive">
-                <div class="spacer-20"></div>
-                <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Detalhes da notícia</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="info-table">
-                        <li><i class="fa fa-calendar" id="dth_publicacao"></i> </li>
-                        <li><i class="fa fa-clock-o" id="dth_atualizacao"></i> </li>
-                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <p id="descricao"></p>
+                <?php } ?>
             </div>
-            <!--</article>-->
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn crose-btn btn-2" data-dismiss="modal">Fechar</button>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modal-evento">
-    <input type="hidden" name="id" id="id">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title" id="nome"></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-        <div class="box-body">
-            <!--<article class="post-content">-->
-            <div class="event-description"> <img id="foto" src="" class="img-responsive">
-                <div class="spacer-20"></div>
-                <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Detalhes do evento</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="info-table">
-                        <li><i class="fa fa-calendar" id="dth_inicio"></i> </li>
-                        <li><i class="fa fa-clock-o" id="dth_fim"></i> </li>
-                        <li><i class="fa fa-map-marker" id="local"></i> </li>
-                        <!--<li><i class="fa fa-phone"></i> 1 800 321 4321</li>-->
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <p id="descricao"></p>
-            </div>
-            <!--</article>-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn crose-btn btn-2" data-dismiss="modal">Fechar</button>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-<!-- end modals -->
+    </section>
+    <!-- ##### Donate Area End ##### -->
+    <?php
+}
+?>
 @endsection

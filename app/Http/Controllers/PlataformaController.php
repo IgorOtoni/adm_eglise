@@ -5,7 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\TblIgreja;
 use App\TblIgrejasModulos;
+use App\TblModulo;
 use App\TblConfiguracoes;
+use App\TblMenu;
+use App\TblSubMenu;
+use App\TblSubSubMenu;
+use App\TblPerfil;
+use App\TblPerfisIgrejasModulos;
+use App\User;
 class PlataformaController extends Controller
 {
     public function index(){
@@ -39,41 +46,158 @@ class PlataformaController extends Controller
         $igreja->logo = "vazio";
 
         $count = TblIgreja::where("nome", "=", $igreja->nome)->count();
+        $count_ = TblConfiguracoes::where("url", "=", $request->url)->count();
         if($count == 0){
-            $igreja->save();
+            if($count_ == 0){
+                $igreja->save();
 
-            //convertendo imagem base64
-            $img = $request->logo;
+                //convertendo imagem base64
+                $img = $request->logo;
 
-            \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension()),90);
+                \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension()),90);
 
-            $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension());
+                $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension());
 
-            $igreja->save();
-            $modulo = new TblIgrejasModulos();
+                $igreja->status = true;
+                $igreja->save();
+                $igreja_modulos = null;
 
-            foreach ($request->modulos as $key => $value) {
-                $data = [
-                    'id_igreja' => $igreja->id,
-                    'id_modulo' => $value
-                ];
-                $modulo->create($data);
+                $modulos = TblModulo::all();
+
+                $x = 0;
+                foreach ($modulos as $modulo) {
+                    $igreja_modulo = new TblIgrejasModulos();
+                    $igreja_modulo->id_igreja = $igreja->id;
+                    $igreja_modulo->id_modulo = $modulo->id;
+                    $igreja_modulo->save();
+                    $igreja_modulos[$x] = $igreja_modulo;
+                    $x++;
+                }
+
+                $configuracao = new TblConfiguracoes();
+                $configuracao->id_igreja = $igreja->id;
+                $configuracao->url = $request->url;
+                $configuracao->cor = 'white';
+                $configuracao->id_template = 1;
+                $configuracao->save();
+
+                // Configuração dos menus ====================================================
+                $menu = new TblMenu();
+                $menu->id_configuracao = $configuracao->id;
+                $menu->nome = "Login";
+                $menu->link = "login";
+                $menu->ordem = 1;
+                $menu->save();
+
+                $menu = new TblMenu();
+                $menu->id_configuracao = $configuracao->id;
+                $menu->nome = "Sobre nós";
+                $menu->ordem = 2;
+                $menu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Visões e Valores";
+                $submenu->ordem = 1;
+                $submenu->link = "apresentacao";
+                $submenu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Contatos";
+                $submenu->ordem = 2;
+                $submenu->link = "contato";
+                $submenu->save();
+
+                $menu = new TblMenu();
+                $menu->id_configuracao = $configuracao->id;
+                $menu->nome = "Mídia";
+                $menu->ordem = 3;
+                $menu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Sermões";
+                $submenu->ordem = 1;
+                $submenu->link = "sermoes";
+                $submenu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Galerias";
+                $submenu->ordem = 2;
+                $submenu->link = "galeria";
+                $submenu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Notícias";
+                $submenu->ordem = 3;
+                $submenu->link = "noticias";
+                $submenu->save();
+
+                $menu = new TblMenu();
+                $menu->id_configuracao = $configuracao->id;
+                $menu->nome = "Eventos";
+                $menu->ordem = 4;
+                $menu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Eventos fixos";
+                $submenu->ordem = 1;
+                $submenu->link = "eventosfixos";
+                $submenu->save();
+
+                $submenu = new TblSubMenu();
+                $submenu->id_menu = $menu->id;
+                $submenu->nome = "Linha do tempo";
+                $submenu->ordem = 2;
+                $submenu->link = "eventos";
+                $submenu->save();
+
+                $perfil = new TblPerfil();
+                $perfil->nome = "Administrador";
+                $perfil->descricao = "Perfil dos administradores da congregação.";
+                $perfil->id_igreja = $igreja->id;
+                $perfil->status = true;
+                $perfil->save();
+
+                $PerfisIgrejaModulos_ = null;
+                $x = 0;
+                foreach($igreja_modulos as $igreja_modulo){
+                    $PerfisIgrejaModulos = new TblPerfisIgrejasModulos();
+                    $PerfisIgrejaModulos->id_perfil = $perfil->id;
+                    $PerfisIgrejaModulos->id_modulo_igreja = $igreja_modulo->id;
+                    $PerfisIgrejaModulos->save();
+                    $PerfisIgrejaModulos_[$x] = $PerfisIgrejaModulos;
+                    $x++;
+                }
+
+                $usuario = new User();
+                $usuario->nome = "Administrador";
+                $usuario->password = bcrypt("administrador");
+                $usuario->email = "administrador@teste.com";
+                $usuario->id_perfil = $perfil->id;
+                $usuario->status = true;
+                $usuario->save();
+                // ===========================================================================
+
+                $notification = array(
+                    'message' => 'Bem vindo(a) a plataforma Église! Seu site e usuário já estão configurados.', 
+                    'alert-type' => 'success'
+                );
+
+                //return view('igrejas.index')->with($notification);
+                return redirect()->route('plataforma.congregacoes')->with($notification);
+            }else{
+                $notification = array(
+                    'message' => 'Já existe uma igreja com essa URL, por favor escolha outra URL.', 
+                    'alert-type' => 'error'
+                );
+    
+                return back()->with($notification);
             }
-
-            $configuracao = new TblConfiguracoes();
-            $configuracao->id_igreja = $igreja->id;
-            $configuracao->cor = 'white';
-            $configuracao->id_template = 1;
-            $configuracao->save();
-
-            $notification = array(
-                'message' => 'Bem vindo(a) a plataforma Église!', 
-                'alert-type' => 'success'
-            );
-
-            //return view('igrejas.index')->with($notification);
-            return redirect()->route('plataforma.congregacoes')->with($notification);
-
         }else{
 
             $notification = array(

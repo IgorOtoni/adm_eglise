@@ -79,7 +79,7 @@ $('#modal-evento').on('show.bs.modal', function (event) {
         {{ $eventos->appends(request()->query())->links() }}
     </center>
     <ul class="timeline">
-        <?php 
+        <?php
         $x = 0;
         foreach($eventos as $evento){
             $class = ($x % 2 == 0) ? "timeline-inverted" : "";

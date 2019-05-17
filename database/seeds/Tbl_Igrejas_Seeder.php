@@ -57,7 +57,6 @@ class Tbl_Igrejas_Seeder extends Seeder
             'num'=>'230',
             'cep'=>'35.181-018',
             'logo'=> 'logo-igreja-3.jpg',
-            'status'=> true,
         ]);
         DB::table('tbl_igrejas')->insert([
             'nome'=>'Quinta Igreja Batista',

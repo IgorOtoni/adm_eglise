@@ -10,8 +10,9 @@
     </h1>
     </section>-->
 
-    <center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center>
+    <div class="row"><center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center></div>
     <!-- Main content -->
+    <div class="row">
     <section class="content">
     @foreach ($igrejas_e_configuracoes as $igreja)
         <div class="col-md-6 col-xs-12">
@@ -62,8 +63,9 @@
         </div>
     @endforeach
     </section>
+    </div>
     <!-- /.content -->
-    <center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center>
+    <div class="row"><center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center></div>
 </div>
 <!-- /.container -->
 </div>

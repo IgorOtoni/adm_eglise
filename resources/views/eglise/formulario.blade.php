@@ -201,7 +201,7 @@ $('div.setup-panel div a.btn-success').trigger('click');
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <p>Sem mais detalhes no momento.
+                    <p>Para aderir, basta informar alguns dados  sobre a igreja, realizar o pagamento e obter a visão do seu site. Caso queira ter um domínio (seu www) próprio, entre em contato com nossa equipe pelo tel (31) 3849-6771.
                     </p>
                 </div>
                 <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
@@ -303,6 +303,14 @@ $('div.setup-panel div a.btn-success').trigger('click');
                                 <input name="email" type="text" class="form-control" placeholder="Email">
                             </div>
                         </div>
+                        <div class="col-md-8">
+                            <div class="form-group has-feedback">
+                                <label >URL da igreja (eglise.com.br/URL)</label>
+                                <input maxlength="20" name="url" type="text" class="form-control" placeholder="URL" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
                         </div>
                         
                         <div class="row">
@@ -315,7 +323,7 @@ $('div.setup-panel div a.btn-success').trigger('click');
                         </div>
                         </div>
     
-                        <div class="row">
+                        <?php /* ?><div class="row">
                         <div class="col-md-12">
                             <div class="form-group has-feedback">
                             <label>Módulos do sistema</label>
@@ -332,6 +340,7 @@ $('div.setup-panel div a.btn-success').trigger('click');
                             <!-- /.form-group -->
                         </div>
                         </div>
+                        <?php */ ?>
                 <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
             </div>
         </div>
