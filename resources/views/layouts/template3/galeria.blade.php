@@ -50,7 +50,7 @@ $('#modal-galeria').on('show.bs.modal', function (event) {
                             foreach($fotos_ as $foto){ ?>
                             <!-- Single Donate Slide Area -->
                             <a href="#" data-foto="{{$foto->foto}}" data-toggle="modal" data-target="#modal-galeria"><div class="single-donate-slide">
-                                <img src="/carrega_imagem/480,320,galerias,{{$foto->foto}}" alt="">
+                                <img src="/carrega_imagem_/480,320,galerias,{{$foto->foto}}" alt="">
                             </div></a>
                         <?php } ?>
                     </div>

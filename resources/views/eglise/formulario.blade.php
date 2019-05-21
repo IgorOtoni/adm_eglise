@@ -5,6 +5,19 @@
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
+<!-- lightgallery -->
+<link type="text/css" rel="stylesheet" href="{{asset('template_adm/plugins/lightgallery/css/lightGallery.css')}}" /> 
+
+<!-- lightgallery -->
+<script src="{{asset('template_adm/plugins/lightgallery/js/lightgallery.min.js')}}"></script>
+<!-- lightgallery zoom -->
+<script src="{{asset('template_adm/plugins/lightgallery/js/lg-zoom.js')}}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".lightgallery").lightGallery(); 
+    });
+</script>
 
 <style>
 /* Latest compiled and minified CSS included as External Resource*/
@@ -187,7 +200,11 @@ $('div.setup-panel div a.btn-success').trigger('click');
                 <p><small>Dados da Igreja</small></p>
             </div>
             <div class="stepwizard-step col-xs-3"> 
-                <a href="#step-4" type="button" class="btn btn-default btn-circle disabled" disabled="disabled">4</a>
+                    <a href="#step-4" type="button" class="btn btn-default btn-circle disabled" disabled="disabled">4</a>
+                    <p><small>Escolher template</small></p>
+                </div>
+            <div class="stepwizard-step col-xs-3"> 
+                <a href="#step-5" type="button" class="btn btn-default btn-circle disabled" disabled="disabled">5</a>
                 <p><small>Forma de pagamento</small></p>
             </div>
         </div>
@@ -204,7 +221,7 @@ $('div.setup-panel div a.btn-success').trigger('click');
                     <p>Para aderir, basta informar alguns dados  sobre a igreja, realizar o pagamento e obter a visão do seu site. Caso queira ter um domínio (seu www) próprio, entre em contato com nossa equipe pelo tel (31) 3849-6771.
                     </p>
                 </div>
-                <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                <button class="btn btn-primary nextBtn pull-right" type="button">Próximo</button>
             </div>
         </div>
         
@@ -217,7 +234,7 @@ $('div.setup-panel div a.btn-success').trigger('click');
                     <p>Sem termo de contrato no momento.
                     </p>
                 </div>
-                <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                <button class="btn btn-primary nextBtn pull-right" type="button">Próximo</button>
             </div>
         </div>
         
@@ -226,132 +243,228 @@ $('div.setup-panel div a.btn-success').trigger('click');
                 <h3 class="panel-title">Dados da Igreja</h3>
             </div>
             <div class="panel-body">
-                        <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-feedback">
-                                <label >Nome</label>
-                                <input name="nome" type="text" class="form-control" placeholder="Nome" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >CEP</label>
-                                <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Estado</label>
-                                <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Cidade</label>
-                                <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Bairro</label>
-                                <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Rua</label>
-                                <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label >Complemento</label>
-                                <input name="complemento" type="text" class="form-control" placeholder="Complemento">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Número</label>
-                                <input name="num" type="number" class="form-control" placeholder="Número" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group has-feedback">
-                                <label >Telefone</label>
-                                <input name="telefone" type="text" class="form-control" placeholder="Telefone" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label >Email</label>
-                                <input name="email" type="text" class="form-control" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group has-feedback">
-                                <label >URL da igreja (eglise.com.br/URL)</label>
-                                <input maxlength="20" name="url" type="text" class="form-control" placeholder="URL" required>
-                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        </div>
+
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group has-feedback">
+                        <label >Nome</label>
+                        <input name="nome" type="text" class="form-control" placeholder="Nome" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >CEP</label>
+                        <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Estado</label>
+                        <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Cidade</label>
+                        <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Bairro</label>
+                        <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Rua</label>
+                        <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label >Complemento</label>
+                        <input name="complemento" type="text" class="form-control" placeholder="Complemento">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Número</label>
+                        <input name="num" type="number" class="form-control" placeholder="Número" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group has-feedback">
+                        <label >Telefone</label>
+                        <input name="telefone" type="text" class="form-control" placeholder="Telefone" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label >Email</label>
+                        <input name="email" type="text" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group has-feedback">
+                        <label >URL da igreja (eglise.com.br/URL)</label>
+                        <input maxlength="20" name="url" type="text" class="form-control" placeholder="URL" required>
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                </div>
+                
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group has-feedback">
+                        <label >Logo</label>
+                        <input name="logo" type="file" id="input_img" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                </div>
+
+                <?php /* ?><div class="row">
+                <div class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label>Módulos do sistema</label>
+                    <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione os módulos"
+                            style="width: 100%;" required>
+                        <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
+                        @foreach ($modulos as $modulo)
+                        <option value="{{$modulo->id}}">{{$modulo->nome}} - {{$modulo->sistema}} - {{($modulo->gerencial) ? 'Gerencial' : 'Apresentativo'}}</option>
+                        @endforeach
+                    </select>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                </div>
+                <?php */ ?>
+                
+                <button class="btn btn-primary nextBtn pull-right" type="button">Próximo</button>
+            </div>
+        </div>
+
+        <div class="panel panel-primary setup-content" id="step-4">
+            <div class="panel-heading">
+                <h3 class="panel-title">Escolher template</h3>
+            </div>
+            <div class="panel-body">
+                <p>Escolha um template para o site de sua congregação:</p>
+                <?php
+                Use App\TblTemplates;
+                Use App\TblTemplateFotos;
+
+                $templates = TblTemplates::all();
+
+                
+                foreach($templates as $template){
+                    ?> 
+                    <div class="row">
+                    <center>
+                    <h3>{{$template->nome}}</h3>
+                    <div class="lightgallery" style="margin: 15px;">
+                        <?php
+                        $fotos_template = TblTemplateFotos::where('id_template','=',$template->id)->get();;
                         
-                        <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-feedback">
-                                <label >Logo</label>
-                                <input name="logo" type="file" id="input_img" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
+                        foreach($fotos_template as $foto){
+                            // /carrega_imagem/320,180,templates,
+                            ?>
+                            <a href="/storage/templates/{{$foto->foto}}">
+                                <img src="/storage/templates/{{$foto->foto}}" class="mySlides-{{$template->id}}" style="border: #0c3d54 1px solid; width: 60%; height: 400px; display: none;" />
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <script>
+                    var slideIndex_{{$template->id}} = 1;
+                    showDivs_{{$template->id}}(slideIndex_{{$template->id}}, '{{'mySlides-'.$template->id}}');
+                    
+                    function plusDivs_{{$template->id}}(n, class_name) {
+                        showDivs_{{$template->id}}(slideIndex_{{$template->id}} += n, class_name);
+                    }
+                    
+                    function showDivs_{{$template->id}}(n, class_name) {
+                        var i;
+                        var x = document.getElementsByClassName(class_name);
+                        if (n > x.length) {slideIndex_{{$template->id}} = 1}
+                        if (n < 1) {slideIndex_{{$template->id}} = x.length}
+                        for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";  
+                        }
+                        x[slideIndex_{{$template->id}}-1].style.display = "block";  
+                    }
+                    </script>
+                    <div class="form-group has-feedback">
+                        <div class="radio">
+                            <label>
+                                <input name="template" type="radio" value="{{$template->id}}" required>
+                                Escolher esse template
+                            </label>
                         </div>
-                        </div>
-    
-                        <?php /* ?><div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-feedback">
-                            <label>Módulos do sistema</label>
-                            <select name="modulos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione os módulos"
-                                    style="width: 100%;" required>
-                                <?php $modulos = App\TblModulo::orderBy('nome','ASC')->get(); ?>
-                                @foreach ($modulos as $modulo)
-                                <option value="{{$modulo->id}}">{{$modulo->nome}} - {{$modulo->sistema}} - {{($modulo->gerencial) ? 'Gerencial' : 'Apresentativo'}}</option>
-                                @endforeach
-                            </select>
-                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            <div class="help-block with-errors"></div>
-                            </div>
-                            <!-- /.form-group -->
-                        </div>
-                        </div>
-                        <?php */ ?>
-                <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <a class="btn btn-primary btn-rcc" onclick="plusDivs_{{$template->id}}(-1, '{{'mySlides-'.$template->id}}')">&#10094;</a>
+                    <a class="btn btn-primary btn-rcc" onclick="plusDivs_{{$template->id}}(1, '{{'mySlides-'.$template->id}}')">&#10095;</a>
+                    <center>
+                    </div> 
+                    <?php
+                }
+                ?>
+                <button class="btn btn-primary nextBtn pull-right" type="button">Próximo</button>
             </div>
         </div>
         
-        <div class="panel panel-primary setup-content" id="step-4">
+        <div class="panel panel-primary setup-content" id="step-5">
             <div class="panel-heading">
                 <h3 class="panel-title">Forma de pagamento</h3>
             </div>
             <div class="panel-body">
-                <p>Sem formas de pagamento no momento.
+                <p>Escolha a forma de pagamento:
                 </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                            <div class="radio">
+                                <label>
+                                    <input name="pagamento" type="radio" value="cartao">
+                                    Cartão de crédito
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input name="pagamento" type="radio" value="boleto">
+                                    Boleto
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com-md-12">
+                        <div class="pull-right">
+                            <h2 style="color: darkgreen; margin-right: 15px;">R$ 0,00.</h2>
+                        </div>
+                    </div>
+                </div>
                 <button class="btn btn-success pull-right" type="submit">Finish!</button>
             </div>
         </div>

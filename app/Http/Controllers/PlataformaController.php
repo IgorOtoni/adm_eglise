@@ -78,7 +78,7 @@ class PlataformaController extends Controller
                 $configuracao->id_igreja = $igreja->id;
                 $configuracao->url = $request->url;
                 $configuracao->cor = 'white';
-                $configuracao->id_template = 1;
+                $configuracao->id_template = $request->template;
                 $configuracao->save();
 
                 // Configuração dos menus ====================================================

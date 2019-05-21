@@ -277,6 +277,9 @@ class IgrejaController extends Controller
     public function carrega_imagem($largura,$altura,$pasta,$arquivo){
         return view('exemplo2', compact('largura', 'altura', 'pasta', 'arquivo'));
     }
+    public function carrega_imagem_($largura,$pasta,$arquivo){
+        return view('exemplo2', compact('largura', 'pasta', 'arquivo'));
+    }
     public function inscreveEnvento($url, Request $request){
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_apresentativos_igreja($igreja);
