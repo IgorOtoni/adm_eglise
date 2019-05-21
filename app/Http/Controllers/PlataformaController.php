@@ -174,10 +174,12 @@ class PlataformaController extends Controller
                     $x++;
                 }
 
+                $genererated_id = mt_rand(1, 9999);
+
                 $usuario = new User();
-                $usuario->nome = "Administrador";
+                $usuario->nome = "Administrador_" . $genererated_id;
                 $usuario->password = bcrypt("administrador");
-                $usuario->email = "administrador@teste.com";
+                $usuario->email = "administrador_" . $genererated_id . "@teste.com";
                 $usuario->id_perfil = $perfil->id;
                 $usuario->status = true;
                 $usuario->save();
@@ -189,7 +191,7 @@ class PlataformaController extends Controller
                 );
 
                 //return view('igrejas.index')->with($notification);
-                return redirect()->route('plataforma.congregacoes')->with($notification);
+                return redirect($configuracao->url)/*->route('plataforma.congregacoes')*/->with($notification);
             }else{
                 $notification = array(
                     'message' => 'Já existe uma igreja com essa URL, por favor escolha outra URL.', 
