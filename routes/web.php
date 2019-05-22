@@ -269,6 +269,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/carregarPermissoesPerfil/{id}', 'HomeController@carregarPermissoesPerfil')->name('perfis.carregarPermissoesPerfil');
         Route::post('/atualizarPermissoesPerfil', 'HomeController@atualizarPermissoesPerfil')->name('usuario.atualizarPermissoesPerfil');
         //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CRUD FUNCOES ==========================================================================
+        Route::get('/funcoes', 'HomeController@funcoes')->name('usuario.funcoes');
+        Route::get('/tbl_funcoes', 'HomeController@tbl_funcoes')->name('usuario.tbl_funcoes');
+        Route::post('/incluirFuncao', 'HomeController@incluirFuncao')->name('usuario.incluirFuncao');
+        Route::get('/editarFuncao/{id}', 'HomeController@editarFuncao')->name('usuario.editarFuncao');
+        Route::post('/atualizarFuncao', 'HomeController@atualizarFuncao')->name('usuario.atualizarFuncao');
+        Route::get('/excluirFuncao/{id}', 'HomeController@excluirFuncao')->name('usuario.excluirFuncao');
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // CRUD MEMBROS ==========================================================================
+        Route::get('/membros', 'HomeController@membros')->name('usuario.membros');
+        Route::get('/tbl_membros', 'HomeController@tbl_membros')->name('usuario.tbl_membros');
+        Route::post('/incluirMembro', 'HomeController@incluirMembro')->name('usuario.incluirMembro');
+        Route::get('/editarMembro/{id}', 'HomeController@editarMembro')->name('usuario.editarMembro');
+        Route::post('/atualizarMembro', 'HomeController@atualizarMembro')->name('usuario.atualizarMembro');
+        Route::post('/excluirFotoMembro', 'HomeController@excluirFotoMembro')->name('usuario.excluirFotoMembro');
+        Route::get('/excluirMembro/{id}', 'HomeController@excluirMembro')->name('usuario.excluirMembro');
+        //////////////////////////////////////////////////////////////////////////////////////////
     });
 });
 

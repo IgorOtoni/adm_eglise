@@ -375,5 +375,41 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_modulo'=>22,
             'icone'=>'fa fa-cogs',
         ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Funcoes
+            'id'=>67,
+            'id_igreja'=>1,
+            'id_modulo'=>24,
+            'icone'=>'fa fa-tags',
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Funcoes
+            'id'=>68,
+            'id_igreja'=>2,
+            'id_modulo'=>24,
+            'icone'=>'fa fa-tags',
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Funcoes
+            'id'=>69,
+            'id_igreja'=>3,
+            'id_modulo'=>24,
+            'icone'=>'fa fa-tags',
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Membros
+            'id'=>70,
+            'id_igreja'=>1,
+            'id_modulo'=>25,
+            'icone'=>'fa fa-user-plus',
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - Membros
+            'id'=>71,
+            'id_igreja'=>2,
+            'id_modulo'=>25,
+            'icone'=>'fa fa-user-plus',
+        ]);
+        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - Membros
+            'id'=>72,
+            'id_igreja'=>3,
+            'id_modulo'=>25,
+            'icone'=>'fa fa-user-plus',
+        ]);
     }
 }

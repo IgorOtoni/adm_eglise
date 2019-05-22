@@ -497,6 +497,7 @@ class TblIgrejaController extends Controller
         $configuracao = TblConfiguracoes::find($request->id);
         $configuracao->id_template = $request->id_template;
         $configuracao->cor = $request->cor;
+        $configuracao->texto_apresentativo = $request->texto_apresentativo;
 
         $count = TblConfiguracoes::where('url','=',$request->url)->where('id','<>',$configuracao->id)->count();
         if($count == 0){

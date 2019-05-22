@@ -7,6 +7,8 @@ use DataTables;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\TblPerfil;
+use App\TblFuncoes;
+use App\TblMembros;
 use App\TblBanner;
 use App\TblModulo;
 use App\TblGalerias;
@@ -1076,6 +1078,7 @@ class HomeController extends Controller
             $configuracao = TblConfiguracoes::find($request->id);
             $configuracao->id_template = $request->id_template;
             $configuracao->cor = $request->cor;
+            $configuracao->texto_apresentativo = $request->texto_apresentativo;
 
             $configuracao->save();
 
@@ -1790,5 +1793,109 @@ class HomeController extends Controller
             
         }else{ return view('error'); }
     }*/
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // NOTÍCIA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function funcoes()
+    {
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.funcoes', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_funcoes(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $funcao = TblFuncoes::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($funcao)->addColumn('action',function($funcao){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarFuncao/'.$funcao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirFuncao/'.$funcao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($funcao) {
+                if($funcao->created_at != null)
+                    return Carbon::parse($funcao->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($funcao) {
+                if($funcao->updated_at != null){
+                    $upd = Carbon::parse($funcao->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })
+            ->make(true);
+        }
+    }
+
+    public function incluirFuncao(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $funcao = new TblFuncoes();
+            $funcao->id_igreja = $request->igreja;
+            $funcao->nome = $request->nome;
+            $funcao->descricao = $request->descricao;
+            if($request->apresentar) $funcao->apresentar = true;
+            $funcao->save();
+
+            $notification = array(
+                'message' => 'Funções "' . $funcao->nome . '" foi publicada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.funcoes')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarFuncao($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $funcao = TblFuncoes::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarfuncao', compact('funcao','igreja','modulos_igreja'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarFuncao(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $funcao = TblFuncoes::find($request->id);
+            $funcao->nome = $request->nome;
+            $funcao->descricao = $request->descricao;
+            $funcao->save();
+            
+            $notification = array(
+                'message' => 'Função "' . $funcao->nome . '" foi atualizada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.funcoes')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirFuncao($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $funcao = TblFuncoes::find($id);
+            $funcao->delete();
+
+            $notification = array(
+                'message' => 'Função "' . $funcao->nome . '" foi excluída com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.funcoes')->with($notification);
+        }else{ return view('error'); }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////
 }

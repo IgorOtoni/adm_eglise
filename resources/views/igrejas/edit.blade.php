@@ -234,9 +234,11 @@ $(function () {
                   </div>
               </div>
               <div class="col-md-8">
-                  <div class="form-group">
+                  <div class="form-group has-feedback">
                       <label >Email</label>
-                      <input name="email" type="text" class="form-control" placeholder="Email" value="{{$igreja->email}}">
+                      <input name="email" type="text" class="form-control" placeholder="Email" value="{{$igreja->email}}" required>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                      <div class="help-block with-errors"></div>
                   </div>
               </div>
             </div>

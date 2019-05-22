@@ -60,7 +60,7 @@ class TblPerfilController extends Controller
             ->leftJoin('tbl_igrejas_modulos', 'tbl_modulos.id', '=', 'tbl_igrejas_modulos.id_modulo')
             ->leftJoin('tbl_perfis_igrejas_modulos', 'tbl_igrejas_modulos.id', '=', 'tbl_perfis_igrejas_modulos.id_modulo_igreja')
             ->leftJoin('tbl_perfis', 'tbl_perfis_igrejas_modulos.id_perfil', '=', 'tbl_perfis.id')
-            ->where('tbl_perfis.id','=',$id)
+            ->where('tbl_perfis.id','=',$perfil->id)
             //->groupBy('tbl_modulos.id')
             ->orderBy('nome', 'ASC')
             ->get();

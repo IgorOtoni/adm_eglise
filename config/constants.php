@@ -11,6 +11,8 @@ return [
         'sermoesg' => '20',
         'publicacoesg' => '21',
         'configuracoesg' => '22',
+        'funcoesg' => '24',
+        'membrosg' => '25',
     ],
     'permissoes' => [
         'incluir' => 1,

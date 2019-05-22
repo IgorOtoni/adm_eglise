@@ -191,5 +191,41 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
             'id_permissao'=>3,
         ]);
         //////////////////////////////////////
+
+        // Permissões do módulo de funções
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>31,
+            'id_modulo'=>24,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>32,
+            'id_modulo'=>24,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>33,
+            'id_modulo'=>24,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
+
+        // Permissões do módulo de membros
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>34,
+            'id_modulo'=>25,
+            'id_permissao'=>1,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>35,
+            'id_modulo'=>25,
+            'id_permissao'=>2,
+        ]);
+        DB::table('tbl_modulos_permissoes')->insert([
+            'id'=>36,
+            'id_modulo'=>25,
+            'id_permissao'=>3,
+        ]);
+        //////////////////////////////////////
     }
 }

@@ -88,6 +88,20 @@ class Tbl_Modulos_Seeder extends Seeder
             'rota'=>'login',
         ]);
         DB::table('tbl_modulos')->insert([
+            'id'=>24,
+            'nome'=>'Funções',
+            'descricao'=>'Funcionalidade do site apresentativo.',
+            'rota'=>'funcoes',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>25,
+            'nome'=>'Membros',
+            'descricao'=>'Funcionalidade do site apresentativo.',
+            'rota'=>'membros',
+            'gerencial'=>true,
+        ]);
+        DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>'',

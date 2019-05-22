@@ -56,7 +56,7 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
 
   <header class="main-header">
     <!-- Logo -->
-      <a href="/usuario/home" class="logo">
+    <a href="/usuario/home" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Eglise</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -103,6 +103,15 @@ $igreja = obter_dados_igreja_id($perfil->id_igreja);
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/storage/{{($igreja->logo != null) ? "igrejas/" . $igreja->logo : "no-logo.jpg"}}" class="img" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{$igreja->nome}}</p>
+        </div>
+      </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">BARRA DE NAVEGAÇÃO</li>

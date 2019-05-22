@@ -172,7 +172,7 @@ function obter_modulos_perfil($perfil){
         ->leftJoin('tbl_modulos', 'tbl_igrejas_modulos.id_modulo', '=', 'tbl_modulos.id')
         ->select('tbl_igrejas_modulos.id_modulo', 'tbl_modulos.*')
         ->where('tbl_perfis_igrejas_modulos.id_perfil','=',$perfil->id)
-        ->where('tbl_modulos.sistema','=','web')
+        ->where('tbl_modulos.sistema','like','%web%')
         ->orderBy('tbl_modulos.nome', 'ASC')
         ->get();
     return $modulos;

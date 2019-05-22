@@ -508,6 +508,14 @@ $('#modal-editar-subsubmenu').on('show.bs.modal', function (event) {
                 <div class="help-block with-errors"></div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                <label >Texto da congregação sobre suas missões e valores</label>
+                <textarea name="texto_apresentativo" class="form-control" rows="10" required>{{$igreja->texto_apresentativo}}</textarea>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+                </div>
+            </div>
         </div>
 
         </div>

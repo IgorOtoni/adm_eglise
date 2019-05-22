@@ -44,23 +44,25 @@
   <header class="main-header">
     <nav class="navbar navbar-static-top">
       <div class="container">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>Plataforma Eglise</b></a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <div style="min-height: 55px; vertical-align: center; margin: 15px;">
+          <div class="navbar-header">
+            <a href="#" class="navbar-brand"><b>Plataforma Eglise</b></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="{{route('plataforma.home')}}">Inicial</a></li>
-            <li><a href="{{route('plataforma.congregacoes')}}">Congregações</a></li>
-            <li><a href="{{route('plataforma.formulario')}}">Cadastro</a></li>
-            <li><a href="{{route('login')}}">Login</a></li>
-          </ul>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="{{route('plataforma.home')}}">Inicial</a></li>
+              <li><a href="{{route('plataforma.congregacoes')}}">Congregações</a></li>
+              <li><a href="{{route('plataforma.formulario')}}">Cadastro</a></li>
+              <li><a href="{{route('login')}}">Login</a></li>
+            </ul>
+          </div>
+          <!-- /.navbar-collapse -->
         </div>
-        <!-- /.navbar-collapse -->
       </div>
       <!-- /.container-fluid -->
     </nav>

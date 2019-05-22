@@ -35,5 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Banner_Seeder::class);
         $this->call(Tbl_Publicacao_Fotos_Seeder::class);
         $this->call(Tbl_Template_Fotos_Seeder::class);
+        $this->call(Tbl_Funcoes_Seeder::class);
+        $this->call(Tbl_Membros_Seeder::class);
     }
 }
