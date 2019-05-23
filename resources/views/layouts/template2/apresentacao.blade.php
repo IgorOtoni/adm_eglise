@@ -37,80 +37,48 @@
 </div>
 <!-- ##### About Us Area End ##### -->
 
-<!-- ##### Team Members Area Start ##### -->
-<div class="team-members-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <!-- Section Heading -->
-            <div class="col-12">
-                <div class="section-heading">
-                    <h2>Ministros</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Team Members Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/33.jpg')}});">
-                        <div class="team-social-info">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
+@if ($funcoes != null && sizeof($funcoes) > 0)
+    <!-- ##### Team Members Area Start ##### -->
+    <div class="team-members-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h2>Ministros</h2>
                     </div>
-                    <h6>Jackson Nash</h6>
-                    <span>Pastor</span>
                 </div>
             </div>
 
-            <!-- Team Members Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/34.jpg')}});">
-                        <div class="team-social-info">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <div class="row">
+                @foreach ($funcoes as $funcao)
+                    @foreach ($membros[$funcao->id] as $membro)
+                        <!-- Team Members Area -->
+                        <div class="col-12 col-sm-6 col-lg-3">
+                            <div class="single-team-members text-center mb-100">
+                                <div class="team-thumb" style="background-image: url({{asset('/storage/'.($membro->foto != null ? 'membros/'.$membro->foto : 'no-foto.png'))}});">
+                                    <div class="team-social-info">
+                                        @if ($membro->facebook != null)
+                                            <a href="{{$membro->facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                        @endif
+                                        @if ($membro->twitter != null)
+                                            <a href="{{$membro->twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                        @endif
+                                        @if ($membro->youtube != null)
+                                            <a href="{{$membro->youtube}}"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <h6>{{$membro->nome}} ({{$funcao->nome}})</h6>
+                                <span>{{$membro->descricao}}</span>
+                            </div>
                         </div>
-                    </div>
-                    <h6>Rucsandra Moisa</h6>
-                    <span>Bishop</span>
-                </div>
-            </div>
-
-            <!-- Team Members Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/35.jpg')}});">
-                        <div class="team-social-info">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <h6>Ollie Schneider</h6>
-                    <span>Archbishop</span>
-                </div>
-            </div>
-
-            <!-- Team Members Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-team-members text-center mb-100">
-                    <div class="team-thumb" style="background-image: url({{asset('template_igreja/template-vermelho/img/bg-img/36.jpg')}});">
-                        <div class="team-social-info">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <h6>Alex Manning</h6>
-                    <span>Pope</span>
-                </div>
+                    @endforeach
+                @endforeach
             </div>
         </div>
     </div>
-</div>
-<!-- ##### Team Members Area End ##### -->
+    <!-- ##### Team Members Area End ##### -->
+@endif
+
 @endsection

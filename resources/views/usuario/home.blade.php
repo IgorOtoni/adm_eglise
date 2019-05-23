@@ -14,18 +14,20 @@
     <!-- Info boxes -->
     <div class="row">
         @foreach ($quadros as $quadro)
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                <span class="info-box-icon bg-{{$quadro['color']}}"><i class="fa {{$quadro['icon']}}"></i></span>
+            <a href="{{$quadro['link']}}">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                    <span class="info-box-icon bg-{{$quadro['color']}}"><i class="fa {{$quadro['icon']}}"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">{{$quadro['title']}}</span>
-                    <span class="info-box-number">{{$quadro['info']}}</span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">{{$quadro['title']}}</span>
+                        <span class="info-box-number">{{$quadro['info']}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
                 </div>
-                <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
+            </a>
         @endforeach
     </div>
     <!-- /.row -->

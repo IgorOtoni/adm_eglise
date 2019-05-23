@@ -31,8 +31,8 @@ class TblPerfilController extends Controller
             '<a href="perfis/carregarPermissoes/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>'.'&nbsp'.
             '<label title="Status do Perfil" class="switch"><input onClick="switch_status(this)" name="'.$perfis->nome.'" class="status" id="'.$perfis->id.'" type="checkbox" '.(($perfis->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })->addColumn('igreja',function($perfis){
-            if($perfis->id != null && $perfis->id != 1)
-                return (TblIgreja::find($perfis->id))->nome;
+            if($perfis->id_igreja != null && $perfis->id_igreja != 1)
+                return (TblIgreja::find($perfis->id_igreja))->nome;
             else
                 return 'Administrador da Plataforma';
         })->editColumn('created_at', function($perfis) {

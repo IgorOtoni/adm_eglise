@@ -17,6 +17,9 @@ class CreateTblMembrosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->text('descricao')->nullable();
+            $table->text('twitter')->nullable();
+            $table->text('youtube')->nullable();
+            $table->text('facebook')->nullable();
             $table->text('foto')->nullable();
             $table->string('cep')->nullable();
             $table->string('estado')->nullable();

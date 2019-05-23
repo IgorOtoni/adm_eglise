@@ -34,44 +34,42 @@
         <div class="col-md-12">
         <p>{{$igreja->texto_apresentativo}}</p>
         <hr>
-        <h3>Ministros</h3>
+        @if ($funcoes != null && sizeof($funcoes) > 0)
+            <h3>Ministros</h3>
+        @endif
         </div>
-        <div class="col-md-4 col-sm-4">
-        <div class="grid-item staff-item">
-            <div class="grid-item-inner">
-            <div class="media-box"> <img src="http://placehold.it/500x300&amp;text=IMAGE+PLACEHOLDER" alt=""> </div>
-            <div class="grid-content">
-                <h3>Melina Mironescu</h3>
-                <nav class="social-icons"> <a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook"></i></a> <a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a> <a href="http://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a> <a href="http://www.pinterest.com" target="_blank"><i class="fa fa-pinterest"></i></a> </nav>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4 col-sm-4">
-        <div class="grid-item staff-item">
-            <div class="grid-item-inner">
-            <div class="media-box"> <img src="http://placehold.it/500x300&amp;text=IMAGE+PLACEHOLDER" alt=""> </div>
-            <div class="grid-content">
-                <h3>Francisc Cazan</h3>
-                <nav class="social-icons"> <a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook"></i></a> <a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a> <a href="http://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a> <a href="http://www.pinterest.com" target="_blank"><i class="fa fa-pinterest"></i></a> </nav>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4 col-sm-4">
-        <div class="grid-item staff-item">
-            <div class="grid-item-inner">
-            <div class="media-box"> <img src="http://placehold.it/500x300&amp;text=IMAGE+PLACEHOLDER" alt=""> </div>
-            <div class="grid-content">
-                <h3>Ethan Kay</h3>
-                <nav class="social-icons"> <a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook"></i></a> <a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a> <a href="http://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a> <a href="http://www.pinterest.com" target="_blank"><i class="fa fa-pinterest"></i></a> </nav>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis egestas rhoncus. Donec facilisis fermentum sem, ac viverra ante luctus vel. Donec vel mauris quam.</p>
-            </div>
-            </div>
-        </div>
-        </div>
+        @foreach ($funcoes as $funcao)
+            @foreach ($membros[$funcao->id] as $membro)
+                <div class="col-md-4 col-sm-4">
+                <div class="grid-item staff-item">
+                    <div class="grid-item-inner">
+                    <div class="media-box"> 
+                        @if ($membro->foto != null)
+                            <img src="/carrega_imagem/250,250,memnbros,{{$membro->foto}}" alt=""> 
+                        @else
+                            <img src="/carrega_imagem/250,250,X,no-foto.png" alt=""> 
+                        @endif
+                    </div>
+                    <div class="grid-content">
+                        <h3>{{$membro->nome}} ({{$funcao->nome}})</h3>
+                        <nav class="social-icons"> 
+                            @if ($membro->facebook != null)
+                                <a href="{{$membro->facebook}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                            @endif
+                            @if ($membro->twitter != null)
+                                <a href="{{$membro->twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                            @endif
+                            @if ($membro->youtube != null)
+                                <a href="{{$membro->youtube}}" target="_blank"><i class="fa fa-youtube"></i></a>
+                            @endif
+                        </nav>
+                        <p>{{$membro->descricao}}</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            @endforeach
+        @endforeach
     </div>
     </div>
 </div>

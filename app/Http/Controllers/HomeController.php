@@ -61,54 +61,63 @@ class HomeController extends Controller
             $quadros[$x]['title'] = 'Banners';
             $quadros[$x]['icon'] = 'fa-play';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'banners';
             $x++;
 
             $quadros[$x]['info'] = TblEventos::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Linha do tempo';
             $quadros[$x]['icon'] = 'fa-clock-o';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'eventos';
             $x++;
 
             $quadros[$x]['info'] = TblEventosFixos::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Eventos fixos';
             $quadros[$x]['icon'] = 'fa-calendar';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'eventosfixos';
             $x++;
 
             $quadros[$x]['info'] = TblGalerias::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Galerias';
             $quadros[$x]['icon'] = 'fa-file-image-o';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'galerias';
             $x++;
 
             $quadros[$x]['info'] = TblNoticias::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Notícias';
             $quadros[$x]['icon'] = 'fa-newspaper-o';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'noticias';
             $x++;
 
             $quadros[$x]['info'] = TblPerfil::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Perfis';
             $quadros[$x]['icon'] = 'fa-users';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'perfis';
             $x++;
 
             $quadros[$x]['info'] = TblPublicacoes::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Publicações';
             $quadros[$x]['icon'] = 'fa-thumbs-o-up';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'publicacoes';
             $x++;
 
             $quadros[$x]['info'] = TblSermoes::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Sermões';
             $quadros[$x]['icon'] = 'fa-microphone';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'sermoes';
             $x++;
 
             $quadros[$x]['info'] = \DB::table('users')->leftJoin('tbl_perfis','users.id_perfil','=','tbl_perfis.id')->where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Usuários ativos';
             $quadros[$x]['icon'] = 'fa-child';
             $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'usuarios';
             $x++;
 
             return view('usuario.home', compact('quadros'));
@@ -1795,7 +1804,7 @@ class HomeController extends Controller
     }*/
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    // NOTÍCIA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // FUNÇÕES AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function funcoes()
     {
         if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg')) == false){
@@ -1813,30 +1822,35 @@ class HomeController extends Controller
             return view('error');
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
-            $funcao = TblFuncoes::where('id_igreja','=',$perfil->id_igreja)->get();
-            return DataTables::of($funcao)->addColumn('action',function($funcao){
+            $funcoes = TblFuncoes::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($funcoes)->addColumn('action',function($funcoes){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarFuncao/'.$funcao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="editarFuncao/'.$funcoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirFuncao/'.$funcao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="excluirFuncao/'.$funcoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
-            })->editColumn('created_at', function($funcao) {
-                if($funcao->created_at != null)
-                    return Carbon::parse($funcao->created_at)->format('d/m/Y');
+            })->editColumn('created_at', function($funcoes) {
+                if($funcoes->created_at != null)
+                    return Carbon::parse($funcoes->created_at)->format('d/m/Y');
                 else
                     return null;
-            })->editColumn('updated_at', function($funcao) {
-                if($funcao->updated_at != null){
-                    $upd = Carbon::parse($funcao->updated_at)->diffForHumans();
+            })->editColumn('updated_at', function($funcoes) {
+                if($funcoes->updated_at != null){
+                    $upd = Carbon::parse($funcoes->updated_at)->diffForHumans();
                     return $upd;
                 }else
                     return null;
+            })->editColumn('apresentar', function($funcoes) {
+                if($funcoes->apresentar){
+                    return "<span class='label bg-green'>Sim</span>";
+                }else
+                    return "<span class='label bg-red'>Não</span>";
             })
-            ->make(true);
+            ->rawColumns(['apresentar', 'action'])->make(true);
         }
     }
 
@@ -1850,7 +1864,7 @@ class HomeController extends Controller
             $funcao->save();
 
             $notification = array(
-                'message' => 'Funções "' . $funcao->nome . '" foi publicada com sucesso!', 
+                'message' => 'Função "' . $funcao->nome . '" foi adicionada com sucesso!', 
                 'alert-type' => 'success'
             );
 
@@ -1873,10 +1887,12 @@ class HomeController extends Controller
             $funcao = TblFuncoes::find($request->id);
             $funcao->nome = $request->nome;
             $funcao->descricao = $request->descricao;
+            if($request->apresentar) $funcao->apresentar = true;
+            else $funcao->apresentar = false;
             $funcao->save();
             
             $notification = array(
-                'message' => 'Função "' . $funcao->nome . '" foi atualizada com sucesso!', 
+                'message' => 'Função "' . $funcao->nome . '" foi alterada com sucesso!', 
                 'alert-type' => 'success'
             );
 
@@ -1895,6 +1911,152 @@ class HomeController extends Controller
             );
 
             return redirect()->route('usuario.funcoes')->with($notification);
+        }else{ return view('error'); }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // MEMBROS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function membros()
+    {
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.membros', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_membros(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $membros = TblMembros::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($membros)->addColumn('action',function($membros){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarMembro/'.$membros->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirMembro/'.$membros->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($membros) {
+                if($membros->created_at != null)
+                    return Carbon::parse($membros->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($membros) {
+                if($membros->updated_at != null){
+                    $upd = Carbon::parse($membros->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })->addColumn('funcao',function($membros){
+                $funcao = ($membros->id_funcao != null) ? TblFuncoes::find($membros->id_funcao) : null;
+                if($funcao != null){
+                    return "<span class='label bg-green'>".$funcao->nome."</span>";
+                }else{
+                    return "<span class='label bg-red'>Não possuí.</span>";
+                }
+            })
+            ->rawColumns(['funcao', 'action'])->make(true);
+        }
+    }
+
+    public function incluirMembro(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $membro = new TblMembros();
+            $membro->id_igreja = $request->igreja;
+            $membro->nome = $request->nome;
+            $membro->cep = $request->cep;
+            $membro->num = $request->num;
+            $membro->bairro = $request->bairro;
+            $membro->cidade = $request->cidade;
+            $membro->estado = $request->estado;
+            $membro->complemento = $request->complemento;
+            $membro->facebook = $request->facebook;
+            $membro->twitter = $request->twitter;
+            $membro->youtube = $request->youtube;
+            $membro->foto = 'vazio';
+            $membro->descricao = $request->descricao;
+            $membro->save();
+
+            if($membro->foto){
+                $f_ = $membro->foto;
+                \Image::make($f_)->save(public_path('storage/membros/').'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $membro->foto = 'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension();
+                $membro->save();
+            }
+
+            $notification = array(
+                'message' => 'Membro "' . $membro->nome . '" foi adicionado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.membros')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarMembro($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $membro = TblMembros::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarmembro', compact('membro','igreja','modulos_igreja'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarMembro(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $membro = TblMembro::find($request->id);
+            $membro->nome = $request->nome;
+            $membro->cep = $request->cep;
+            $membro->num = $request->num;
+            $membro->bairro = $request->bairro;
+            $membro->cidade = $request->cidade;
+            $membro->estado = $request->estado;
+            $membro->complemento = $request->complemento;
+            $membro->facebook = $request->facebook;
+            $membro->twitter = $request->twitter;
+            $membro->youtube = $request->youtube;
+            $membro->foto = 'vazio';
+            $membro->descricao = $request->descricao;
+            $membro->save();
+
+            if($membro->foto){
+                $f_ = $membro->foto;
+                \Image::make($f_)->save(public_path('storage/membros/').'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension(),90);
+                $membro->foto = 'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension();
+                $membro->save();
+            }
+            
+            $notification = array(
+                'message' => 'Membro "' . $membro->nome . '" foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.membrosg')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirMembro($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $membro = TblMembros::find($id);
+            $foto = $membro->foto;
+            $membro->delete();
+            if($foto != null) File::delete(public_path().'/storage/membros/'.$foto);
+
+            $notification = array(
+                'message' => 'Membro ' . $membro->nome . ' foi excluído com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.membros')->with($notification);
         }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////

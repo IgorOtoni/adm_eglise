@@ -7,6 +7,8 @@ use App\TblConfiguracoes;
 use App\TblIgrejasModulos;
 use App\TblContatos;
 use App\TblInscricoes;
+use App\TblMembros;
+use App\TblFuncoes;
 use Symfony\Component\HttpFoundation\Response;
 class IgrejaController extends Controller
 {
@@ -137,10 +139,15 @@ class IgrejaController extends Controller
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_apresentativos_igreja($igreja);
         $retorno = obter_menus_configuracao($igreja->id_configuracao);
+        $funcoes = TblFuncoes::where('id_igreja','=',$igreja->id)->where('apresentar','=',true)->get();
+        $membros = null;
+        foreach($funcoes as $funcao){
+            $membros[$funcao->id] = TblMembros::where('id_funcao','=',$funcao->id)->where('id_igreja','=',$funcao->id_igreja)->get();
+        }
         $menus = $retorno[0];
         $submenus = $retorno[1];
         $subsubmenus = $retorno[2];
-        return view('layouts.template' . $igreja->id_template . '.apresentacao', compact('igreja', 'modulos', 'menus', 'submenus', 'subsubmenus'));
+        return view('layouts.template' . $igreja->id_template . '.apresentacao', compact('igreja', 'funcoes', 'membros', 'modulos', 'menus', 'submenus', 'subsubmenus'));
     }
     public function eventosfixos($url)
     {

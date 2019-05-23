@@ -36,25 +36,17 @@ function format ( d ) {
             '<th>Nome:</th>'+
             '<th>Apresentar:</th>'+
             '<th>Descrição:</th>'+
-            '<th>Publicada:</th>'+
-            '<th>Atualizada:</th>'+
             '</tr>'+
         '<tr>'+
             '<td>'+valida(d.nome)+'</td>'+
-            '<td>'+valida_(d.apresentar)+'</td>'+
+            '<td>'+valida(d.apresentar)+'</td>'+
             '<td>'+valida(d.descricao)+'</td>'+
-            '<td>'+valida(d.created_at)+'</td>'+
-            '<td>'+valida(d.updated_at)+'</td>'+
             '</tr>'+
         '</table></div>';
 }
 
 function valida(txt){
   return (txt ? txt : '<span class="label bg-red">Não informado</span>')
-}
-
-function valida_(bool){
-  return (bool ? '<span class="label bg-green">Sim</span>' : '<span class="label bg-red">Não</span>')
 }
 
 $(function(){
@@ -110,6 +102,7 @@ $(function(){
                 },
                 { data: 'id', name: 'id' },
                 { data: 'nome', name: 'nome' },
+                { data: 'apresentar', name: 'apresentar' },
                 { data: 'action', name: 'action' },
                 ],
                 order: [[1, 'asc']]
@@ -176,6 +169,7 @@ $(function(){
             <th>Expandir</th>
             <th>#</th>
             <th>Nome</th>
+            <th>Apresentar</th>
             <th>Ações</th>
         </tr>
         </thead>

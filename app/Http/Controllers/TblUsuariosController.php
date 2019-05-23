@@ -25,8 +25,8 @@ class TblUsuariosController extends Controller
             return (TblPerfil::find($usuarios->id))->nome;
         })->addColumn('igreja',function($usuarios){
             $perfil = TblPerfil::find($usuarios->id);
-            if($perfil->id != null && $perfil->id != 1)
-                return (TblIgreja::find($perfil->id))->nome;
+            if($perfil->id_igreja != null && $perfil->id_igreja != 1)
+                return (TblIgreja::find($perfil->id_igreja))->nome;
             else
                 return 'Administrador da Plataforma';
         })->addColumn('status',function($usuarios){

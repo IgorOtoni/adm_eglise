@@ -15,6 +15,7 @@ class Tbl_Funcoes_Seeder extends Seeder
         DB::table('tbl_funcoes')->insert([
             'id'=>1,
             'nome'=>"Pastor",
+            'apresentar'=>true,
             'id_igreja'=>1,
         ]);
 
@@ -47,6 +48,7 @@ class Tbl_Funcoes_Seeder extends Seeder
         DB::table('tbl_funcoes')->insert([
             'id'=>6,
             'nome'=>"Pastor",
+            'apresentar'=>true,
             'id_igreja'=>2,
         ]);
 
@@ -79,6 +81,7 @@ class Tbl_Funcoes_Seeder extends Seeder
         DB::table('tbl_funcoes')->insert([
             'id'=>11,
             'nome'=>"Pastor",
+            'apresentar'=>true,
             'id_igreja'=>3,
         ]);
 
