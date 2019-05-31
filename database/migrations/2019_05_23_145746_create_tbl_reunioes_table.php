@@ -17,10 +17,9 @@ class CreateTblReunioesTable extends Migration
             $table->bigIncrements('id');
             $table->text('descricao');
             $table->text('observacao')->nullable();
-            $table->date('inicio');
-            $table->date('fim')->nullable();
+            $table->datetime('inicio');
+            $table->datetime('fim')->nullable();
             $table->string('cep')->nullable();
-            $table->string('estado')->nullable();
             $table->string('cidade')->nullable();
             $table->string('bairro')->nullable();
             $table->string('rua')->nullable();

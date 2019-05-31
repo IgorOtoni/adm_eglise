@@ -17,6 +17,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'usuarios',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>14,
@@ -24,6 +25,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'perfis',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>15,
@@ -31,6 +33,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'galerias',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>16,
@@ -38,6 +41,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'eventosfixos',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>17,
@@ -45,6 +49,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'eventos',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>18,
@@ -52,6 +57,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'noticias',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>19,
@@ -59,6 +65,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'banners',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>20,
@@ -66,6 +73,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'sermoes',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>21,
@@ -73,6 +81,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'publicacoes',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>22,
@@ -80,6 +89,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'configuracoes',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>23,
@@ -90,40 +100,62 @@ class Tbl_Modulos_Seeder extends Seeder
         DB::table('tbl_modulos')->insert([
             'id'=>24,
             'nome'=>'Funções',
-            'descricao'=>'Funcionalidade do site apresentativo.',
+            'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'funcoes',
             'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>25,
             'nome'=>'Membros',
-            'descricao'=>'Funcionalidade do site apresentativo.',
+            'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'membros',
             'gerencial'=>true,
+            'sistema'=>'web',
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>26,
+            'nome'=>'Comunidades',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'comunidades',
+            'gerencial'=>true,
+            'sistema'=>'web',
+        ]);
+        DB::table('tbl_modulos')->insert([
+            'id'=>27,
+            'nome'=>'Reuniões',
+            'descricao'=>'Funcionalidade do site gerencial.',
+            'rota'=>'reunioes',
+            'gerencial'=>true,
+            'sistema'=>'web',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>'',
             'rota'=>'membros',
+            'gerencial'=>true,
+            'sistema'=>'web',
         ]);
-        DB::table('tbl_modulos')->insert([
+        /*DB::table('tbl_modulos')->insert([
             'id'=>2,
             'nome'=>'Células',
             'descricao'=>'',
             'rota'=>'celula',
-        ]);
+        ]);*/
         DB::table('tbl_modulos')->insert([
             'id'=>3,
             'nome'=>'Dízimos',
             'descricao'=>'',
             'rota'=>'dizimo',
+            'sistema'=>'indefinido',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>4,
             'nome'=>'Despesas',
             'descricao'=>'',
             'rota'=>'despesa',
+            'sistema'=>'indefinido',
         ]);
         DB::table('tbl_modulos')->insert([
             'id'=>5,
@@ -137,7 +169,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'Funcionalidade do site apresentativo.',
             'rota'=>'eventos',
         ]);
-        DB::table('tbl_modulos')->insert([
+        /*DB::table('tbl_modulos')->insert([
             'id'=>7,
             'nome'=>'Agenda Pastoral',
             'descricao'=>'',
@@ -150,7 +182,7 @@ class Tbl_Modulos_Seeder extends Seeder
             'descricao'=>'',
             'rota'=>'escolaBiblica',
             'gerencial'=>true,
-        ]);
+        ]);*/
         DB::table('tbl_modulos')->insert([
             'id'=>9,
             'nome'=>'Notícias',

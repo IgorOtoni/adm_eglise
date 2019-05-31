@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(Tbl_Igrejas_Seeder::class);
+        $this->call(Tbl_Funcoes_Seeder::class);
+        $this->call(Tbl_Membros_Seeder::class);
         $this->call(Tbl_Perfis_Seeder::class); 
         $this->call(Tbl_User_Seeder::class);
         $this->call(Tbl_Modulos_Seeder::class);
@@ -28,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Sermoes_Seeder::class);
         $this->call(Tbl_Galeria_Seeder::class);
         $this->call(Tbl_Fotos_Seeder::class);
+        $this->call(Tbl_Menus_Android_Seeder::class);
         $this->call(Tbl_Menus_Seeder::class);
         $this->call(Tbl_Sub_Menus_Seeder::class);
         $this->call(Tbl_Sub_Sub_Menus_Seeder::class);
@@ -35,7 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Tbl_Banner_Seeder::class);
         $this->call(Tbl_Publicacao_Fotos_Seeder::class);
         $this->call(Tbl_Template_Fotos_Seeder::class);
-        $this->call(Tbl_Funcoes_Seeder::class);
-        $this->call(Tbl_Membros_Seeder::class);
+        $this->call(Tbl_Comunidades_Seeder::class);
     }
 }

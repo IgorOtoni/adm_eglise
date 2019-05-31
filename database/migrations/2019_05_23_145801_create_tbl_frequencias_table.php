@@ -18,6 +18,8 @@ class CreateTblFrequenciasTable extends Migration
             $table->boolean('ausente');
             $table->bigInteger('id_membro_comunidade')->unsigned();
             $table->foreign('id_membro_comunidade')->references('id')->on('tbl_membros_comunidades');
+            $table->bigInteger('id_reuniao')->unsigned();
+            $table->foreign('id_reuniao')->references('id')->on('tbl_reunioes');
             $table->timestamps();
         });
     }

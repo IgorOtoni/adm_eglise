@@ -23,6 +23,9 @@ use App\TblConfiguracoes;
 use App\TblSermoes;
 use App\TblPublicacaoFotos;
 use App\TblPublicacoes;
+use App\TblComunidades;
+use App\TblmembrosComunidades;
+use App\TblReunioes;
 use App\User;
 use App\TblPerfisIgrejasModulos;
 use App\TblIgrejasModulos;
@@ -1684,23 +1687,38 @@ class HomeController extends Controller
             if($count == 0){
                 $perfil->save();
 
+                $permissoes_backup = null;
+                $cp = 0;
+
                 $modulos_do_perfil = TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->get();
                 if(count($modulos_do_perfil) > 0) foreach($modulos_do_perfil as $modulo_perfil){
+                    $permissoes_perfil = TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->get();
+                    foreach($permissoes_perfil as $permisssao_perfil){
+                        $permissoes_backup[$modulo_perfil->id_modulo_igreja][$cp] = $permisssao_perfil->id_permissao;
+                        $cp++;
+                    }
+                    $cp = 0;
+
                     TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->delete();
                 }
                 TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->delete();
 
-                $perfil_modulo = new TblPerfisIgrejasModulos();
-
                 foreach ($request->modulos as $key => $value) {
+                    $perfil_modulo = new TblPerfisIgrejasModulos();
+
                     $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
                     $modulo_igreja = $modulo_igreja[0];
 
-                    $data = [
-                        'id_perfil' => $perfil->id,
-                        'id_modulo_igreja' => $modulo_igreja->id,
-                    ];
-                    $perfil_modulo->create($data);
+                    $perfil_modulo->id_perfil = $perfil->id;
+                    $perfil_modulo->id_modulo_igreja = $modulo_igreja->id;
+                    $perfil_modulo->save();
+
+                    if(isset($permissoes_backup[$modulo_igreja->id])) foreach($permissoes_backup[$modulo_igreja->id] as $permissao_preservada_id){
+                        $permissao_nova = new TblPerfisPermissoes();
+                        $permissao_nova->id_perfil_igreja_modulo = $perfil_modulo->id;
+                        $permissao_nova->id_permissao = $permissao_preservada_id;
+                        $permissao_nova->save();
+                    }
                 }
 
                 $notification = array(
@@ -2057,6 +2075,122 @@ class HomeController extends Controller
             );
 
             return redirect()->route('usuario.membros')->with($notification);
+        }else{ return view('error'); }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // COMUNIDADE AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function comunidades()
+    {
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.comunidades', compact('igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_comunidades(){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $comunidade = TblComunidades::where('id_igreja','=',$perfil->id_igreja)->get();
+            return DataTables::of($comunidade)->addColumn('action',function($comunidade){
+                $btn_editar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+                    $btn_editar = '<a href="editarComunidade/'.$comunidade->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                $btn_excluir = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_excluir = '<a href="excluirComunidade/'.$comunidade->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir;
+            })->editColumn('created_at', function($comunidade) {
+                if($comunidade->created_at != null)
+                    return Carbon::parse($comunidade->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($comunidade) {
+                if($comunidade->updated_at != null){
+                    $upd = Carbon::parse($comunidade->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })->editColumn('quantidade_membros', function($comunidade) {
+                $count = TblMembrosComunidades::where('id_comunidade','=',$comunidade->id)->count();
+                return $count;
+            })
+            ->rawColumns(['quantidade_membros', 'action'])->make(true);
+        }
+    }
+
+    public function incluirComunidade(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $comunidade = new TblComunidades();
+            $comunidade->id_igreja = $request->igreja;
+            $comunidade->nome = $request->nome;
+            $comunidade->descricao = $request->descricao;
+            $comunidade->save();
+
+            foreach($request->membros as $id_membro){
+                $membro_comunidade = new TblMembrosComunidades();
+                $membro_comunidade->id_membro = $id_membro;
+                $membro_comunidade->id_comunidade = $comunidade->id;
+                if(in_array($id_membro, $request->lideres)) $membro_comunidade->lider = true;
+                else $membro_comunidade->lider = false;
+                $membro_comunidade->save();
+            }
+
+            $notification = array(
+                'message' => 'Comunidade "' . $comunidade->nome . '" foi adicionada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.comunidades')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarComunidade($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $comunidade = TblComunidades::find($id);
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            return view('usuario.editarcomunidade', compact('comunidade','igreja','modulos_igreja'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarComunidade(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $comunidade = TblComunidades::find($request->id);
+            $comunidade->nome = $request->nome;
+            $comunidade->descricao = $request->descricao;
+            $comunidade->save();
+
+            $notification = array(
+                'message' => 'Comunidade "' . $comunidade->nome . '" foi alterada com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.comunidades')->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirComunidade($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $comunidade = TblComunidades::find($id);
+            TblmembrosComunidades::where('id_comunidade','=',$comunidade->id)->delete();
+            $comunidade->delete();
+
+            $notification = array(
+                'message' => 'Comunidade "' . $comunidade->nome . '" foi excluída com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.comunidades')->with($notification);
         }else{ return view('error'); }
     }
     ////////////////////////////////////////////////////////////////////////////////////////

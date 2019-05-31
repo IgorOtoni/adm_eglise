@@ -38,6 +38,7 @@ class Tbl_User_Seeder extends Seeder
             'nome'=>'Pastor',
             'email'=>'pastor@hotsystems.com.br',
             'id_perfil'=> 4,
+            'id_membro'=>19,
             'password'=>bcrypt('123456'),
             'status'=> true,
         ]);

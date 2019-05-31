@@ -15,6 +15,7 @@ class CreateTblMembrosComunidadesTable extends Migration
     {
         Schema::create('tbl_membros_comunidades', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('ativo')->default(true);
             $table->boolean('lider');
             $table->bigInteger('id_membro')->unsigned();
             $table->foreign('id_membro')->references('id')->on('tbl_membros');

@@ -223,23 +223,38 @@ class TblPerfilController extends Controller
         if($count == 0){
             $perfil->save();
 
+            $permissoes_backup = null;
+            $cp = 0;
+
             $modulos_do_perfil = TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->get();
             if(count($modulos_do_perfil) > 0) foreach($modulos_do_perfil as $modulo_perfil){
+                $permissoes_perfil = TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->get();
+                foreach($permissoes_perfil as $permisssao_perfil){
+                    $permissoes_backup[$modulo_perfil->id_modulo_igreja][$cp] = $permisssao_perfil->id_permissao;
+                    $cp++;
+                }
+                $cp = 0;
+
                 TblPerfisPermissoes::where("id_perfil_igreja_modulo","=",$modulo_perfil->id)->delete();
             }
             TblPerfisIgrejasModulos::where("id_perfil","=",$perfil->id)->delete();
 
-            $perfil_modulo = new TblPerfisIgrejasModulos();
-
             foreach ($request->modulos as $key => $value) {
+                $perfil_modulo = new TblPerfisIgrejasModulos();
+
                 $modulo_igreja = TblIgrejasModulos::where('id_modulo', '=', $value)->where('id_igreja', '=', $perfil->id_igreja)->get();
                 $modulo_igreja = $modulo_igreja[0];
 
-                $data = [
-                    'id_perfil' => $perfil->id,
-                    'id_modulo_igreja' => $modulo_igreja->id,
-                ];
-                $perfil_modulo->create($data);
+                $perfil_modulo->id_perfil = $perfil->id;
+                $perfil_modulo->id_modulo_igreja = $modulo_igreja->id;
+                $perfil_modulo->save();
+
+                if(isset($permissoes_backup[$modulo_igreja->id])) foreach($permissoes_backup[$modulo_igreja->id] as $permissao_preservada_id){
+                    $permissao_nova = new TblPerfisPermissoes();
+                    $permissao_nova->id_perfil_igreja_modulo = $perfil_modulo->id;
+                    $permissao_nova->id_permissao = $permissao_preservada_id;
+                    $permissao_nova->save();
+                }
             }
 
             $notification = array(

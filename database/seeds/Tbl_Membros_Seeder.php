@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class Tbl_Membros_Seeder extends Seeder
 {
@@ -24,6 +25,7 @@ class Tbl_Membros_Seeder extends Seeder
             'id'=>2,
             'nome'=>"Maria",
             'id_igreja'=>1,
+            'dt_nascimento'=>Carbon::parse(date('Y-m-d h:i:s', time())),
         ]);
 
         DB::table('tbl_membros')->insert([
@@ -66,6 +68,7 @@ class Tbl_Membros_Seeder extends Seeder
             'id'=>8,
             'nome'=>"Maria",
             'id_igreja'=>2,
+            'dt_nascimento'=>Carbon::parse(date('Y-m-d h:i:s', time())),
         ]);
 
         DB::table('tbl_membros')->insert([
@@ -95,7 +98,7 @@ class Tbl_Membros_Seeder extends Seeder
         ]);
         //////////////////////////////////////////////////////////////////////////////////////
 
-        // Mebros para Igreja 1 =============================================================
+        // Mebros para Igreja 3 =============================================================
         DB::table('tbl_membros')->insert([
             'id'=>13,
             'nome'=>"João",
@@ -108,6 +111,7 @@ class Tbl_Membros_Seeder extends Seeder
             'id'=>14,
             'nome'=>"Maria",
             'id_igreja'=>3,
+            'dt_nascimento'=>Carbon::parse(date('Y-m-d h:i:s', time())),
         ]);
 
         DB::table('tbl_membros')->insert([
@@ -133,6 +137,12 @@ class Tbl_Membros_Seeder extends Seeder
         DB::table('tbl_membros')->insert([
             'id'=>18,
             'nome'=>"Larissa",
+            'id_igreja'=>3,
+        ]);
+
+        DB::table('tbl_membros')->insert([
+            'id'=>19,
+            'nome'=>"Pastor",
             'id_igreja'=>3,
         ]);
         //////////////////////////////////////////////////////////////////////////////////////
