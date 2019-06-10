@@ -1,5 +1,8 @@
 @extends('layouts.usuario.index')
 @push('script')
+<!-- DataTables -->
+<script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="{{asset('template_adm/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 <!-- daterange picker -->
@@ -18,6 +21,40 @@
 
 <script>
 $(function(){
+    $('#tbl_inscricoes').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+
+        "language": {            
+        "sEmptyTable":   "Nenhum registro encontrado",
+        "sProcessing":   "Carregando,aguarde...",
+        "sLengthMenu":   "Mostrar _MENU_ registos",
+        "sZeroRecords":  "A busca não retornou nehum registro",
+        "sInfo":         "Mostrando de _START_ à _END_ de um total de _TOTAL_ registros",
+        "sInfoEmpty":    "Mostrando de 0 à 0 de um total 0 registros",
+        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+        "sInfoPostFix":  "",
+        "sSearch":       "Pesquisar:",
+        "sUrl":          "",
+        "oPaginate": {
+            "sFirst":    "Primeiro",
+            "sPrevious": "Anterior",
+            "sNext":     "Próximo",
+            "sLast":     "Último"
+        },
+        "oAria": {
+            "sSortAscending":  ": Ordenar colunas de forma ascendente",
+            "sSortDescending": ": Ordenar colunas de forma descendente"
+        }
+        },
+        'processing': true,
+        'autoWidth': false,
+    });
+
     $('input[type=file]').fileinput({
         language: "pt-BR",
         //minImageCount: 0,
@@ -148,6 +185,47 @@ $(function(){
             <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
         </div>
     </div>
+
+    <form id="editarInscricoesFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.atualizarInscricoes')}}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" value="{{$evento->id}}">
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+            <div class="col-md-12">
+                <label >Incrições: {{(isset($inscricoes)) ? sizeof($inscricoes) : "0"}}</label>
+                <table id="tbl_inscricoes" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Cancelar</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if(isset($inscricoes) && sizeof($inscricoes) > 0) foreach($inscricoes as $inscricao){
+                        ?>
+                        <tr>
+                            <td>{{$inscricao->id}}</td>
+                            <td>{{$inscricao->email}}</td>
+                            <td>{{$inscricao->telefone}}</td>
+                            <td><input name="inscricoes[]" value="{{$membro->id}}" type="checkbox" {{($inscricao->cancelada) ? "checked" : ""}}></td>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <a href="/usuario/eventos" class="btn btn-warning pull-left">Cancelar</a>
+            <button type="submit" class="btn btn-primary pull-right">Salvar alteração</button>
+        </div>
+    </div>
+    </form>
 
 </section>
 <!-- /.content -->

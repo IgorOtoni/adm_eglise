@@ -19,6 +19,7 @@ class CreateTblInscricoesTable extends Migration
             $table->string('telefone');
             $table->bigInteger('id_evento')->unsigned();
             $table->foreign('id_evento')->references('id')->on('tbl_eventos');
+            $table->boolean('cancelada')->default(false);
             $table->timestamps();
         });
     }

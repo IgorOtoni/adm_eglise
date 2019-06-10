@@ -15,6 +15,7 @@ use App\TblGalerias;
 use App\TblFotos;
 use App\TblEventosFixos;
 use App\TblEventos;
+use App\TblInscricoes;
 use App\TblNoticias;
 use App\TblMenu;
 use App\TblSubMenu;
@@ -59,6 +60,35 @@ class HomeController extends Controller
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
 
             $x = 0;
+
+            $eventos = TblEventos::where('dados_horario_inicio','>', Carbon::parse(date('Y-m-d h:i:s', time())));
+            $qtd_inscricoes = 0;
+            $qtd_feventos = 0;
+            foreach($eventos as $evento){
+                $qtd_inscricoes += TblIncricoes::where('id_evento','=',$evento->id)->count();
+                $qtd_feventos++;
+            }
+
+            $color_inscricoes = 'green';
+            if($color_inscricoes == 0){
+                $color_inscricoes = 'red';
+            }else if($qtd_inscricoes < 100){
+                $color_inscricoes = 'yellow';
+            }
+
+            $quadros[$x]['info'] = $qtd_inscricoes;
+            $quadros[$x]['title'] = 'Quantidade de incrições para os próximos eventos';
+            $quadros[$x]['icon'] = 'fa-play';
+            $quadros[$x]['color'] = $color_inscricoes;
+            $quadros[$x]['link'] = 'eventos';
+            $x++;
+
+            $quadros[$x]['info'] = $qtd_feventos;
+            $quadros[$x]['title'] = 'Eventos que ainda irão acontecer';
+            $quadros[$x]['icon'] = 'fa-play';
+            $quadros[$x]['color'] = 'yellow';
+            $quadros[$x]['link'] = 'banners';
+            $x++;
 
             $quadros[$x]['info'] = TblBanner::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Banners';
@@ -1172,10 +1202,37 @@ class HomeController extends Controller
     public function editarEvento($id){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
             $evento = TblEventos::find($id);
+            $incricoes = TblInscricoes::where('id_evento','=',$evento->id)->get();
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
             $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-            return view('usuario.editarevento', compact('evento','igreja','modulos_igreja'));
+            return view('usuario.editarevento', compact('evento','igreja','modulos_igreja','incricoes'));
+        }else{ return view('error'); }
+    }
+
+    public function atualizarinscricoes(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $evento = TblEventos::find($id);
+
+            $incricoes_ = TblIncricoes::where('id_evento','=',$id);
+
+            foreach($incricoes_ as $incricao_){
+                $incricao_->cancelada = false;
+                $incricao_->save();
+            }
+            
+            foreach($request->inscricoes as $id_inscricao){
+                $incricao = TblIncricoes::find($id_inscricao);
+                $incricao->cancelada = true;
+                $incricao->save();
+            }
+
+            $notification = array(
+                'message' => 'A inscrições do "' . $evento->nome . '" foram atualizadas com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('usuario.eventos')->with($notification);
         }else{ return view('error'); }
     }
 

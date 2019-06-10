@@ -14,7 +14,7 @@ return [
         'funcoesg' => '24',
         'membrosg' => '25',
         'comunidadesg' => '26',
-        'reunioesg' => '27',
+        //'reunioesg' => '27',
     ],
     'permissoes' => [
         'incluir' => 1,

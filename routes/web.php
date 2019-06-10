@@ -44,6 +44,7 @@ Route::get('/formulario', 'PlataformaController@formulario')->name('plataforma.f
 Route::post('/cadastro', 'PlataformaController@cadastro')->name('plataforma.incluirIgreja');
 
 Route::get('/congregacoes', 'PlataformaController@eglise')->name('plataforma.congregacoes');
+Route::get('/filtrarIgreja', 'PlataformaController@filtrarIgreja')->name('plataforma.filtrarIgreja');
 
 Route::get('/', 'PlataformaController@index')->name('plataforma.home');
 //Route::get('/eglise', 'PlataformaController@eglise')->name('eglise');
@@ -231,6 +232,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarEvento', 'HomeController@atualizarEvento')->name('usuario.atualizarEvento');
         Route::post('/excluirFotoEvento', 'HomeController@excluirFotoEvento')->name('usuario.excluirFotoEvento');
         Route::get('/excluirEvento/{id}', 'HomeController@excluirEvento')->name('usuario.excluirEvento');
+        Route::post('/atualizarInscricoes', 'HomeController@atualizarInscricoes')->name('usuario.atualizarInscricoes');
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // CRUD PUBLICAÇÕES ======================================================================

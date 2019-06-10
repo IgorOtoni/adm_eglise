@@ -10,6 +10,20 @@
     </h1>
     </section>-->
 
+    <form id="filtrarIgrejaForm" method="GET" role="form" action="{{route('plataforma.filtrarIgreja')}}" enctype="multipart/form-data">
+    @csrf
+        <div class="box-body">
+            <div class="row">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" name="nome" placeholder="Congregação">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-flat">Filtrar</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <div class="row"><center>{{ $igrejas_e_configuracoes->appends(request()->query())->links() }}</center></div>
     <!-- Main content -->
     <div class="row">

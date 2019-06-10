@@ -429,7 +429,7 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_modulo'=>26,
             'icone'=>'fa fa-user-plus',
         ]);
-        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Reuniões
+        /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - Reuniões
             'id'=>76,
             'id_igreja'=>1,
             'id_modulo'=>27,
@@ -446,6 +446,6 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_igreja'=>3,
             'id_modulo'=>27,
             'icone'=>'fa fa-user-plus',
-        ]);
+        ]);*/
     }
 }

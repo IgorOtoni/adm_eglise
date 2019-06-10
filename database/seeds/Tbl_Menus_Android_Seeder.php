@@ -13,11 +13,19 @@ class tbl_menus_android_Seeder extends Seeder
     {
         // Menus da primeira igreja =============================================================
         DB::table('tbl_menus_android')->insert([
+            'id'=>22,
+            'id_configuracao'=>1,
+            'nome'=>'Inicial',
+            'link'=>'modulo-home',
+            'ordem'=>1,
+        ]);
+        
+        DB::table('tbl_menus_android')->insert([
             'id'=>1,
             'id_configuracao'=>1,
             'nome'=>'Linha do tempo',
             'link'=>'modulo-eventos',
-            'ordem'=>1,
+            'ordem'=>2,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -25,7 +33,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Eventos fixos',
             'link'=>'modulo-eventosfixos',
-            'ordem'=>2,
+            'ordem'=>3,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -33,7 +41,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Notícias',
             'link'=>'modulo-noticias',
-            'ordem'=>3,
+            'ordem'=>4,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -41,7 +49,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Galerias',
             'link'=>'modulo-galerias',
-            'ordem'=>4,
+            'ordem'=>5,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -49,7 +57,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Publicações',
             'link'=>'modulo-publicacoes',
-            'ordem'=>5,
+            'ordem'=>6,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -57,7 +65,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Login',
             'link'=>'modulo-login',
-            'ordem'=>7,
+            'ordem'=>8,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -65,17 +73,25 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>1,
             'nome'=>'Sermões',
             'link'=>'modulo-sermoes',
-            'ordem'=>6,
+            'ordem'=>7,
         ]);
         /////////////////////////////////////////////////////////////////////////////////////////
 
         // Menus da segunda igreja =============================================================
         DB::table('tbl_menus_android')->insert([
+            'id'=>23,
+            'id_configuracao'=>2,
+            'nome'=>'Inicial',
+            'link'=>'modulo-home',
+            'ordem'=>1,
+        ]);
+        
+        DB::table('tbl_menus_android')->insert([
             'id'=>7,
             'id_configuracao'=>2,
             'nome'=>'Linha do tempo',
             'link'=>'modulo-eventos',
-            'ordem'=>1,
+            'ordem'=>2,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -83,7 +99,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Eventos fixos',
             'link'=>'modulo-eventosfixos',
-            'ordem'=>2,
+            'ordem'=>3,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -91,7 +107,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Notícias',
             'link'=>'modulo-noticias',
-            'ordem'=>3,
+            'ordem'=>4,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -99,7 +115,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Galerias',
             'link'=>'modulo-galerias',
-            'ordem'=>4,
+            'ordem'=>5,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -107,7 +123,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Publicações',
             'link'=>'modulo-publicacoes',
-            'ordem'=>5,
+            'ordem'=>6,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -115,7 +131,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Login',
             'link'=>'modulo-login',
-            'ordem'=>7,
+            'ordem'=>8,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -123,17 +139,25 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>2,
             'nome'=>'Sermões',
             'link'=>'modulo-sermoes',
-            'ordem'=>6,
+            'ordem'=>7,
         ]);
         /////////////////////////////////////////////////////////////////////////////////////////
 
         // Menus da terceira igreja =============================================================
         DB::table('tbl_menus_android')->insert([
+            'id'=>24,
+            'id_configuracao'=>3,
+            'nome'=>'Inicial',
+            'link'=>'modulo-home',
+            'ordem'=>1,
+        ]);
+        
+        DB::table('tbl_menus_android')->insert([
             'id'=>13,
             'id_configuracao'=>3,
             'nome'=>'Linha do tempo',
             'link'=>'modulo-eventos',
-            'ordem'=>1,
+            'ordem'=>2,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -141,7 +165,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Eventos fixos',
             'link'=>'modulo-eventosfixos',
-            'ordem'=>2,
+            'ordem'=>3,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -149,7 +173,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Notícias',
             'link'=>'modulo-noticias',
-            'ordem'=>3,
+            'ordem'=>4,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -157,7 +181,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Galerias',
             'link'=>'modulo-galerias',
-            'ordem'=>4,
+            'ordem'=>5,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -165,7 +189,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Publicações',
             'link'=>'modulo-publicacoes',
-            'ordem'=>5,
+            'ordem'=>6,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -173,7 +197,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Login',
             'link'=>'modulo-login',
-            'ordem'=>7,
+            'ordem'=>8,
         ]);
 
         DB::table('tbl_menus_android')->insert([
@@ -181,7 +205,7 @@ class tbl_menus_android_Seeder extends Seeder
             'id_configuracao'=>3,
             'nome'=>'Sermões',
             'link'=>'modulo-sermoes',
-            'ordem'=>6,
+            'ordem'=>7,
         ]);
         /////////////////////////////////////////////////////////////////////////////////////////
     }

@@ -27,6 +27,14 @@ class PlataformaController extends Controller
         return view('eglise.igrejas', compact('igrejas_e_configuracoes'));
     }
 
+    public function filtrarIgreja(Request $request)
+    {
+        //$igrejas = TblIgreja::all();
+        $igrejas_e_configuracoes = \DB::table('tbl_igrejas')->where('tbl_igrejas.nome','like', '%'.$request->nome.'%')->leftJoin('tbl_configuracoes','tbl_igrejas.id','=','tbl_configuracoes.id_igreja')->paginate(6);
+        //dd($igrejas_e_configuracoes);
+        return view('eglise.igrejas', compact('igrejas_e_configuracoes'));
+    }
+
     public function formulario(){
         return view('eglise.formulario');
     }

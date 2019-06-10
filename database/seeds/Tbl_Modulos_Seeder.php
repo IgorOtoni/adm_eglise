@@ -121,14 +121,14 @@ class Tbl_Modulos_Seeder extends Seeder
             'gerencial'=>true,
             'sistema'=>'web',
         ]);
-        DB::table('tbl_modulos')->insert([
+        /*DB::table('tbl_modulos')->insert([
             'id'=>27,
             'nome'=>'Reuniões',
             'descricao'=>'Funcionalidade do site gerencial.',
             'rota'=>'reunioes',
             'gerencial'=>true,
             'sistema'=>'web',
-        ]);
+        ]);*/
         DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
