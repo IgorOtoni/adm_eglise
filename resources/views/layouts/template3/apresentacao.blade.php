@@ -52,7 +52,7 @@
                         <div class="col-12 col-sm-6 col-lg-3">
                             <div class="single-pastor-area mb-100">
                                 @if ($membro->foto != null)
-                                    <img src="/carrega_imagem/250,250,memnbros,{{$membro->foto}}" alt=""> 
+                                    <img src="/carrega_imagem/250,250,membros,{{$membro->foto}}" alt=""> 
                                 @else
                                     <img src="/carrega_imagem/250,250,X,no-foto.png" alt=""> 
                                 @endif

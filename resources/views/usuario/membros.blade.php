@@ -1,8 +1,12 @@
 @extends('layouts.usuario.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
 
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
@@ -33,20 +37,30 @@ tr.shown td.details-control {
 </style>
 
 <script>
+function switch_status(comp){
+  var id = $(comp).prop('id');
+  var nome = $(comp).prop('name');
+  $.ajax({
+    url: '/usuario/switchStatusMembro/'+id,
+    type: 'GET'
+  });
+  if($(comp).prop('checked') == true){
+    toastr.success(nome + " teve seu status ativado!");
+  }else{
+    toastr.error(nome + " teve seu status desativado!");
+  }
+}
+
 function format ( d ) {
     // `d` is the original data object for the row
     return '<div class=" table-responsive"><table class="table table-bordered">'+
         '<tr>'+
             '<th>Nome:</th>'+
             '<th>Função:</th>'+
-            '<th>Publicada:</th>'+
-            '<th>Atualizada:</th>'+
             '</tr>'+
         '<tr>'+
             '<td>'+valida(d.nome)+'</td>'+
             '<td>'+valida(d.funcao)+'</td>'+
-            '<td>'+valida(d.created_at)+'</td>'+
-            '<td>'+valida(d.updated_at)+'</td>'+
             '</tr>'+
         '</table></div>';
 }
@@ -56,6 +70,8 @@ function valida(txt){
 }
 
 $(function(){
+
+    $('#funcao').select2();
 
     $('[data-mask]').inputmask();
 
@@ -264,44 +280,46 @@ $(function(){
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group has-feedback">
+                        <label >Função</label>
+                        <select id="funcao" name="funcao" class="form-control select2" style="width: 100%;" required>
+                            <option value="0">Sem função</option>
+                            <?php $funcoes = App\TblFuncoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                            @foreach ($funcoes as $funcao)
+                            <option value="{{$funcao->id}}">{{$funcao->nome}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label >CEP</label>
                         <input id="cep" name="cep" type="text" class="form-control" placeholder="CEP" data-inputmask='"mask": "99.999-999"' data-mask>
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Estado</label>
                         <input id="uf" name="estado" type="text" class="form-control" placeholder="Estado">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Cidade</label>
                         <input id="cidade" name="cidade" type="text" class="form-control" placeholder="Cidade">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Bairro</label>
                         <input id="bairro" name="bairro" type="text" class="form-control" placeholder="Bairro">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Rua</label>
                         <input id="rua" name="rua" type="text" class="form-control" placeholder="Rua">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -311,66 +329,51 @@ $(function(){
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Número</label>
-                        <input name="num" type="number" class="form-control" placeholder="Número">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
+                        <input name="text" type="number" class="form-control" placeholder="Número">
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Telefone</label>
                         <input name="telefone" type="text" class="form-control" placeholder="Telefone" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Email</label>
                         <input name="email" type="text" class="form-control" placeholder="Email">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                       <label >Foto</label>
                       <input name="foto" type="file" id="input_img">
-                      <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Descrição</label>
                         <textarea name="descricao" class="form-control" rows="3" placeholder="Descrição"></textarea>
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Facebook</label>
                         <input name="facebook" type="url" class="form-control" placeholder="Facebook">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Youtube</label>
-                        <input name="facebook" type="url" class="form-control" placeholder="Facebook">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
+                        <input name="youtube" type="url" class="form-control" placeholder="Youtube">
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label >Twitter</label>
-                        <input name="facebook" type="url" class="form-control" placeholder="Facebook">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <div class="help-block with-errors"></div>
+                        <input name="twitter" type="url" class="form-control" placeholder="Twitter">
                     </div>
                 </div>
                 </div>

@@ -21,16 +21,19 @@ use App\TblMenu;
 use App\TblSubMenu;
 use App\TblSubSubMenu;
 use App\TblConfiguracoes;
+use App\TblMenusAndroid;
 use App\TblSermoes;
 use App\TblPublicacaoFotos;
 use App\TblPublicacoes;
 use App\TblComunidades;
-use App\TblmembrosComunidades;
+use App\TblMembrosComunidades;
 use App\TblReunioes;
 use App\User;
 use App\TblPerfisIgrejasModulos;
+use App\TblIgreja;
 use App\TblIgrejasModulos;
 use App\TblPerfisPermissoes;
+use App\TblFrequencias;
 use Carbon\Carbon;
 use Calendar;
 
@@ -243,6 +246,8 @@ class HomeController extends Controller
             }else if($request->link == 6){
                 $menu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
+                $menu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
                 $menu->link = $request->url;
             }
             if($request->foto){
@@ -282,6 +287,8 @@ class HomeController extends Controller
             }else if($request->link == 6){
                 $menu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
+                $menu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
                 $menu->link = $request->url;
             }
             $banner->save();
@@ -845,7 +852,8 @@ class HomeController extends Controller
             $menus = $retorno[0];
             $submenus = $retorno[1];
             $subsubmenus = $retorno[2];
-            return view('usuario.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus'));
+            $menus_aplicativo = obter_menus_aplicativo_configuracao($igreja->id_configuracao);
+            return view('usuario.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus','menus_aplicativo'));
         }
     }
 
@@ -869,6 +877,8 @@ class HomeController extends Controller
             }else if($request->link == 6){
                 $menu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
+                $menu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
                 $menu->link = $request->url;
             }
             $menu->save();
@@ -901,6 +911,8 @@ class HomeController extends Controller
             }else if($request->link == 6){
                 $menu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
+                $menu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
                 $menu->link = $request->url;
             }
             $menu->save();
@@ -954,19 +966,21 @@ class HomeController extends Controller
             $submenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $menu->link = $modulo->rota;
+                $submenu->link = $modulo->rota;
             }else if($request->link == 2){
-                $menu->link = 'publicacao/'.$request->publicacao;
+                $submenu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $menu->link = 'evento/'.$request->evento;
+                $submenu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $menu->link = 'eventofixo/'.$request->eventofixo;
+                $submenu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $menu->link = 'noticia/'.$request->noticia;
+                $submenu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $menu->link = 'sermao/'.$request->sermao;
+                $submenu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
-                $menu->link = $request->url;
+                $submenu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
+                $submenu->link = $request->url;
             }
             $submenu->save();
 
@@ -987,19 +1001,21 @@ class HomeController extends Controller
             $submenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $menu->link = $modulo->rota;
+                $submenu->link = $modulo->rota;
             }else if($request->link == 2){
-                $menu->link = 'publicacao/'.$request->publicacao;
+                $submenu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $menu->link = 'evento/'.$request->evento;
+                $submenu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $menu->link = 'eventofixo/'.$request->eventofixo;
+                $submenu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $menu->link = 'noticia/'.$request->noticia;
+                $submenu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $menu->link = 'sermao/'.$request->sermao;
+                $submenu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
-                $menu->link = $request->url;
+                $submenu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
+                $submenu->link = $request->url;
             }
             $submenu->save();
 
@@ -1043,19 +1059,21 @@ class HomeController extends Controller
             $subsubmenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $menu->link = $modulo->rota;
+                $subsubmenu->link = $modulo->rota;
             }else if($request->link == 2){
-                $menu->link = 'publicacao/'.$request->publicacao;
+                $subsubmenu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $menu->link = 'evento/'.$request->evento;
+                $subsubmenu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $menu->link = 'eventofixo/'.$request->eventofixo;
+                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $menu->link = 'noticia/'.$request->noticia;
+                $subsubmenu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $menu->link = 'sermao/'.$request->sermao;
+                $subsubmenu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
-                $menu->link = $request->url;
+                $subsubmenu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
+                $subsubmenu->link = $request->url;
             }
             $subsubmenu->save();
 
@@ -1070,25 +1088,27 @@ class HomeController extends Controller
 
     public function editarSubSubMenu(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-            $subsubmenu = new TblSubSubMenu();
+            $subsubmenu = TblSubSubMenu::find($request->id);
             $subsubmenu->id_submenu = $request->id_submenu;
             $subsubmenu->nome = $request->nome;
             $subsubmenu->ordem = $request->ordem;
             if($request->link == 1){
                 $modulo = TblModulo::find($request->modulo);
-                $menu->link = $modulo->rota;
+                $subsubmenu->link = $modulo->rota;
             }else if($request->link == 2){
-                $menu->link = 'publicacao/'.$request->publicacao;
+                $subsubmenu->link = 'publicacao/'.$request->publicacao;
             }else if($request->link == 3){
-                $menu->link = 'evento/'.$request->evento;
+                $subsubmenu->link = 'evento/'.$request->evento;
             }else if($request->link == 4){
-                $menu->link = 'eventofixo/'.$request->eventofixo;
+                $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
             }else if($request->link == 5){
-                $menu->link = 'noticia/'.$request->noticia;
+                $subsubmenu->link = 'noticia/'.$request->noticia;
             }else if($request->link == 6){
-                $menu->link = 'sermao/'.$request->sermao;
+                $subsubmenu->link = 'sermao/'.$request->sermao;
             }else if($request->link == 7){
-                $menu->link = $request->url;
+                $subsubmenu->link = 'galeria/'.$request->galeria;
+            }else if($request->link == 8){
+                $subsubmenu->link = $request->url;
             }
             $subsubmenu->save();
 
@@ -1115,6 +1135,17 @@ class HomeController extends Controller
         }else{ return view('error'); }
     }
 
+    public function excluirLogo(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $logo = $request['logo'];
+            $igreja = TblIgreja::find($request->id);
+            $igreja->logo = null;
+            $igreja->save();
+            File::delete(public_path().'/storage/igrejas/'.$logo);
+            return \Response::json(['message' => 'File successfully delete'], 200);
+        }
+    }
+
     public function salvarConfiguracoes(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
             $configuracao = TblConfiguracoes::find($request->id);
@@ -1122,10 +1153,127 @@ class HomeController extends Controller
             $configuracao->cor = $request->cor;
             $configuracao->texto_apresentativo = $request->texto_apresentativo;
 
-            $configuracao->save();
+            $igreja = TblIgreja::find($configuracao->id_igreja);
+            $igreja->nome = fistCharFromWord_toUpper($request->nome);
+            $igreja->cep = $request->cep;
+            $igreja->num = $request->num;
+            $igreja->rua = $request->rua;
+            $igreja->cidade = $request->cidade;
+            $igreja->complemento = $request->complemento;
+            $igreja->bairro = $request->bairro;
+            $igreja->estado = $request->estado;
+            $igreja->telefone = $request->telefone;
+            $igreja->email = $request->email;
+
+            $count = TblIgreja::where("nome", "=", $igreja->nome)->where("id", "<>", $request->id)->count();
+            if($count == 0){
+                if($request->logo){
+                    //convertendo imagem base64
+                    $img = $request->logo;
+                    \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension()),90);
+                    $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension());
+                }
+
+                $igreja->save();
+                $configuracao->save();
+
+                $notification = array(
+                    'message' => 'Configurações da congregação alteradas com sucesso!', 
+                    'alert-type' => 'success'
+                );
+
+                return back()->with($notification);
+
+            }else{
+
+                $notification = array(
+                    'message' => 'O nome informado já está na base de dados!', 
+                    'alert-type' => 'error'
+                );
+    
+                return back()->with($notification);
+    
+            }
+        }else{ return view('error'); }
+    }
+
+    public function adicionarMenuAplicativo(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.incluir'))[2] == true){
+            $menu = new TblMenusAndroid();
+            $menu->id_configuracao = $request->id_configuracao;
+            $menu->nome = $request->nome;
+            $menu->ordem = $request->ordem;
+            if($request->link == 1){ // modulo
+                $modulo = TblModulo::find($request->modulo);
+                $menu->link = 'modulo-' . $modulo->rota;
+            }else if($request->link == 2){ // publicação
+                $menu->link = 'publicacao-'.$request->publicacao;
+            }else if($request->link == 3){ // evento
+                $menu->link = 'evento-'.$request->evento;
+            }else if($request->link == 4){ // eventofixo
+                $menu->link = 'eventofixo-'.$request->eventofixo;
+            }else if($request->link == 5){ // notica
+                $menu->link = 'noticia-'.$request->noticia;
+            }else if($request->link == 6){ // sermao
+                $menu->link = 'sermao-'.$request->sermao;
+            }else if($request->link == 7){ // galeria
+                $menu->link = 'galeria-'.$request->sermao;
+            }else if($request->link == 8){ // link
+                $menu->link = $request->url;
+            }
+            $menu->save();
 
             $notification = array(
-                'message' => 'Configurações da congregação alteradas com sucesso!', 
+                'message' => 'Menu ' . $menu->nome . ' foi adicionado ao aplicativo com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return back()->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function editarMenuAplicativo(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
+            $menu = TblMenusAndroid::find($request->id);
+            $menu->nome = $request->nome;
+            $menu->ordem = $request->ordem;
+            if($request->link == 1){ // modulo
+                $modulo = TblModulo::find($request->modulo);
+                $menu->link = 'modulo-' . $modulo->rota;
+            }else if($request->link == 2){ // publicação
+                $menu->link = 'publicacao-'.$request->publicacao;
+            }else if($request->link == 3){ // evento
+                $menu->link = 'evento-'.$request->evento;
+            }else if($request->link == 4){ // eventofixo
+                $menu->link = 'eventofixo-'.$request->eventofixo;
+            }else if($request->link == 5){ // notica
+                $menu->link = 'noticia-'.$request->noticia;
+            }else if($request->link == 6){ // sermao
+                $menu->link = 'sermao-'.$request->sermao;
+            }else if($request->link == 7){ // galeria
+                $menu->link = 'galeria-'.$request->sermao;
+            }else if($request->link == 8){ // link
+                $menu->link = $request->url;
+            }
+            $menu->save();
+
+            $notification = array(
+                'message' => 'Menu ' . $menu->nome . ' do aplicativo foi alterado com sucesso!', 
+                'alert-type' => 'success'
+            );
+
+            return back()->with($notification);
+        }else{ return view('error'); }
+    }
+
+    public function excluirMenuAplicativo($id){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.configuracoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+
+            $menu = TblMenusAndroid::find($id);
+            TblMenusAndroid::where('id', $id)->delete();
+
+            $notification = array(
+                'message' => 'Menu ' . $menu->nome . ' foi excluído do aplicativo com sucesso!', 
                 'alert-type' => 'success'
             );
 
@@ -1532,6 +1680,13 @@ class HomeController extends Controller
             $usuario->nome = $request->nome;
             $usuario->email = $request->email;
             $usuario->id_perfil = $request->perfil;
+            if($request->membro > 0){
+                $usuario->id_membro = $request->membro;
+                $membro = TblMembros::find($request->membro);
+                $usuario->nome = $membro->nome;
+            }else if($request->membro == 0){
+                $usuario->id_membro = null;
+            }
             
             $count = \DB::table('users')
                 ->select('users.email')
@@ -1585,6 +1740,13 @@ class HomeController extends Controller
             $usuario->nome = $request->nome;
             $usuario->email = $request->email;
             $usuario->id_perfil = $request->perfil;
+            if($request->membro > 0){
+                $usuario->id_membro = $request->membro;
+                $membro = TblMembros::find($request->membro);
+                $usuario->nome = $membro->nome;
+            }else if($request->membro == 0){
+                $usuario->id_membro = null;
+            }
             
             $count = \DB::table('users')
                 ->select('users.email')
@@ -2018,7 +2180,11 @@ class HomeController extends Controller
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
                     $btn_excluir = '<a href="excluirMembro/'.$membros->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
-                return $btn_editar.'&nbsp'.$btn_excluir;
+                $btn_destivar = '';
+                if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+                    $btn_destivar = '<label title="Status do Membro" class="switch"><input onClick="switch_status(this)" name="'.$membros->nome.'" class="status" id="'.$membros->id.'" type="checkbox" '.(($membros->ativo == 1) ? "checked" : "").'><span class="slider"></span></label>';
+                }
+                return $btn_editar.'&nbsp'.$btn_excluir.'&nbsp'.$btn_destivar;
             })->editColumn('created_at', function($membros) {
                 if($membros->created_at != null)
                     return Carbon::parse($membros->created_at)->format('d/m/Y');
@@ -2042,11 +2208,22 @@ class HomeController extends Controller
         }
     }
 
+    public function switchStatusMembro(Request $request){
+        if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
+            $membro = TblMembros::find($request->id);
+            TblMembrosComunidades::where('id_membro','=', $membro->id)->update(['ativo' => false]);
+            ($membro->ativo == 1) ? $membro->ativo = 0 : $membro->ativo = 1 ;
+            $membro->save();
+        }else{ return view('error'); }
+    }
+
     public function incluirMembro(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.incluir'))[2] == true){
             $membro = new TblMembros();
             $membro->id_igreja = $request->igreja;
             $membro->nome = $request->nome;
+            if($request->funcao > 0) $membro->id_funcao = $request->funcao;
+            else $membro->id_funcao = null;
             $membro->cep = $request->cep;
             $membro->num = $request->num;
             $membro->bairro = $request->bairro;
@@ -2060,8 +2237,8 @@ class HomeController extends Controller
             $membro->descricao = $request->descricao;
             $membro->save();
 
-            if($membro->foto){
-                $f_ = $membro->foto;
+            if($request->foto){
+                $f_ = $request->foto;
                 \Image::make($f_)->save(public_path('storage/membros/').'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension(),90);
                 $membro->foto = 'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension();
                 $membro->save();
@@ -2088,8 +2265,10 @@ class HomeController extends Controller
 
     public function atualizarMembro(Request $request){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-            $membro = TblMembro::find($request->id);
+            $membro = TblMembros::find($request->id);
             $membro->nome = $request->nome;
+            if($request->funcao > 0) $membro->id_funcao = $request->funcao;
+            else $membro->id_funcao = null;
             $membro->cep = $request->cep;
             $membro->num = $request->num;
             $membro->bairro = $request->bairro;
@@ -2099,12 +2278,11 @@ class HomeController extends Controller
             $membro->facebook = $request->facebook;
             $membro->twitter = $request->twitter;
             $membro->youtube = $request->youtube;
-            $membro->foto = 'vazio';
             $membro->descricao = $request->descricao;
             $membro->save();
 
-            if($membro->foto){
-                $f_ = $membro->foto;
+            if($request->foto){
+                $f_ = $request->foto;
                 \Image::make($f_)->save(public_path('storage/membros/').'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension(),90);
                 $membro->foto = 'membro-'.$membro->id.'-'.$membro->id_igreja.'.'.$f_->getClientOriginalExtension();
                 $membro->save();
@@ -2115,7 +2293,7 @@ class HomeController extends Controller
                 'alert-type' => 'success'
             );
 
-            return redirect()->route('usuario.membrosg')->with($notification);
+            return redirect()->route('usuario.membros')->with($notification);
         }else{ return view('error'); }
     }
 
@@ -2156,6 +2334,10 @@ class HomeController extends Controller
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $comunidade = TblComunidades::where('id_igreja','=',$perfil->id_igreja)->get();
             return DataTables::of($comunidade)->addColumn('action',function($comunidade){
+                $btn_reunioes = '';
+                if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == true){
+                    $btn_reunioes = '<a href="listarReunioes/'.$comunidade->id.'" class="btn btn-xs btn-warning"><i class="fa fa-list"></i></a>';
+                }
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
                     $btn_editar = '<a href="editarComunidade/'.$comunidade->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
@@ -2164,7 +2346,7 @@ class HomeController extends Controller
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
                     $btn_excluir = '<a href="excluirComunidade/'.$comunidade->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
-                return $btn_editar.'&nbsp'.$btn_excluir;
+                return $btn_reunioes.'&nbsp'.$btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($comunidade) {
                 if($comunidade->created_at != null)
                     return Carbon::parse($comunidade->created_at)->format('d/m/Y');
@@ -2177,10 +2359,66 @@ class HomeController extends Controller
                 }else
                     return null;
             })->editColumn('quantidade_membros', function($comunidade) {
-                $count = TblMembrosComunidades::where('id_comunidade','=',$comunidade->id)->count();
+                $count = TblMembrosComunidades::where('id_comunidade','=',$comunidade->id)->where('ativo','=',true)->count();
                 return $count;
             })
             ->rawColumns(['quantidade_membros', 'action'])->make(true);
+        }
+    }
+
+    public function listarReunioes($id)
+    {
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            $comunidade = TblComunidades::find($id);
+            return view('usuario.reunioes', compact('comunidade','igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_reunioes($id){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $reunioes = TblReunioes::where('id_comunidade','=',$id)->get();
+            return DataTables::of($reunioes)->addColumn('action',function($reunioes){
+                $btn_presenca = '';
+                if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == true){
+                    $btn_presenca = '<a href="listarPresenca/'.$reunioes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                }
+                return $btn_presenca.'&nbsp';
+            })->addColumn('duracao', function($reunioes) {
+                $duracao = Carbon::parse($reunioes->fim)->diffForHumans($reunioes->inicio);
+                return $duracao;
+            })->addColumn('quantidade_presentes', function($reunioes) {
+                $count = TblFrequencias::where('id_reuniao','=',$reunioes->id)->where('ausente','=',false)->count();
+                return $count;
+            })->editColumn('created_at', function($reunioes) {
+                if($reunioes->created_at != null)
+                    return Carbon::parse($reunioes->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($reunioes) {
+                if($reunioes->updated_at != null){
+                    $upd = Carbon::parse($reunioes->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })->editColumn('inicio', function($reunioes) {
+                if($reunioes->inicio != null)
+                    return Carbon::parse($reunioes->inicio)->format('d/m/Y H:m');
+                else
+                    return null;
+            })->editColumn('fim', function($reunioes) {
+                if($reunioes->fim != null)
+                    return Carbon::parse($reunioes->fim)->format('d/m/Y H:m');
+                else
+                    return null;
+            })
+            ->rawColumns(['quantidade_presentes','duracao','action'])->make(true);
         }
     }
 
@@ -2198,6 +2436,7 @@ class HomeController extends Controller
                 $membro_comunidade->id_comunidade = $comunidade->id;
                 if(in_array($id_membro, $request->lideres)) $membro_comunidade->lider = true;
                 else $membro_comunidade->lider = false;
+                $membro_comunidade->ativo = true;
                 $membro_comunidade->save();
             }
 
@@ -2213,10 +2452,18 @@ class HomeController extends Controller
     public function editarComunidade($id){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
             $comunidade = TblComunidades::find($id);
+            $membros_comunidade = \DB::table('tbl_membros')
+                ->select('tbl_membros.*','tbl_membros_comunidades.lider')
+                ->join('tbl_membros_comunidades', 'tbl_membros_comunidades.id_membro', '=', 'tbl_membros.id')
+                ->where('tbl_membros.ativo', '=', true)
+                ->where('tbl_membros_comunidades.ativo', '=', true)
+                ->where('tbl_membros_comunidades.id_comunidade', '=', $comunidade->id)
+                ->orderBy('nome', 'ASC')
+                ->get();
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
             $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
-            return view('usuario.editarcomunidade', compact('comunidade','igreja','modulos_igreja'));
+            return view('usuario.editarcomunidade', compact('comunidade', 'membros_comunidade','igreja','modulos_igreja'));
         }else{ return view('error'); }
     }
 
@@ -2226,6 +2473,26 @@ class HomeController extends Controller
             $comunidade->nome = $request->nome;
             $comunidade->descricao = $request->descricao;
             $comunidade->save();
+
+            TblMembrosComunidades::where('id_comunidade', '=', $comunidade->id)
+                        ->update(['ativo' => false]);
+
+            foreach($request->membros as $id_membro){
+                $membro_comunidade = null;
+                $results = TblMembrosComunidades::where('id_comunidade','=',$comunidade->id)
+                    ->where('id_membro','=',$id_membro)->get();
+                if($results == null || sizeof($results) != 1){
+                    $membro_comunidade = new TblMembrosComunidades();
+                    $membro_comunidade->id_membro = $id_membro;
+                    $membro_comunidade->id_comunidade = $comunidade->id;
+                }else{
+                    $membro_comunidade = $results[0];
+                }
+                if(in_array($id_membro, $request->lideres)) $membro_comunidade->lider = true;
+                else $membro_comunidade->lider = false;
+                $membro_comunidade->ativo = true;
+                $membro_comunidade->save();
+            }
 
             $notification = array(
                 'message' => 'Comunidade "' . $comunidade->nome . '" foi alterada com sucesso!', 
@@ -2239,7 +2506,7 @@ class HomeController extends Controller
     public function excluirComunidade($id){
         if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
             $comunidade = TblComunidades::find($id);
-            TblmembrosComunidades::where('id_comunidade','=',$comunidade->id)->delete();
+            TblMembrosComunidades::where('id_comunidade','=',$comunidade->id)->delete();
             $comunidade->delete();
 
             $notification = array(

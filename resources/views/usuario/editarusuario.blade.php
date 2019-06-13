@@ -1,6 +1,20 @@
 @extends('layouts.usuario.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+
+<script>
+$(function () {
+
+    $('#perfil').select2();
+  
+    $('#membro').select2();
+
+});
+</script>
 @endpush
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -57,7 +71,7 @@
             <div class="col-md-12">
                 <div class="form-group has-feedback">
                 <label>Selecione o perfil do usuário:</label>
-                <select id="perfil" name="perfil" class="form-control" required>
+                <select id="perfil" name="perfil" class="form-control select2" required>
                     <?php $perfis = App\TblPerfil::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                     @foreach ($perfis as $perfil)
                     <option value="{{$perfil->id}}" {{($perfil->id == $usuario->id_perfil) ? 'selected' : ''}}>{{$perfil->nome}}</option>
@@ -65,6 +79,19 @@
                 </select>
                 <div class="help-block with-errors"></div>
                 </div>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group has-feedback">
+                <label>Selecione o membro do usuário:</label>
+                <select id="membro" name="membro" class="form-control select2" style="width: 100%;" required>
+                <?php $membros = App\TblMembros::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                <option value="0" {{$usuario->id_membro == null ? "selected" : ""}}>Sem membro</option>
+                @foreach ($membros as $membro)
+                <option value="{{$membro->id}}" {{$usuario->id_membro == $membro->id ? "selected" : ""}}>{{$membro->nome}}</option>
+                @endforeach
+                </select>
+                <div class="help-block with-errors"></div>
+            </div>
             </div>
             </div>
         </div>

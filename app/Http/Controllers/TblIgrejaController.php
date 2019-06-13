@@ -176,8 +176,7 @@ class TblIgrejaController extends Controller
      * @param  \App\Tbl_Igreja  $tbl_Igreja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request){
         $igreja = TblIgreja::find($request->id);
         $igreja->nome = fistCharFromWord_toUpper($request->nome);
         $igreja->cep = $request->cep;
@@ -248,7 +247,8 @@ class TblIgrejaController extends Controller
         $menus = $retorno[0];
         $submenus = $retorno[1];
         $subsubmenus = $retorno[2];
-        return view('igrejas.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus'));
+        $menus_aplicativo = obter_menus_aplicativo_configuracao($igreja->id_configuracao);
+        return view('igrejas.configuracoes', compact('igreja','modulos_igreja','menus','submenus','subsubmenus','menus_aplicativo'));
     }
 
     public function adicionarMenu(Request $request){
@@ -268,6 +268,10 @@ class TblIgrejaController extends Controller
         }else if($request->link == 5){
             $menu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
+            $menu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $menu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
             $menu->link = $request->url;
         }
         $menu->save();
@@ -276,17 +280,13 @@ class TblIgrejaController extends Controller
             'message' => 'Menu ' . $menu->nome . ' foi adicionado com sucesso!', 
             'alert-type' => 'success'
         );
-
-        return back()->with($notification);
     }
 
     public function editarMenu(Request $request){
         $menu = TblMenu::find($request->id);
         $menu->nome = $request->nome;
         $menu->ordem = $request->ordem;
-        if($request->link == 0){
-            $menu->link = null;
-        }else if($request->link == 1){
+        if($request->link == 1){
             $modulo = TblModulo::find($request->modulo);
             $menu->link = $modulo->rota;
         }else if($request->link == 2){
@@ -298,6 +298,10 @@ class TblIgrejaController extends Controller
         }else if($request->link == 5){
             $menu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
+            $menu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $menu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
             $menu->link = $request->url;
         }
         $menu->save();
@@ -357,6 +361,10 @@ class TblIgrejaController extends Controller
         }else if($request->link == 5){
             $submenu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
+            $submenu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $submenu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
             $submenu->link = $request->url;
         }
         $submenu->save();
@@ -374,9 +382,7 @@ class TblIgrejaController extends Controller
         $submenu->id_menu = $request->id_menu;
         $submenu->nome = $request->nome;
         $submenu->ordem = $request->ordem;
-        if($request->link == 0){
-            $submenu->link = null;
-        }else if($request->link == 1){
+        if($request->link == 1){
             $modulo = TblModulo::find($request->modulo);
             $submenu->link = $modulo->rota;
         }else if($request->link == 2){
@@ -388,6 +394,10 @@ class TblIgrejaController extends Controller
         }else if($request->link == 5){
             $submenu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
+            $submenu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $submenu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
             $submenu->link = $request->url;
         }
         $submenu->save();
@@ -432,13 +442,17 @@ class TblIgrejaController extends Controller
         }else if($request->link == 2){
             $subsubmenu->link = 'publicacao/'.$request->publicacao;
         }else if($request->link == 3){
-            $menu->link = 'evento/'.$request->evento;
+            $subsubmenu->link = 'evento/'.$request->evento;
         }else if($request->link == 4){
-            $menu->link = 'eventofixo/'.$request->eventofixo;
+            $subsubmenu->link = 'eventofixo/'.$request->eventofixo;
         }else if($request->link == 5){
-            $menu->link = 'noticia/'.$request->noticia;
+            $subsubmenu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
-            $menu->link = $request->url;
+            $subsubmenu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $subsubmenu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
+            $subsubmenu->link = $request->url;
         }
         $subsubmenu->save();
 
@@ -451,13 +465,11 @@ class TblIgrejaController extends Controller
     }
 
     public function editarSubSubMenu(Request $request){
-        $subsubmenu = new TblSubSubMenu();
+        $subsubmenu = TblSubSubMenu::find($request->id);
         $subsubmenu->id_submenu = $request->id_submenu;
         $subsubmenu->nome = $request->nome;
         $subsubmenu->ordem = $request->ordem;
-        if($request->link == 0){
-            $submenu->link = null;
-        }if($request->link == 1){
+        if($request->link == 1){
             $modulo = TblModulo::find($request->modulo);
             $subsubmenu->link = $modulo->rota;
         }else if($request->link == 2){
@@ -469,6 +481,10 @@ class TblIgrejaController extends Controller
         }else if($request->link == 5){
             $subsubmenu->link = 'noticia/'.$request->noticia;
         }else if($request->link == 6){
+            $subsubmenu->link = 'sermao/'.$request->sermao;
+        }else if($request->link == 7){
+            $subsubmenu->link = 'galeria/'.$request->galeria;
+        }else if($request->link == 8){
             $subsubmenu->link = $request->url;
         }
         $subsubmenu->save();
@@ -499,26 +515,124 @@ class TblIgrejaController extends Controller
         $configuracao->cor = $request->cor;
         $configuracao->texto_apresentativo = $request->texto_apresentativo;
 
-        $count = TblConfiguracoes::where('url','=',$request->url)->where('id','<>',$configuracao->id)->count();
-        if($count == 0){
-            $configuracao->url = $request->url;
+        $igreja = TblIgreja::find($configuracao->id_igreja);
+        $igreja->nome = fistCharFromWord_toUpper($request->nome);
+        $igreja->cep = $request->cep;
+        $igreja->num = $request->num;
+        $igreja->rua = $request->rua;
+        $igreja->cidade = $request->cidade;
+        $igreja->complemento = $request->complemento;
+        $igreja->bairro = $request->bairro;
+        $igreja->estado = $request->estado;
+        $igreja->telefone = $request->telefone;
+        $igreja->email = $request->email;
 
+        $count = TblIgreja::where("nome", "=", $igreja->nome)->where("id", "<>", $request->id)->count();
+        if($count == 0){
+            if($request->logo){
+                //convertendo imagem base64
+                $img = $request->logo;
+                \Image::make($request->logo)->save(public_path('storage/igrejas/').'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension()),90);
+                $igreja->logo = 'logo-igreja-'.$igreja->id.'.'.strtolower($request->logo->getClientOriginalExtension());
+            }
+
+            $igreja->save();
             $configuracao->save();
 
             $notification = array(
                 'message' => 'Configurações da congregação alteradas com sucesso!', 
                 'alert-type' => 'success'
             );
-    
-            return redirect()->route('igrejas')->with($notification);
+
+            return back()->with($notification);
+
         }else{
+
             $notification = array(
-                'message' => 'Essa URL já está em uso por outra congregação!', 
+                'message' => 'O nome informado já está na base de dados!', 
                 'alert-type' => 'error'
             );
-    
+
             return back()->with($notification);
+
         }
+    }
+
+    public function adicionarMenuAplicativo(Request $request){
+        $menu = new TblMenusAndroid();
+        $menu->id_configuracao = $request->id_configuracao;
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 1){ // modulo
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = 'modulo-' . $modulo->rota;
+        }else if($request->link == 2){ // publicação
+            $menu->link = 'publicacao-'.$request->publicacao;
+        }else if($request->link == 3){ // evento
+            $menu->link = 'evento-'.$request->evento;
+        }else if($request->link == 4){ // eventofixo
+            $menu->link = 'eventofixo-'.$request->eventofixo;
+        }else if($request->link == 5){ // notica
+            $menu->link = 'noticia-'.$request->noticia;
+        }else if($request->link == 6){ // sermao
+            $menu->link = 'sermao-'.$request->sermao;
+        }else if($request->link == 7){ // galeria
+            $menu->link = 'galeria-'.$request->sermao;
+        }else if($request->link == 8){ // link
+            $menu->link = $request->url;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi adicionado ao aplicativo com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function editarMenuAplicativo(Request $request){
+        $menu = TblMenusAndroid::find($request->id);
+        $menu->nome = $request->nome;
+        $menu->ordem = $request->ordem;
+        if($request->link == 1){ // modulo
+            $modulo = TblModulo::find($request->modulo);
+            $menu->link = 'modulo-' . $modulo->rota;
+        }else if($request->link == 2){ // publicação
+            $menu->link = 'publicacao-'.$request->publicacao;
+        }else if($request->link == 3){ // evento
+            $menu->link = 'evento-'.$request->evento;
+        }else if($request->link == 4){ // eventofixo
+            $menu->link = 'eventofixo-'.$request->eventofixo;
+        }else if($request->link == 5){ // notica
+            $menu->link = 'noticia-'.$request->noticia;
+        }else if($request->link == 6){ // sermao
+            $menu->link = 'sermao-'.$request->sermao;
+        }else if($request->link == 7){ // galeria
+            $menu->link = 'galeria-'.$request->sermao;
+        }else if($request->link == 8){ // link
+            $menu->link = $request->url;
+        }
+        $menu->save();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' do aplicativo foi alterado com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function excluirMenuAplicativo($id){
+        $menu = TblMenusAndroid::find($id);
+        TblMenusAndroid::where('id', $id)->delete();
+
+        $notification = array(
+            'message' => 'Menu ' . $menu->nome . ' foi excluído do aplicativo com sucesso!', 
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
     }
 
     /**

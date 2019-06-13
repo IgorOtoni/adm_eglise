@@ -45,7 +45,7 @@
                     <div class="grid-item-inner">
                     <div class="media-box"> 
                         @if ($membro->foto != null)
-                            <img src="/carrega_imagem/250,250,memnbros,{{$membro->foto}}" alt=""> 
+                            <img src="/carrega_imagem/250,250,membros,{{$membro->foto}}" alt=""> 
                         @else
                             <img src="/carrega_imagem/250,250,X,no-foto.png" alt=""> 
                         @endif

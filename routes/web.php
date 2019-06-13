@@ -204,6 +204,7 @@ Route::group(['middleware' => 'auth'], function () {
         // CONFIGURACOES SITE ==========================================================================
         Route::get('/configuracoes', 'HomeController@configuracoes')->name('usuario.configuracoes');
         Route::post('/salvarConfiguracoes', 'HomeController@salvarConfiguracoes')->name('usuario.salvarConfiguracoes');        
+        Route::post('/excluirLogo', 'HomeController@excluirLogo')->name('usuario.excluirLogo');
         Route::post('/adicionarMenu', 'HomeController@adicionarMenu')->name('usuario.adicionarMenu');
         Route::post('/editarMenu', 'HomeController@editarMenu')->name('usuario.editarMenu');
         Route::get('/excluirMenu/{id}', 'HomeController@excluirMenu')->name('usuario.excluirMenu');
@@ -213,6 +214,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/adicionarSubSubMenu', 'HomeController@adicionarSubSubMenu')->name('usuario.adicionarSubSubMenu');
         Route::post('/editarSubSubMenu', 'HomeController@editarSubSubMenu')->name('usuario.editarSubSubMenu');
         Route::get('/excluirSubSubMenu/{id}', 'HomeController@excluirSubSubMenu')->name('usuario.excluirSubSubMenu');
+        Route::post('/adicionarMenuAplicativo', 'HomeController@adicionarMenuAplicativo')->name('usuario.adicionarMenuAplicativo');
+        Route::post('/editarMenuAplicativo', 'HomeController@editarMenuAplicativo')->name('usuario.editarMenuAplicativo');
+        Route::get('/excluirMenuAplicativo/{id}', 'HomeController@excluirMenuAplicativo')->name('usuario.excluirMenuAplicativo');
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // CRUD SERMOES ==========================================================================
@@ -289,6 +293,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarMembro', 'HomeController@atualizarMembro')->name('usuario.atualizarMembro');
         Route::post('/excluirFotoMembro', 'HomeController@excluirFotoMembro')->name('usuario.excluirFotoMembro');
         Route::get('/excluirMembro/{id}', 'HomeController@excluirMembro')->name('usuario.excluirMembro');
+        Route::get('/switchStatusMembro/{id}', 'HomeController@switchStatusMembro')->name('usuario.switchStatusMembro');
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // CRUD COMUNIDADES ==========================================================================
@@ -298,6 +303,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/editarComunidade/{id}', 'HomeController@editarComunidade')->name('usuario.editarComunidade');
         Route::post('/atualizarComunidade', 'HomeController@atualizarComunidade')->name('usuario.atualizarComunidade');
         Route::get('/excluirComunidade/{id}', 'HomeController@excluirComunidade')->name('usuario.excluirComunidade');
+        Route::get('/listarReunioes/{id}', 'HomeController@listarReunioes')->name('usuario.listarReunioes');
+        Route::get('/tbl_reunioes/{id}', 'HomeController@tbl_reunioes')->name('usuario.tbl_reunioes');
+        Route::get('/listarPresenca/{id}', 'HomeController@listarPresenca')->name('usuario.listarPresenca');
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // CRUD REUNIOES ==========================================================================
@@ -312,6 +320,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/{url}', 'IgrejaController@index')->name('igreja.index');
+Route::get('/{url}/home/', 'IgrejaController@index')->name('igreja.index');
 Route::get('/{url}/contato', 'IgrejaController@contato')->name('igreja.contato');
 Route::get('/{url}/enviaContato', 'IgrejaController@enviaContato')->name('igreja.enviaContato');
 Route::get('/{url}/eventos', 'IgrejaController@eventos')->name('igreja.eventos');

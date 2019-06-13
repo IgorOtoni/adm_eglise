@@ -1,5 +1,10 @@
 @extends('layouts.usuario.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
+
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- DataTables -->
 <script src="{{asset('template_adm/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -58,6 +63,10 @@ function valida(txt){
 }
 
 $(function () {
+
+  $('#perfil').select2();
+
+  $('#membro').select2();
 
   var table = $('#tbl_usuarios').DataTable({
     'paging'      : true,
@@ -237,10 +246,23 @@ $(function () {
                   <div class="col-md-12">
                     <div class="form-group has-feedback">
                       <label>Selecione o perfil do usuário:</label>
-                      <select id="perfil" name="perfil" class="form-control" required>
+                      <select id="perfil" name="perfil" class="form-control select2" style="width: 100%;" required>
                         <?php $perfis = App\TblPerfil::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($perfis as $perfil)
                         <option value="{{$perfil->id}}">{{$perfil->nome}}</option>
+                        @endforeach
+                      </select>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group has-feedback">
+                      <label>Selecione o membro do usuário: (o nome do usuário será substituído pelo nome do membro)</label>
+                      <select id="membro" name="membro" class="form-control select2" style="width: 100%;" required>
+                        <?php $membros = App\TblMembros::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        <option value="0">Sem membro</option>
+                        @foreach ($membros as $membro)
+                        <option value="{{$membro->id}}">{{$membro->nome}}</option>
                         @endforeach
                       </select>
                       <div class="help-block with-errors"></div>

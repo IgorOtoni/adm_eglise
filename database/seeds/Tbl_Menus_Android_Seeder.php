@@ -15,8 +15,8 @@ class tbl_menus_android_Seeder extends Seeder
         DB::table('tbl_menus_android')->insert([
             'id'=>22,
             'id_configuracao'=>1,
-            'nome'=>'Inicial',
-            'link'=>'modulo-home',
+            'nome'=>'Apresentação',
+            'link'=>'modulo-apresentacao',
             'ordem'=>1,
         ]);
         
@@ -81,8 +81,8 @@ class tbl_menus_android_Seeder extends Seeder
         DB::table('tbl_menus_android')->insert([
             'id'=>23,
             'id_configuracao'=>2,
-            'nome'=>'Inicial',
-            'link'=>'modulo-home',
+            'nome'=>'Apresentação',
+            'link'=>'modulo-apresentacao',
             'ordem'=>1,
         ]);
         
@@ -147,8 +147,8 @@ class tbl_menus_android_Seeder extends Seeder
         DB::table('tbl_menus_android')->insert([
             'id'=>24,
             'id_configuracao'=>3,
-            'nome'=>'Inicial',
-            'link'=>'modulo-home',
+            'nome'=>'Apresentação',
+            'link'=>'modulo-apresentacao',
             'ordem'=>1,
         ]);
         

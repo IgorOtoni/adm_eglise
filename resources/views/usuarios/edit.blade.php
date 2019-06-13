@@ -1,5 +1,16 @@
 @extends('layouts.admin_site.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
+
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+
+<script>
+$(function(){
+    $('.select2').select2();
+});
+</script>
 
 @endpush
 @section('content')
@@ -57,10 +68,17 @@
             <div class="col-md-12">
                 <div class="form-group has-feedback">
                 <label>Selecione o perfil do usuário:</label>
-                <select id="perfil" name="perfil" class="form-control" required>
-                    <?php $perfis = App\TblPerfil::orderBy('nome','ASC')->get(); ?>
+                <select id="perfil" name="perfil" class="form-control select2" style="width: 100%;" required>
+                    <?php 
+                    //$perfis = App\TblPerfil::orderBy('nome','ASC')->get();
+                    $perfis = \DB::table('tbl_perfis')
+                        ->select('tbl_perfis.*', 'tbl_igrejas.nome as nome_congregacao')
+                        ->leftJoin('tbl_igrejas','tbl_igrejas.id','=','tbl_perfis.id_igreja')
+                        ->orderBy('nome', 'ASC')
+                        ->get();
+                    ?>
                     @foreach ($perfis as $perfil)
-                    <option value="{{$perfil->id}}" {{($perfil->id == $usuario->id_perfil) ? 'selected' : ''}}>{{$perfil->nome}}</option>
+                    <option value="{{$perfil->id}}" {{($perfil->id == $usuario->id_perfil) ? 'selected' : ''}}>{{$perfil->nome}} - {{($perfil->id_igreja == null || $perfil->id_igreja == 1) ? "Administador" : $perfil->nome_congregacao}}</option>
                     @endforeach
                 </select>
                 <div class="help-block with-errors"></div>

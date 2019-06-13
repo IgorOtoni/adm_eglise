@@ -4,12 +4,12 @@
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
+<!-- InputFilePTBR Confirm Dialog -->
+<link href="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- Toogle Button -->
 <link rel="stylesheet" href="{{asset('template_adm/plugins/switch/switch.css')}}">
 <!-- Toastr -->
 <link rel="stylesheet" type="text/css" href="{{asset('template_adm/plugins/toastr/toastr.min.css')}}">
-<!-- InputFilePTBR Confirm Dialog -->
-<link href="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- Select2 -->
 <script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
@@ -20,10 +20,10 @@
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
-<!-- Toastr -->
-<script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
 <!-- InputFilePTBR Confirm Dialog -->
 <script src="{{asset('template_adm/plugins/krajee.confirm/jquery-confirm.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{asset('template_adm/plugins/toastr/toastr.min.js')}}"></script>
 
 <script>
 function switch_status(comp){

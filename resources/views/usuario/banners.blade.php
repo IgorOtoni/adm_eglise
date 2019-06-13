@@ -1,8 +1,12 @@
 @extends('layouts.usuario.index')
 @push('script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('template_adm/bower_components/select2/dist/css/select2.min.css')}}">
 <!-- InputFilePTBR -->
 <link rel="stylesheet" href="{{asset('template_adm/bower_components/input.file.js/fileinput.min.css')}}">
 
+<!-- Select2 -->
+<script src="{{asset('template_adm/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- InputFilePTBR -->
 <script src="{{asset('template_adm/bower_components/input.file.js/fileinput.js')}}"></script>
 <script src="{{asset('template_adm/bower_components/input.file.js/locales/pt-BR.js')}}"></script>
@@ -48,48 +52,96 @@ function valida(txt){
 }
 
 $(function(){
-    var html_modulos_area = $("#modal-incluir #modulos_area").html();
-    $("#modal-incluir #modulos_area").html("");
-    var html_publicacoes_area = $("#modal-incluir #publicacoes_area").html();
-    $("#modal-incluir #publicacoes_area").html("");
-    var html_eventos_area = $("#modal-incluir #eventos_area").html();
-    $("#modal-incluir #eventos_area").html("");
-    var html_eventosfixos_area = $("#modal-incluir #eventosfixos_area").html();
-    $("#modal-incluir #eventosfixos_area").html("");
-    var html_noticias_area = $("#modal-incluir #noticias_area").html();
-    $("#modal-incluir #noticias_area").html("");
-    var html_sermoes_area = $("#modal-incluir #sermoes_area").html();
-    $("#modal-incluir #sermoes_area").html("");
-    var html_url_externa_area = $("#modal-incluir #url_externa_area").html();
-    $("#modal-incluir #url_externa_area").html("");
+    $('.select2').select2();
+
+    $('#incluirBannerFormulario').validator({
+        update: true,
+        ignore: [':disabled', ':hidden', ':not(:visible)'],
+        rules: {
+        //Rules
+        },
+        messages: {
+        //messages
+        }
+    });
+
+    $("#modal-incluir #modulos_area").css('display', 'none');
+    $("#modal-incluir #modulos").attr('data-validate', 'false');
+
+    $("#modal-incluir #publicacoes_area").css('display', 'none');
+    $("#modal-incluir #publicacao").attr('data-validate', 'false');
+
+    $("#modal-incluir #eventos_area").css('display', 'none');
+    $("#modal-incluir #evento").attr('data-validate', 'false');
+
+    $("#modal-incluir #eventosfixos_area").css('display', 'none');
+    $("#modal-incluir #eventofixo").attr('data-validate', 'false');
+
+    $("#modal-incluir #noticias_area").css('display', 'none');
+    $("#modal-incluir #noticia").attr('data-validate', 'false');
+
+    $("#modal-incluir #sermoes_area").css('display', 'none');
+    $("#modal-incluir #sermao").attr('data-validate', 'false');
+    
+    $("#modal-incluir #galerias_area").css('display', 'none');
+    $("#modal-incluir #galeria").attr('data-validate', 'false');
+
+    $("#modal-incluir #url_externa_area").css('display', 'none');
+    $("#modal-incluir #url").attr('data-validate', 'false');
 
     $('#incluirBannerFormulario').validator('update');
     $('#incluirBannerFormulario').validator('validate');
 
     $('#modal-incluir #link').on('change', function (event) {
-        $("#modal-incluir #modulos_area").html("");
-        $("#modal-incluir #publicacoes_area").html("");
-        $("#modal-incluir #eventos_area").html("");
-        $("#modal-incluir #eventosfixos_area").html("");
-        $("#modal-incluir #noticias_area").html("");
-        $("#modal-incluir #sermoes_area").html("");
-        $("#modal-incluir #url_externa_area").html("");
+        $("#modal-incluir #modulos_area").css('display', 'none');
+        $("#modal-incluir #modulos").attr('data-validate', 'false');
+
+        $("#modal-incluir #publicacoes_area").css('display', 'none');
+        $("#modal-incluir #publicacao").attr('data-validate', 'false');
+
+        $("#modal-incluir #eventos_area").css('display', 'none');
+        $("#modal-incluir #evento").attr('data-validate', 'false');
+
+        $("#modal-incluir #eventosfixos_area").css('display', 'none');
+        $("#modal-incluir #eventofixo").attr('data-validate', 'false');
+
+        $("#modal-incluir #noticias_area").css('display', 'none');
+        $("#modal-incluir #noticia").attr('data-validate', 'false');
+
+        $("#modal-incluir #sermoes_area").css('display', 'none');
+        $("#modal-incluir #sermao").attr('data-validate', 'false');
+
+        $("#modal-incluir #galerias_area").css('display', 'none');
+        $("#modal-incluir #galeria").attr('data-validate', 'false');
+
+        $("#modal-incluir #url_externa_area").css('display', 'none');
+        $("#modal-incluir #url").attr('data-validate', 'false');
 
         op = $("#modal-incluir #link").val();
         if(op == 1){
-            $("#modal-incluir #modulos_area").html(html_modulos_area);
+            $("#modal-incluir #modulos_area").css('display', 'block');
+            $("#modal-incluir #modulo").attr('data-validate', 'true');
         }else if(op == 2){
-            $("#modal-incluir #publicacoes_area").html(html_publicacoes_area);
+            $("#modal-incluir #publicacoes_area").css('display', 'block');
+            $("#modal-incluir #publicacao").attr('data-validate', 'true');
         }else if(op == 3){
-            $("#modal-incluir #eventos_area").html(html_eventos_area);
+            $("#modal-incluir #eventos_area").css('display', 'block');
+            $("#modal-incluir #evento").attr('data-validate', 'true');
         }else if(op == 4){
-            $("#modal-incluir #eventosfixos_area").html(html_eventosfixos_area);
+            $("#modal-incluir #eventosfixos_area").css('display', 'block');
+            $("#modal-incluir #eventofixo").attr('data-validate', 'true');
         }else if(op == 5){
-            $("#modal-incluir #noticias_area").html(html_noticias_area);
+            $("#modal-incluir #noticias_area").css('display', 'block');
+            $("#modal-incluir #noticia").attr('data-validate', 'true');
         }else if(op == 6){
-            $("#modal-incluir #sermoes_area").html(html_sermoes_area);
+            $("#modal-incluir #sermoes_area").css('display', 'block');
+            $("#modal-incluir #sermao").attr('data-validate', 'true');
         }else if(op == 7){
-            $("#modal-incluir #url_externa_area").html(html_url_externa_area);
+            $("#modal-incluir #galerias_area").css('display', 'block');
+            $("#modal-incluir #galeria").attr('data-validate', 'true');
+        }else if(op == 8){
+            $("#modal-incluir #url_externa_area").css('display', 'block');
+            $("#modal-incluir #url").attr('data-validate', 'true');
         }
 
         $('#incluirBannerFormulario').validator('update');
@@ -274,7 +326,7 @@ $(function(){
                 <div id="link_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Tipo de link</label>
-                    <select id="link" name="link" class="form-control" required>
+                    <select id="link" name="link" class="form-control select2" style="width: 100%;" required>
                         <option value="0" selected>Sem link</option>
                         <option value="1">Link para módulo do sistema</option>
                         <option value="2">Link para publicação</option>
@@ -282,7 +334,8 @@ $(function(){
                         <option value="4">Link para evento fixo</option>
                         <option value="5">Link para notícia</option>
                         <option value="6">Link para sermão</option>
-                        <option value="7">Link externo</option>
+                        <option value="7">Link para galeria</option>
+                        <option value="8">Link externo</option>
                     </select>
                     <div class="help-block with-errors"></div>
                     </div>
@@ -290,7 +343,7 @@ $(function(){
                 <div id="modulos_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Módulos</label>
-                    <select id="modulo" name="modulo" class="form-control" required>
+                    <select id="modulo" name="modulo" class="form-control select2" style="width: 100%;" required>
                         @foreach ($modulos_igreja as $modulo)
                             <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
                         @endforeach
@@ -301,7 +354,7 @@ $(function(){
                 <div id="publicacoes_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Publicações</label>
-                    <select id="publicacao" name="publicacao" class="form-control" required>
+                    <select id="publicacao" name="publicacao" class="form-control select2" style="width: 100%;" required>
                         <?php $publicacoes = App\TblPublicacoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($publicacoes as $publicacao)
                             <option value="{{$publicacao->id}}">{{$publicacao->nome}}</option>
@@ -313,7 +366,7 @@ $(function(){
                 <div id="eventos_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Eventos</label>
-                    <select id="evento" name="evento" class="form-control" required>
+                    <select id="evento" name="evento" class="form-control select2" style="width: 100%;" required>
                         <?php $eventos = App\TblEventos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($eventos as $evento)
                             <option value="{{$evento->id}}">{{$evento->nome}}</option>
@@ -325,7 +378,7 @@ $(function(){
                 <div id="eventosfixos_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Eventos fixos</label>
-                    <select id="eventofixo" name="eventofixo" class="form-control" required>
+                    <select id="eventofixo" name="eventofixo" class="form-control select2" style="width: 100%;" required>
                         <?php $eventosfixos = App\TblEventosFixos::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($eventosfixos as $eventofixo)
                             <option value="{{$eventofixo->id}}">{{$eventofixo->nome}}</option>
@@ -336,8 +389,8 @@ $(function(){
                 </div>
                 <div id="noticias_area" class="col-md-12">
                     <div class="form-group has-feedback">
-                    <label >Eventos fixos</label>
-                    <select id="noticia" name="noticia" class="form-control" required>
+                    <label >Notícias</label>
+                    <select id="noticia" name="noticia" class="form-control select2" style="width: 100%;" required>
                         <?php $noticias = App\TblNoticias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($noticias as $noticia)
                             <option value="{{$noticia->id}}">{{$noticia->nome}}</option>
@@ -349,10 +402,22 @@ $(function(){
                 <div id="sermoes_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Sermões</label>
-                    <select id="noticia" name="noticia" class="form-control" required>
+                    <select id="sermoes" name="sermoes" class="form-control select2" style="width: 100%;" required>
                         <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($sermoes as $sermao)
                             <option value="{{$sermao->id}}">{{$sermao->nome}}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div id="galerias_area" class="col-md-12">
+                    <div class="form-group has-feedback">
+                    <label >Galerias</label>
+                    <select id="galeria" name="galeria" class="form-control select2" style="width: 100%;" required>
+                        <?php $galerias = App\TblGalerias::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
+                        @foreach ($galerias as $galeria)
+                            <option value="{{$galeria->id}}">{{$galeria->nome}}</option>
                         @endforeach
                     </select>
                     <div class="help-block with-errors"></div>

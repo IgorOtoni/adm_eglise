@@ -258,7 +258,7 @@ $(function(){
                 </thead>
                 <tbody>
                     <?php Use App\TblMembros;
-                    $membros = TblMembros::where('id_igreja','=',$igreja->id)->get();
+                    $membros = TblMembros::where('id_igreja','=',$igreja->id)->where('ativo','=',true)->get();
                     foreach($membros as $membro){
                         ?>
                         <tr>

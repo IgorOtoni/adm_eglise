@@ -247,7 +247,7 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
         //////////////////////////////////////
 
         // Permissões do módulo de reuniões
-        DB::table('tbl_modulos_permissoes')->insert([
+        /*DB::table('tbl_modulos_permissoes')->insert([
             'id'=>40,
             'id_modulo'=>27,
             'id_permissao'=>1,
@@ -261,7 +261,7 @@ class Tbl_Permissoes_Modulos_Seeder extends Seeder
             'id'=>42,
             'id_modulo'=>27,
             'id_permissao'=>3,
-        ]);
+        ]);*/
         //////////////////////////////////////
     }
 }
