@@ -304,8 +304,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/atualizarComunidade', 'HomeController@atualizarComunidade')->name('usuario.atualizarComunidade');
         Route::get('/excluirComunidade/{id}', 'HomeController@excluirComunidade')->name('usuario.excluirComunidade');
         Route::get('/listarReunioes/{id}', 'HomeController@listarReunioes')->name('usuario.listarReunioes');
-        Route::get('/tbl_reunioes/{id}', 'HomeController@tbl_reunioes')->name('usuario.tbl_reunioes');
-        Route::get('/listarPresenca/{id}', 'HomeController@listarPresenca')->name('usuario.listarPresenca');
+        Route::get('/tbl_reunioes/', 'HomeController@tbl_reunioes')->name('usuario.tbl_reunioes');
+        Route::get('/listarPresencas/{id}', 'HomeController@listarPresencas')->name('usuario.listarPresencas');
+        Route::get('/tbl_presencas/', 'HomeController@tbl_presencas')->name('usuario.tbl_presencas');
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // CRUD REUNIOES ==========================================================================

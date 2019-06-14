@@ -27,16 +27,12 @@ function format ( d ) {
     // `d` is the original data object for the row
     return '<div class=" table-responsive"><table class="table table-bordered">'+
         '<tr>'+
-            '<th>Descrição:</th>'+
-            '<th>Observação:</th>'+
-            '<th>Data e horário de início:</th>'+
-            '<th>Duração:</th>'+
+            '<th>Nome:</th>'+
+            '<th>Parecer:</th>'+
             '</tr>'+
         '<tr>'+
-            '<td>'+valida(d.descricao)+'</td>'+
-            '<td>'+valida(d.observacao)+'</td>'+
-            '<td>'+valida(d.inicio)+'</td>'+
-            '<td>'+valida(d.duracao)+'</td>'+
+            '<td>'+valida(d.nome)+'</td>'+
+            '<td>'+valida(d.parecer)+'</td>'+
             '</tr>'+
         '</table></div>';
 }
@@ -47,7 +43,7 @@ function valida(txt){
 
 $(function(){
 
-    var table = $('#tbl_reunioes').DataTable({
+    var table = $('#tbl_presencas').DataTable({
         'paging'      : true,
         'lengthChange': true,
         'searching'   : true,
@@ -89,10 +85,10 @@ $(function(){
         'autoWidth': false,
         //'serverSide': false,
         'ajax': { 
-            url: '{{route('usuario.tbl_reunioes')}}',
+            url: '{{route('usuario.tbl_presencas')}}',
             type: 'get',
             data: {
-                id: '{{$comunidade->id}}',
+                id: '{{$reuniao->id}}',
             }
         },
         'columns': [
@@ -103,15 +99,14 @@ $(function(){
                 "defaultContent": ''
                 },
                 { data: 'id', name: 'id' },
-                { data: 'inicio', name: 'inicio' },
-                { data: 'fim', name: 'fim' },
-                { data: 'action', name: 'action' },
-                ]/*,
-                order: [[1, 'asc']]*/
+                { data: 'nome', name: 'nome' },
+                { data: 'parecer', name: 'parecer' },
+                ],
+                order: [[1, 'asc']]
     });
 
     // Add event listener for opening and closing details
-    $('#tbl_reunioes tbody').on('click', 'td.details-control', function () {
+    $('#tbl_presencas tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row( tr );
 
@@ -138,8 +133,8 @@ $(function(){
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-    Reuniões
-    <small>Lista de todas as reuniões da comunidade: {{$comunidade->nome}}</small>
+    Presenças
+    <small>Lista de presença da reunião: {{\Carbon\Carbon::parse($reuniao->inicio)->format('d/m/Y H:m')}} - {{\Carbon\Carbon::parse($reuniao->fim)->format('d/m/Y H:m')}}</small>
     </h1>
 </section>
 
@@ -149,14 +144,14 @@ $(function(){
     <!-- Default box -->
     <div class="box">
     <div class="box-body">
-        <table id="tbl_reunioes" class="table table-bordered table-striped">
+        <table id="tbl_presencas" class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Expandir</th>
             <th>#</th>
-            <th>Data e horário de início</th>
-            <th>Data e horário de término</th>
-            <th>Ações</th>
+            <th>Nome</th>
+            <th>Parecer</th>
+            <!--<th>Ações</th>-->
         </tr>
         </thead>
         <tbody>

@@ -193,11 +193,11 @@ class HomeController extends Controller
             return DataTables::of($banners)->addColumn('action',function($banners){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarBanner/'.$banners->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarBanner/'.$banners->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.bannersg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirBanner/'.$banners->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirBanner/'.$banners->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($banners) {
@@ -355,11 +355,11 @@ class HomeController extends Controller
             return DataTables::of($galeria)->addColumn('action',function($galeria){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarGaleria/'.$galeria->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarGaleria/'.$galeria->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.galeriasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirGaleria/'.$galeria->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirGaleria/'.$galeria->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('data', function($galeria) {
@@ -502,11 +502,11 @@ class HomeController extends Controller
             return DataTables::of($eventofixo)->addColumn('action',function($eventofixo){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.eventosfixosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirEventoFixo/'.$eventofixo->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($eventofixo) {
@@ -631,11 +631,11 @@ class HomeController extends Controller
             return DataTables::of($noticia)->addColumn('action',function($noticia){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarNoticia/'.$noticia->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarNoticia/'.$noticia->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.noticiasg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirNoticia/'.$noticia->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirNoticia/'.$noticia->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($noticia) {
@@ -757,11 +757,11 @@ class HomeController extends Controller
             return DataTables::of($sermao)->addColumn('action',function($sermao){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarSermao/'.$sermao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarSermao/'.$sermao->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.sermoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirSermao/'.$sermao->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($sermao) {
@@ -1464,11 +1464,11 @@ class HomeController extends Controller
             return DataTables::of($publicacoes)->addColumn('action',function($publicacoes){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.publicacoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirPublicacao/'.$publicacoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })
@@ -1641,7 +1641,7 @@ class HomeController extends Controller
             return DataTables::of($usuarios)->addColumn('action',function($usuarios){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarUsuario/'.$usuarios->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarUsuario/'.$usuarios->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.usuariosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
@@ -1812,8 +1812,8 @@ class HomeController extends Controller
             return DataTables::of($perfis)->addColumn('action',function($perfis){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
-                    '<a href="carregarPermissoesPerfil/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>';
+                    $btn_editar = '<a href="/usuario/editarPerfil/'.$perfis->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
+                    '<a href="/usuario/carregarPermissoesPerfil/'.$perfis->id.'" class="btn btn-xs btn-warning"><i class="fa fa-cog"></i></button></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.perfisg'), \Config::get('constants.permissoes.desativar'))[2] == true){
@@ -2063,11 +2063,11 @@ class HomeController extends Controller
             return DataTables::of($funcoes)->addColumn('action',function($funcoes){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarFuncao/'.$funcoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarFuncao/'.$funcoes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.funcoesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirFuncao/'.$funcoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirFuncao/'.$funcoes->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($funcoes) {
@@ -2174,11 +2174,11 @@ class HomeController extends Controller
             return DataTables::of($membros)->addColumn('action',function($membros){
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarMembro/'.$membros->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarMembro/'.$membros->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirMembro/'.$membros->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirMembro/'.$membros->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 $btn_destivar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.membrosg'), \Config::get('constants.permissoes.desativar'))[2] == true){
@@ -2336,15 +2336,15 @@ class HomeController extends Controller
             return DataTables::of($comunidade)->addColumn('action',function($comunidade){
                 $btn_reunioes = '';
                 if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == true){
-                    $btn_reunioes = '<a href="listarReunioes/'.$comunidade->id.'" class="btn btn-xs btn-warning"><i class="fa fa-list"></i></a>';
+                    $btn_reunioes = '<a href="/usuario/listarReunioes/'.$comunidade->id.'" class="btn btn-xs btn-warning"><i class="fa fa-group"></i></a>';
                 }
                 $btn_editar = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.alterar'))[2] == true){
-                    $btn_editar = '<a href="editarComunidade/'.$comunidade->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_editar = '<a href="/usuario/editarComunidade/'.$comunidade->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
                 }
                 $btn_excluir = '';
                 if( valida_permissao(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg'), \Config::get('constants.permissoes.desativar'))[2] == true){
-                    $btn_excluir = '<a href="excluirComunidade/'.$comunidade->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn_excluir = '<a href="/usuario/excluirComunidade/'.$comunidade->id.'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>';
                 }
                 return $btn_reunioes.'&nbsp'.$btn_editar.'&nbsp'.$btn_excluir;
             })->editColumn('created_at', function($comunidade) {
@@ -2379,15 +2379,15 @@ class HomeController extends Controller
         }
     }
 
-    public function tbl_reunioes($id){
+    public function tbl_reunioes(Request $request){
         if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
             return view('error');
         }else{
-            $reunioes = TblReunioes::where('id_comunidade','=',$id)->get();
+            $reunioes = TblReunioes::where('id_comunidade','=',$request->id)->get();
             return DataTables::of($reunioes)->addColumn('action',function($reunioes){
                 $btn_presenca = '';
                 if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == true){
-                    $btn_presenca = '<a href="listarPresenca/'.$reunioes->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>';
+                    $btn_presenca = '<a href="/usuario/listarPresencas/'.$reunioes->id.'" class="btn btn-xs btn-warning"><i class="fa fa-list"></i></a>';
                 }
                 return $btn_presenca.'&nbsp';
             })->addColumn('duracao', function($reunioes) {
@@ -2419,6 +2419,47 @@ class HomeController extends Controller
                     return null;
             })
             ->rawColumns(['quantidade_presentes','duracao','action'])->make(true);
+        }
+    }
+
+    public function listarPresencas($id)
+    {
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $perfil = TblPerfil::find(\Auth::user()->id_perfil);
+            $igreja = obter_dados_igreja_id($perfil->id_igreja);
+            $modulos_igreja = obter_modulos_gerenciais_igreja($igreja);
+            $reuniao = TblReunioes::find($id);
+            return view('usuario.presencas', compact('reuniao','igreja','modulos_igreja'));
+        }
+    }
+
+    public function tbl_presencas(Request $request){
+        if( valida_modulo(\Auth::user()->id_perfil, \Config::get('constants.modulos.comunidadesg')) == false){
+            return view('error');
+        }else{
+            $frequencias = TblFrequencias::where('id_reuniao','=',$request->id)->get();
+            return DataTables::of($frequencias)->addColumn('parecer', function($frequencias) {
+                $parecer = ($frequencias->ausente == false) ? '<span class="label bg-green">Presente</span>' : '<span class="label bg-red">Ausente</span>';
+                return $parecer;
+            })->addColumn('nome', function($frequencias) {
+                $membro_comunidade = TblMembrosComunidades::find($frequencias->id_membro_comunidade);
+                $membro = TblMembros::find($membro_comunidade->id_membro);
+                return $membro->nome;
+            })->editColumn('created_at', function($frequencias) {
+                if($frequencias->created_at != null)
+                    return Carbon::parse($frequencias->created_at)->format('d/m/Y');
+                else
+                    return null;
+            })->editColumn('updated_at', function($frequencias) {
+                if($frequencias->updated_at != null){
+                    $upd = Carbon::parse($frequencias->updated_at)->diffForHumans();
+                    return $upd;
+                }else
+                    return null;
+            })
+            ->rawColumns(['parecer','nome'])->make(true);
         }
     }
 
