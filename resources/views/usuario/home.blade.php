@@ -22,7 +22,7 @@ $(document).ready(function(){
     <div class="row">
         @foreach ($quadros as $quadro)
             <a href="{{$quadro['link']}}">
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="info-box">
                     <span class="info-box-icon bg-{{$quadro['color']}}"><i class="fa {{$quadro['icon']}}"></i></span>
 

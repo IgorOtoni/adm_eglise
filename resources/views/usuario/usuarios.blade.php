@@ -49,11 +49,13 @@ function format ( d ) {
             '<th>Nome:</th>'+
             '<th>Email:</th>'+
             '<th>Perfil:</th>'+
+            '<th>Situação:</th>'+
             '</tr>'+
         '<tr>'+
             '<td>'+valida(d.nome)+'</td>'+
             '<td>'+valida(d.email)+'</td>'+
             '<td>'+valida(d.perfil)+'</td>'+
+            '<td>'+valida(d.situacao)+'</td>'+
             '</tr>'+
         '</table></div>';
 }
@@ -119,6 +121,7 @@ $(function () {
             },
             { data: 'id', name: 'id' },
             { data: 'nome', name: 'nome' },
+            { data: 'situacao', name: 'situacao' },
             { data: 'action', name: 'action' },
           ],
           order: [[1, 'asc']]
@@ -175,6 +178,7 @@ $(function () {
           <th>Expandir</th>
           <th>#</th>
           <th>Nome</th>
+          <th>Situação</th>
           <th>Ações</th>
       </tr>
       </thead>

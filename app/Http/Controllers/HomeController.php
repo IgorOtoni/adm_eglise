@@ -56,8 +56,43 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->id_perfil == 1){
-            return view('home');
+        if(\Auth::user()->id_perfil == null || \Auth::user()->id_perfil == 1){
+            $x = 0;
+
+            $qtd_congregacoes = TblIgreja::all()->count();
+
+            $usuarios_ativos = User::where('status','=',1)->get();
+
+            $qtd_usuarios = sizeof($usuarios_ativos);
+
+            $qtd_usuarios_on = 0;
+
+            foreach($usuarios_ativos as $usuario){
+                if($usuario->isOnline()) $qtd_usuarios_on++;
+            }
+
+            $quadros[$x]['info'] = $qtd_usuarios_on;
+            $quadros[$x]['title'] = 'Total de usuários online';
+            $quadros[$x]['icon'] = 'fa-users';
+            $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'igrejas';
+            $x++;
+
+            $quadros[$x]['info'] = $qtd_congregacoes;
+            $quadros[$x]['title'] = 'Total de congregações';
+            $quadros[$x]['icon'] = 'fa-university';
+            $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'igrejas';
+            $x++;
+
+            $quadros[$x]['info'] = $qtd_usuarios;
+            $quadros[$x]['title'] = 'Total de usuários ativos';
+            $quadros[$x]['icon'] = 'fa-child';
+            $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'igrejas';
+            $x++;
+
+            return view('home', compact('quadros'));
         }else{
             $perfil = TblPerfil::find(\Auth::user()->id_perfil);
             $igreja = obter_dados_igreja_id($perfil->id_igreja);
@@ -91,6 +126,31 @@ class HomeController extends Controller
             $quadros[$x]['icon'] = 'fa-play';
             $quadros[$x]['color'] = 'yellow';
             $quadros[$x]['link'] = 'banners';
+            $x++;
+
+            $usuarios_ativos = \DB::table('users')->leftJoin('tbl_perfis','users.id_perfil','=','tbl_perfis.id')
+                ->where('users.status','=',true)
+                ->where('tbl_perfis.status','=',true)
+                ->where('id_igreja','=',$igreja->id)->get();
+
+            $qtd_usuarios_on = 0;
+
+            foreach($usuarios_ativos as $usuario){
+                if(\Cache::has('user-is-online-'.$usuario->id)) $qtd_usuarios_on++;
+            }
+
+            $quadros[$x]['info'] = $qtd_usuarios_on;
+            $quadros[$x]['title'] = 'Usuários online';
+            $quadros[$x]['icon'] = 'fa-users';
+            $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'usuarios';
+            $x++;
+
+            $quadros[$x]['info'] = sizeof($usuarios_ativos);
+            $quadros[$x]['title'] = 'Usuários ativos';
+            $quadros[$x]['icon'] = 'fa-child';
+            $quadros[$x]['color'] = 'green';
+            $quadros[$x]['link'] = 'usuarios';
             $x++;
 
             $quadros[$x]['info'] = TblBanner::where('id_igreja','=',$igreja->id)->count();
@@ -130,7 +190,7 @@ class HomeController extends Controller
 
             $quadros[$x]['info'] = TblPerfil::where('id_igreja','=',$igreja->id)->count();
             $quadros[$x]['title'] = 'Perfis';
-            $quadros[$x]['icon'] = 'fa-users';
+            $quadros[$x]['icon'] = 'fa-user';
             $quadros[$x]['color'] = 'green';
             $quadros[$x]['link'] = 'perfis';
             $x++;
@@ -147,13 +207,6 @@ class HomeController extends Controller
             $quadros[$x]['icon'] = 'fa-microphone';
             $quadros[$x]['color'] = 'green';
             $quadros[$x]['link'] = 'sermoes';
-            $x++;
-
-            $quadros[$x]['info'] = \DB::table('users')->leftJoin('tbl_perfis','users.id_perfil','=','tbl_perfis.id')->where('id_igreja','=',$igreja->id)->count();
-            $quadros[$x]['title'] = 'Usuários ativos';
-            $quadros[$x]['icon'] = 'fa-child';
-            $quadros[$x]['color'] = 'green';
-            $quadros[$x]['link'] = 'usuarios';
             $x++;
 
             return view('usuario.home', compact('quadros'));
@@ -1661,8 +1714,14 @@ class HomeController extends Controller
                     return null;
             })->addColumn('perfil',function($usuarios){
                 return (TblPerfil::find($usuarios->id_perfil))->nome;
+            })->addColumn('situacao',function($usuarios){
+                if(\Cache::has('user-is-online-'.$usuarios->id)){
+                    return "<span class='label bg-green'>Online</span>";
+                }else{
+                    return "<span class='label bg-red'>Offline</span>";
+                }
             })
-            ->make(true);
+            ->rawColumns(['perfil', 'situacao', 'action'])->make(true);
         }
     }
 

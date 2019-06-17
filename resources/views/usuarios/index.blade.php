@@ -184,7 +184,7 @@ $(function () {
           <th>Nome</th>
           <th>Perfil</th>
           <th>Igreja</th>
-          <th>Status</th>
+          <th>Situação</th>
           <th>Ações</th>
       </tr>
       </thead>
