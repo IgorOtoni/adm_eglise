@@ -265,7 +265,7 @@ $(function () {
                       foreach ($modulos_igreja as $modulo_igreja){
                         if($modulo_igreja->id_modulo == $modulo->id){
                           ?>
-                          <option value="{{$modulo->id}}" selected>{{$modulo->nome}}</option>
+                          <option value="{{$modulo->id}}" selected>{{$modulo->nome}} - {{$modulo->sistema}} - {{($modulo->gerencial) ? 'Gerencial' : 'Apresentativo'}}</option>
                           <?php
                           $achou = true;
                           break;
@@ -273,7 +273,7 @@ $(function () {
                       }
                       if($achou == false){
                         ?>
-                        <option value="{{$modulo->id}}">{{$modulo->nome}}</option>
+                        <option value="{{$modulo->id}}">{{$modulo->nome}} - {{$modulo->sistema}} - {{($modulo->gerencial) ? 'Gerencial' : 'Apresentativo'}}</option>
                         <?php
                       }
                     } ?>

@@ -12,11 +12,11 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - ????????? apresentacao
+        /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - ????????? apresentacao
             'id'=>1,
             'id_igreja'=>3,
             'id_modulo'=>1,
-        ]);
+        ]);*/
         /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 3 - ????????? apresentacao
             'id'=>2,
             'id_igreja'=>3,
@@ -73,11 +73,11 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_modulo'=>12,
         ]);
 
-        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - ????????? apresentacao
+        /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - ????????? apresentacao
             'id'=>13,
             'id_igreja'=>1,
             'id_modulo'=>1,
-        ]);
+        ]);*/
         /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 1 - ????????? apresentacao
             'id'=>14,
             'id_igreja'=>1,
@@ -134,11 +134,11 @@ class Tbl_Igrejas_Modulos_Seeder extends Seeder
             'id_modulo'=>12,
         ]);
 
-        DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - ????????? apresentacao
+        /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - ????????? apresentacao
             'id'=>25,
             'id_igreja'=>2,
             'id_modulo'=>1,
-        ]);
+        ]);*/
         /*DB::table('tbl_igrejas_modulos')->insert([ // Igreja 2 - ????????? apresentacao
             'id'=>26,
             'id_igreja'=>2,

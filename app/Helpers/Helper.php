@@ -147,7 +147,7 @@ function limpa_html($html){
 function verifica_link($link, $igreja){
     if($link == null || empty($link) || trim($link) == ""){
         return "/".$igreja->url;
-    }else if(substr($link, 0, 3) == "http"){
+    }else if(substr($link, 0, 4) == "http"){
         return $link;
     }else{
         return "/".$igreja->url."/".$link;

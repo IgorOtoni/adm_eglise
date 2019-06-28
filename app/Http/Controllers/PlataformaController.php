@@ -69,6 +69,7 @@ class PlataformaController extends Controller
                 $igreja->status = true;
                 $igreja->save();
                 $igreja_modulos = null;
+                $igreja_modulos_g = null;
 
                 $modulos = TblModulo::all();
 
@@ -79,6 +80,7 @@ class PlataformaController extends Controller
                     $igreja_modulo->id_modulo = $modulo->id;
                     $igreja_modulo->save();
                     $igreja_modulos[$x] = $igreja_modulo;
+                    if($modulo->gerencial) $igreja_modulos_g[$x] = $igreja_modulo;
                     $x++;
                 }
 
@@ -173,7 +175,7 @@ class PlataformaController extends Controller
 
                 $PerfisIgrejaModulos_ = null;
                 $x = 0;
-                foreach($igreja_modulos as $igreja_modulo){
+                foreach($igreja_modulos_g as $igreja_modulo){
                     $PerfisIgrejaModulos = new TblPerfisIgrejasModulos();
                     $PerfisIgrejaModulos->id_perfil = $perfil->id;
                     $PerfisIgrejaModulos->id_modulo_igreja = $igreja_modulo->id;

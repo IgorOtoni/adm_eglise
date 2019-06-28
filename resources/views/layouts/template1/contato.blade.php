@@ -67,7 +67,7 @@ $(function(){
                         @csrf
                         <div class="col-md-6 margin-15">
                         <div class="form-group has-feedback">
-                            <input type="text" id="name" name="nome"  class="form-control input-lg" placeholder="Name" required>
+                            <input type="text" id="name" name="nome"  class="form-control input-lg" placeholder="Nome" required>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             <div class="help-block with-errors"></div>
                         </div>

@@ -66,7 +66,7 @@ $(function(){
     });
 
     $("#modal-incluir #modulos_area").css('display', 'none');
-    $("#modal-incluir #modulos").attr('data-validate', 'false');
+    $("#modal-incluir #modulo").attr('data-validate', 'false');
 
     $("#modal-incluir #publicacoes_area").css('display', 'none');
     $("#modal-incluir #publicacao").attr('data-validate', 'false');
@@ -94,7 +94,7 @@ $(function(){
 
     $('#modal-incluir #link').on('change', function (event) {
         $("#modal-incluir #modulos_area").css('display', 'none');
-        $("#modal-incluir #modulos").attr('data-validate', 'false');
+        $("#modal-incluir #modulo").attr('data-validate', 'false');
 
         $("#modal-incluir #publicacoes_area").css('display', 'none');
         $("#modal-incluir #publicacao").attr('data-validate', 'false');

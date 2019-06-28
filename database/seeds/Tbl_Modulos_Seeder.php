@@ -129,14 +129,13 @@ class Tbl_Modulos_Seeder extends Seeder
             'gerencial'=>true,
             'sistema'=>'web',
         ]);*/
-        DB::table('tbl_modulos')->insert([
+        /*DB::table('tbl_modulos')->insert([
             'id'=>1,
             'nome'=>'Membros',
             'descricao'=>'',
             'rota'=>'membros',
-            'gerencial'=>true,
             'sistema'=>'web',
-        ]);
+        ]);*/
         /*DB::table('tbl_modulos')->insert([
             'id'=>2,
             'nome'=>'Células',

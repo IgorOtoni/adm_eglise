@@ -1135,7 +1135,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 <!-- Main content -->
 <section class="content">
 
-    <form id="editarConfiguracoesIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.salvarConfiguracoes')}}" enctype="multipart/form-data">
+    <form id="editarConfiguracoesIgrejaFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.salvarConfiguracoes')}}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" value="{{$igreja->id_configuracao}}">
     <div class="box">
@@ -1395,7 +1395,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 <!-- modals -->
 <!-- Adicionar Menu -->
 <div class="modal fade" id="modal-incluir-menu">
-<form id="adicionarMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.adicionarMenu')}}" enctype="multipart/form-data">
+<form id="adicionarMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.adicionarMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id_configuracao" value="{{$igreja->id_configuracao}}">
     <div class="modal-dialog modal-lg">
@@ -1549,7 +1549,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Adicionar Sub Menu -->
 <div class="modal fade" id="modal-incluir-submenu">
-<form id="adicionarSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.adicionarSubMenu')}}" enctype="multipart/form-data">
+<form id="adicionarSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.adicionarSubMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id_menu" id="id_menu">
     <div class="modal-dialog modal-lg">
@@ -1703,7 +1703,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Adicionar Sub Sub Menu -->
 <div class="modal fade" id="modal-incluir-subsubmenu">
-<form id="adicionarSubSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.adicionarSubSubMenu')}}" enctype="multipart/form-data">
+<form id="adicionarSubSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.adicionarSubSubMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id_submenu" id="id_submenu">
     <div class="modal-dialog modal-lg">
@@ -1857,7 +1857,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Editar Menu -->
 <div class="modal fade" id="modal-editar-menu">
-<form id="editarMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.editarMenu')}}" enctype="multipart/form-data">
+<form id="editarMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.editarMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id" id="id">
     <div class="modal-dialog modal-lg">
@@ -2017,7 +2017,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Editar Sub Menu -->
 <div class="modal fade" id="modal-editar-submenu">
-<form id="editarSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.editarSubMenu')}}" enctype="multipart/form-data">
+<form id="editarSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.editarSubMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id" id="id">
     <div class="modal-dialog modal-lg">
@@ -2188,7 +2188,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Editar Sub Sub Menu -->
 <div class="modal fade" id="modal-editar-subsubmenu">
-<form id="editarSubSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.editarSubMenu')}}" enctype="multipart/form-data">
+<form id="editarSubSubMenuFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.editarSubMenu')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id" id="id">
     <div class="modal-dialog modal-lg">
@@ -2370,7 +2370,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 <!-- modals -->
 <!-- Adicionar Menu Aplicativo -->
 <div class="modal fade" id="modal-incluir-menu-aplicativo">
-<form id="adicionarMenuAplicativoFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.adicionarMenuAplicativo')}}" enctype="multipart/form-data">
+<form id="adicionarMenuAplicativoFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.adicionarMenuAplicativo')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id_configuracao" value="{{$igreja->id_configuracao}}">
     <div class="modal-dialog modal-lg">
@@ -2523,7 +2523,7 @@ $('#modal-editar-menu-aplicativo').on('show.bs.modal', function (event) {
 
 <!-- Editar Menu Aplicativo -->
 <div class="modal fade" id="modal-editar-menu-aplicativo">
-<form id="editarMenuAplicativoFormulario" data-toggle="validator" method="POST" role="form" action="{{route('usuario.editarMenuAplicativo')}}" enctype="multipart/form-data">
+<form id="editarMenuAplicativoFormulario" data-toggle="validator" method="POST" role="form" action="{{route('igrejas.editarMenuAplicativo')}}" enctype="multipart/form-data">
 @csrf
     <input type="hidden" name="id" id="id">
     <div class="modal-dialog modal-lg">
