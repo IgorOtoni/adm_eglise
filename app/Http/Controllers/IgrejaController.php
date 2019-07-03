@@ -31,7 +31,7 @@ class IgrejaController extends Controller
         $noticias = \DB::table('tbl_noticias')
             ->where('id_igreja', '=', $igreja->id)
             ->orderBy('created_at','DESC')
-            ->limit(3)
+            ->limit(4)
             ->get();
         $igreja = obter_dados_igreja($url);
         $modulos = obter_modulos_apresentativos_igreja($igreja);

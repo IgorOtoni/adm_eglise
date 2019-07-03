@@ -1713,7 +1713,7 @@ class HomeController extends Controller
                 }else
                     return null;
             })->addColumn('perfil',function($usuarios){
-                return (TblPerfil::find($usuarios->id_perfil))->nome;
+                return (TblPerfil::find($usuarios->id))->nome;
             })->addColumn('situacao',function($usuarios){
                 if(\Cache::has('user-is-online-'.$usuarios->id)){
                     return "<span class='label bg-green'>Online</span>";

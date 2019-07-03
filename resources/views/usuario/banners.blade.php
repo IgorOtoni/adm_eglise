@@ -402,7 +402,7 @@ $(function(){
                 <div id="sermoes_area" class="col-md-12">
                     <div class="form-group has-feedback">
                     <label >Sermões</label>
-                    <select id="sermoes" name="sermoes" class="form-control select2" style="width: 100%;" required>
+                    <select id="sermao" name="sermao" class="form-control select2" style="width: 100%;" required>
                         <?php $sermoes = App\TblSermoes::where('id_igreja','=',$igreja->id)->orderBy('nome','ASC')->get(); ?>
                         @foreach ($sermoes as $sermao)
                             <option value="{{$sermao->id}}">{{$sermao->nome}}</option>

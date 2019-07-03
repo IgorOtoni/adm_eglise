@@ -22,9 +22,9 @@ class TblUsuariosController extends Controller
             return '<a href="/admin/usuarios/editarUsuario/'.$usuarios->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>'.'&nbsp'.
             '<label title="Status do Usuário" class="switch"><input onClick="switch_status(this)" name="'.$usuarios->nome.'" class="status" id="'.$usuarios->id.'" type="checkbox" '.(($usuarios->status == 1) ? "checked" : "").'><span class="slider"></span></label>';
         })->addColumn('perfil',function($usuarios){
-            return (TblPerfil::find($usuarios->id))->nome;
+            return (TblPerfil::find($usuarios->id_perfil))->nome;
         })->addColumn('igreja',function($usuarios){
-            $perfil = TblPerfil::find($usuarios->id);
+            $perfil = TblPerfil::find($usuarios->id_perfil);
             if($perfil->id_igreja != null && $perfil->id_igreja != 1)
                 return (TblIgreja::find($perfil->id_igreja))->nome;
             else

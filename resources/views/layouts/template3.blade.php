@@ -98,8 +98,6 @@
     </header>
     <!-- ##### Header Area End ##### -->
 
-    @yield('content')
-
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
         <!-- Main Footer Area -->
